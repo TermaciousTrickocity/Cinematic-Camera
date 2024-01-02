@@ -163,16 +163,21 @@ namespace Camera
 
                 string selectedFilePath = Path.Combine(subfolderPath, comboBox.SelectedItem.ToString());
                 GlobalData.LoadJSONFile(selectedFilePath);
-
-                xPos = GlobalData.StringList[0];
-                yPos = GlobalData.StringList[1];
-                zPos = GlobalData.StringList[2];
-                yawAng = GlobalData.StringList[3];
-                pitchAng = GlobalData.StringList[4];
-                rollAng = GlobalData.StringList[5];
-                speedCamera = GlobalData.StringList[6];
-                playerFov = GlobalData.StringList[7];
-                vehicleFov = GlobalData.StringList[8];
+                var lastOffset = "0x20";
+                xPos = GlobalData.StringList[0] + lastOffset;
+                lastOffset = "0x24";
+                yPos = GlobalData.StringList[0] + lastOffset;
+                lastOffset = "0x28";
+                zPos = GlobalData.StringList[0] + lastOffset;
+                lastOffset = "0x2C";
+                yawAng = GlobalData.StringList[0] + lastOffset;
+                lastOffset = "0x30";
+                pitchAng = GlobalData.StringList[0] + lastOffset;
+                lastOffset = "0x34";
+                rollAng = GlobalData.StringList[0] + lastOffset;
+                speedCamera = GlobalData.StringList[1];
+                playerFov = GlobalData.StringList[2];
+                //vehicleFov = GlobalData.StringList[8];
             }
         }
 

@@ -21,13 +21,25 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="plugins\" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Memory">
-      <HintPath>..\..\..\..\Downloads\Memory.dll</HintPath>
+      <HintPath>..\Memory.dll</HintPath>
     </Reference>
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="plugins\" />
+    <None Update="plugins\Hopefully_Forge_World_IG.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="plugins\MCC-Reach-Campaign-1.3272.0.0.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="plugins\MCC-Reach-Multiplayer-1.3272.0.0.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
