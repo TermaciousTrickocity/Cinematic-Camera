@@ -1,0 +1,11 @@
+[ // For HR MCC 1.3251.0.0 (2023.07.16.176674.1-QFE1)
+  "halo3.dll+0x0125BAA4,0x28", // X
+  "halo3.dll+0x0125BAA4,0x2C", // Y
+  "halo3.dll+0x0125BAA4,0x30", // Z
+  "halo3.dll+0x0125BAA4,0x34", // Yaw
+  "halo3.dll+0x0125BAA4,0x38", // Pitch
+  "halo3.dll+0x0125BAA4,0x3C", // Roll
+  "halo3.dll+0x8A998C", // Camera speed
+  "halo3.dll+0x2D3DDE4", // FOV
+  "halo3.dll+0x2D3DDE8", // Vehicle FOV
+]

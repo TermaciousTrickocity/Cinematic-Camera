@@ -1,0 +1,12 @@
+[ // For HR MCC 1.3251.0.0 (2023.07.16.176674.1-QFE1)
+  "halo4.dll+0x01B1E658,0x28", // X
+  "halo4.dll+0x01B1E658,0x2C", // Y
+  "halo4.dll+0x01B1E658,0x30", // Z
+  "halo4.dll+0x01B1E658,0x34", // Yaw
+  "halo4.dll+0x01B1E658,0x38", // Pitch
+  "halo4.dll+0x01B1E658,0x3C", // Roll
+  "halo4.dll+0xE7840C", // Camera speed
+  "halo4.dll+0x30EBEEC", // FOV
+  "halo4.dll+0x30EBEF0", // Vehicle FOV
+  "MCC-Win64-Shipping" // Process
+]
