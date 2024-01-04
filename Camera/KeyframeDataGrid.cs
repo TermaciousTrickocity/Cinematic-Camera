@@ -40,12 +40,26 @@ namespace Camera
 
         private void RemoveSelectedKeypoint()
         {
-            if (keyframeDataGridView.SelectedRows.Count > 0)
+            List<int> selectedIndices = new List<int>();
+            foreach (DataGridViewRow row in keyframeDataGridView.SelectedRows)
             {
-                int selectedIndex = keyframeDataGridView.SelectedRows[0].Index;
-                keyPoints.RemoveAt(selectedIndex);
-                UpdateDataGridView();
+                selectedIndices.Add(row.Index);
             }
+
+            // Sort in descending order to avoid shifting indices while removing
+            selectedIndices.Sort((a, b) => b.CompareTo(a));
+
+            foreach (int selectedIndex in selectedIndices)
+            {
+                //Check if the index is valid
+                if (selectedIndex >= 0 && selectedIndex < keyPoints.Count)
+                {
+                    keyPoints.RemoveAt(selectedIndex);
+                }
+                
+            }
+
+            UpdateDataGridView();
         }
 
         private void UpdateDataGridView()
@@ -64,6 +78,13 @@ namespace Camera
                 var editedValue = keyframeDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
                 if (editedValue != null && float.TryParse(editedValue.ToString(), out float newValue))
                 {
+                    //Check if the index is valid return if not
+                    if (e.RowIndex >= 0 && !(e.RowIndex < keyPoints.Count))
+                    {
+                        return;
+                    }
+                    
+
                     var editedKeyPoint = keyPoints[e.RowIndex];
                     switch (e.ColumnIndex)
                     {

@@ -23,9 +23,32 @@ namespace Camera
                     if (!string.IsNullOrEmpty(Module.ModuleName) && !memory.modules.ContainsKey(Module.ModuleName))
                         memory.modules.Add(Module.ModuleName, Module.BaseAddress);
                 }
+                byte[] target = null;
+                string hexString = "";
+                
+                while (target == null)
+                {
+                    target = memory.ReadBytes(targetAddr, 8);
+
+                }
+                //Reverse the bytes
+                Array.Reverse(target);
+                hexString = BitConverter.ToString(target).Replace("-", string.Empty);
+                //Debug.WriteLine(hexString);
+                xPos = hexString;
+                //Convert the hex string to an int64
+                long result = Convert.ToInt64(hexString, 16);
+                yPos = (result + 0x4).ToString("X");
+                zPos = (result + 0x8).ToString("X");
+                yawAng = (result + 0xC).ToString("X");
+                pitchAng = (result + 0x10).ToString("X");
+                rollAng = (result + 0x14).ToString("X");
+
+
 
                 await DisableButton();
                 await Data();
+                
             }
             catch
             {

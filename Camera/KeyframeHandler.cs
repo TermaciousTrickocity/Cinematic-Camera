@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,7 @@ namespace Camera
         {
             try
             {
+                if (xPos == null || yPos == null || zPos == null || yawAng == null || pitchAng == null || rollAng == null || playerFov == null) return;
                 // Retrieve the current XYZ position from memory
                 float x = memory.ReadFloat(xPos);
                 float y = memory.ReadFloat(yPos);
