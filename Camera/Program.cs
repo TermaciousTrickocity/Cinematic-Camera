@@ -1,7 +1,4 @@
-using System;
-using System.Windows.Forms;
-
-namespace Camera
+namespace modularDollyCam
 {
     internal static class Program
     {
@@ -11,10 +8,10 @@ namespace Camera
         [STAThread]
         static void Main()
         {
-            Application.SetHighDpiMode(HighDpiMode.SystemAware);
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CameraForm());
+            // To customize application configuration such as set high DPI settings or default font,
+            // see https://aka.ms/applicationconfiguration.
+            ApplicationConfiguration.Initialize();
+            Application.Run(new MainForm());
         }
     }
 }
