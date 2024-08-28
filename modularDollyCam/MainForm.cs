@@ -44,7 +44,7 @@ namespace modularDollyCam
         private Thread checkTheaterTime;
         private Thread headerCheck;
 
-        bool isHeaderLoaded = false; // Shouldn't be true (on startup) unless it's actually loaded, but I can not be fucked to fix this right now.
+        bool isHeaderLoaded = false;
         bool lockHotkeys = true;
         bool startup = false;
 
@@ -86,6 +86,8 @@ namespace modularDollyCam
             GetModules();
             GetData();
             SetupDataGridView();
+
+            
 
             _proc = HookCallback;
             _hookID = SetHook(_proc);
@@ -140,6 +142,25 @@ namespace modularDollyCam
         {
             base.OnFormClosing(e);
             UnhookWindowsHookEx(_hookID);
+        }
+
+        public async Task CheckForMapHeader()
+        {
+            while (true)
+            {
+                string daeh = memory.ReadString(Header, "", 0x04);
+
+                if (daeh == "daeh")
+                {
+                    isHeaderLoaded = true;
+                }
+                else
+                {
+                    isHeaderLoaded = false;
+                }
+
+                await Task.Delay(1);
+            }
         }
 
         #region Hotkeys
@@ -246,6 +267,7 @@ namespace modularDollyCam
                         Console.WriteLine("Found: " + selectedProcessName.ToString() + " (" + p.Id + ")");
 
                         updateModules.Text = $"Load .plugin/.json";
+
                         startup = true;
                     }
                 }
@@ -420,24 +442,55 @@ namespace modularDollyCam
 
                         while (true)
                         {
-                            float currentTheaterTime = memory.ReadFloat(theaterTime);
-
-                            if (currentTheaterTime >= endTime)
+                            if (isHeaderLoaded == false)
+                            {
                                 break;
+                            }
+                            else
+                            {
+                                float currentTheaterTime = memory.ReadFloat(theaterTime);
 
-                            float tNormalized = (currentTheaterTime - startTime) / segmentDuration;
-                            var interpolatedPosition = CatmullRomPositionInterpolation(p0, p1, p2, p3, tNormalized);
+                                if (currentTheaterTime >= endTime)
+                                {   
+                                    pathStart_checkbox.Checked = false;
+                                    break;
+                                }
 
-                            memory.WriteMemory(xPos, "float", $"{interpolatedPosition.Item1}");
-                            memory.WriteMemory(yPos, "float", $"{interpolatedPosition.Item2}");
-                            memory.WriteMemory(zPos, "float", $"{interpolatedPosition.Item3}");
+                                if (currentTheaterTime < startTime)
+                                {
+                                    float x = Convert.ToSingle(keyframeDataGridView.Rows[0].Cells["X"].Value);
+                                    float y = Convert.ToSingle(keyframeDataGridView.Rows[0].Cells["Y"].Value);
+                                    float z = Convert.ToSingle(keyframeDataGridView.Rows[0].Cells["Z"].Value);
+                                    float yaw = Convert.ToSingle(keyframeDataGridView.Rows[0].Cells["Yaw"].Value);
+                                    float pitch = Convert.ToSingle(keyframeDataGridView.Rows[0].Cells["Pitch"].Value);
+                                    float roll = Convert.ToSingle(keyframeDataGridView.Rows[0].Cells["Roll"].Value);
+                                    float fov = Convert.ToSingle(keyframeDataGridView.Rows[0].Cells["FOV"].Value);
 
-                            memory.WriteMemory(yawAng, "float", $"{interpolatedPosition.Item4}");
-                            memory.WriteMemory(pitchAng, "float", $"{interpolatedPosition.Item5}");
-                            memory.WriteMemory(rollAng, "float", $"{interpolatedPosition.Item6}");
-                            memory.WriteMemory(playerFov, "float", $"{interpolatedPosition.Item7}");
+                                    memory.WriteMemory(xPos, "float", $"{x}");
+                                    memory.WriteMemory(yPos, "float", $"{y}");
+                                    memory.WriteMemory(zPos, "float", $"{z}");
+                                    memory.WriteMemory(yawAng, "float", $"{yaw}");
+                                    memory.WriteMemory(pitchAng, "float", $"{pitch}");
+                                    memory.WriteMemory(rollAng, "float", $"{roll}");
+                                    memory.WriteMemory(playerFov, "float", $"{fov}");
+                                }
+                                else
+                                {
+                                    float tNormalized = (currentTheaterTime - startTime) / segmentDuration;
+                                    var interpolatedPosition = CatmullRomPositionInterpolation(p0, p1, p2, p3, tNormalized);
 
-                            await Task.Delay(10);
+                                    memory.WriteMemory(xPos, "float", $"{interpolatedPosition.Item1}");
+                                    memory.WriteMemory(yPos, "float", $"{interpolatedPosition.Item2}");
+                                    memory.WriteMemory(zPos, "float", $"{interpolatedPosition.Item3}");
+
+                                    memory.WriteMemory(yawAng, "float", $"{interpolatedPosition.Item4}");
+                                    memory.WriteMemory(pitchAng, "float", $"{interpolatedPosition.Item5}");
+                                    memory.WriteMemory(rollAng, "float", $"{interpolatedPosition.Item6}");
+                                    memory.WriteMemory(playerFov, "float", $"{interpolatedPosition.Item7}");
+                                }
+
+                                await Task.Delay(1);
+                            }
                         }
                     }
                 }
@@ -678,6 +731,9 @@ namespace modularDollyCam
                             isHeaderLoaded = true;
 
                             unlockUI();
+
+                            headerCheck = new Thread(async () => { await CheckForMapHeader(); });
+                            headerCheck.Start();
                         }
                         else
                         {
@@ -973,14 +1029,23 @@ namespace modularDollyCam
 
         private void pathStart_checkbox_CheckedChanged(object sender, EventArgs e)
         {
-            if (pathStart_checkbox.Checked == true)
+
+            if (isHeaderLoaded == true)
             {
-                MoveCamera();
+                if (pathStart_checkbox.Checked == true)
+                {
+                    MoveCamera();
+                }
+                else if (pathStart_checkbox.Checked == false)
+                {
+                    pathStart_checkbox.Checked = false;
+                    return;
+                }
             }
-            else if (pathStart_checkbox.Checked == false)
+            else
             {
+                MessageBox.Show("You might want to load a map first!", "Warning", MessageBoxButtons.OK);
                 pathStart_checkbox.Checked = false;
-                return;
             }
         }
 
