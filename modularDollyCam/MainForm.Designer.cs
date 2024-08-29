@@ -44,7 +44,7 @@
             deleteKey_Button = new Button();
             replaceCurrent_Button = new Button();
             dupeSelection_Button = new Button();
-            groupBox3 = new GroupBox();
+            saveGroupbox = new GroupBox();
             importPathWithOffset = new Button();
             label1 = new Label();
             linearSmoothingFactor_Textbox = new TextBox();
@@ -80,7 +80,7 @@
             label5 = new Label();
             lookTracking_Combobox = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)keyframeDataGridView).BeginInit();
-            groupBox3.SuspendLayout();
+            saveGroupbox.SuspendLayout();
             groupBox9.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)trackingDataGrid).BeginInit();
@@ -245,17 +245,18 @@
             dupeSelection_Button.UseVisualStyleBackColor = true;
             dupeSelection_Button.Click += dupeSelection_Button_Click;
             // 
-            // groupBox3
+            // saveGroupbox
             // 
-            groupBox3.Controls.Add(importPath_Button);
-            groupBox3.Controls.Add(importPathWithOffset);
-            groupBox3.Controls.Add(exportPath_Button);
-            groupBox3.Location = new Point(666, 12);
-            groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(272, 63);
-            groupBox3.TabIndex = 9;
-            groupBox3.TabStop = false;
-            groupBox3.Text = "Save/load";
+            saveGroupbox.Controls.Add(importPath_Button);
+            saveGroupbox.Controls.Add(importPathWithOffset);
+            saveGroupbox.Controls.Add(exportPath_Button);
+            saveGroupbox.Enabled = false;
+            saveGroupbox.Location = new Point(666, 12);
+            saveGroupbox.Name = "saveGroupbox";
+            saveGroupbox.Size = new Size(272, 63);
+            saveGroupbox.TabIndex = 9;
+            saveGroupbox.TabStop = false;
+            saveGroupbox.Text = "Save/load";
             // 
             // importPathWithOffset
             // 
@@ -633,14 +634,14 @@
             Controls.Add(SaveAndSmooth_Button);
             Controls.Add(linearSmoothingFactor_Textbox);
             Controls.Add(label1);
-            Controls.Add(groupBox3);
+            Controls.Add(saveGroupbox);
             MaximizeBox = false;
             MaximumSize = new Size(970, 700);
             MinimumSize = new Size(970, 700);
             Name = "MainForm";
             Text = "Halo camera tool";
             ((System.ComponentModel.ISupportInitialize)keyframeDataGridView).EndInit();
-            groupBox3.ResumeLayout(false);
+            saveGroupbox.ResumeLayout(false);
             groupBox9.ResumeLayout(false);
             groupBox9.PerformLayout();
             groupBox1.ResumeLayout(false);
@@ -672,7 +673,7 @@
         private Button teleportCamera_Button;
         private Label label1;
         private TextBox linearSmoothingFactor_Textbox;
-        private GroupBox groupBox3;
+        private GroupBox saveGroupbox;
         private TextBox fpsTextbox;
         private Label label2;
         private Button button10;

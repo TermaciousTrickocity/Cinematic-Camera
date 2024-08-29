@@ -204,23 +204,27 @@ namespace modularDollyCam
                             addKey();
                             break;
                         case VK_Home:
-                            if (useTheaterTime.Checked == true)
-                            {
-                                int selectedIndex = keyframeDataGridView.SelectedRows[0].Index;
-                                float Time = Convert.ToSingle(keyframeDataGridView.Rows[selectedIndex].Cells["Transition Time"].Value);
-                                TimeSpan timeSpan = TimeSpan.FromSeconds(Time);
-                                string formattedTime = timeSpan.ToString(@"hh\:mm\:ss");
-                                string map = memory.ReadString(LoadedMap, "", 50);
-                                string build = memory.ReadString(BuildTag, "", 25);
-                                byte[] framerate = memory.ReadBytes(gameFramerate, 4);
-                                int framerateValue = BitConverter.ToInt32(framerate, 0);
-                                string framerateString = framerateValue.ToString();
-                                if (framerateString == "0")
-                                {
-                                    framerateString = "Unlimited";
-                                }
 
-                                if (isHeaderLoaded == true)
+                            int selectedIndex = keyframeDataGridView.SelectedRows[0].Index;
+                            float Time = Convert.ToSingle(keyframeDataGridView.Rows[selectedIndex].Cells["Transition Time"].Value);
+                            TimeSpan timeSpan = TimeSpan.FromSeconds(Time);
+                            string formattedTime = timeSpan.ToString(@"hh\:mm\:ss");
+
+                            string map = memory.ReadString(LoadedMap, "", 50);
+                            string build = memory.ReadString(BuildTag, "", 25);
+
+                            byte[] framerate = memory.ReadBytes(gameFramerate, 4);
+                            int framerateValue = BitConverter.ToInt32(framerate, 0);
+                            string framerateString = framerateValue.ToString();
+
+                            if (framerateString == "0")
+                            {
+                                framerateString = "Unlimited";
+                            }
+
+                            if (isHeaderLoaded == true)
+                            {
+                                if (useTheaterTime.Checked == true)
                                 {
                                     MessageBox.Show($"Game stats:\n" +
                                         $"********************************************************************************\n" +
@@ -234,8 +238,21 @@ namespace modularDollyCam
                                         $"Time (in seconds): {Time}",
                                         "Debug", MessageBoxButtons.OK);
                                 }
-                                
+                                else
+                                {
+                                    MessageBox.Show($"Game stats:\n" +
+                                        $"********************************************************************************\n" +
+                                        $"Build: {build}\n" +
+                                        $"Current Map: {map}\n" +
+                                        $"Game Framerate: {framerateString}\n" +
+                                        $"\nKeyframe stats:\n" +
+                                        $"********************************************************************************\n" +
+                                        $"Selected Keyframe: {selectedIndex + 1}\n" +
+                                        $"Time (in seconds): {Time}",
+                                        "Debug", MessageBoxButtons.OK);
+                                }
                             }
+
                             break;
                         default:
                             break;
@@ -426,7 +443,10 @@ namespace modularDollyCam
             float t2 = t * t;
             float t3 = t2 * t;
 
-            float x = 0.5f * ((2.0f * p1.Item1) + (-p0.Item1 + p2.Item1) * t + (2.0f * p0.Item1 - 5.0f * p1.Item1 + 4.0f * p2.Item1 - p3.Item1) * t2 + (-p0.Item1 + 3.0f * p1.Item1 - 3.0f * p2.Item1 + p3.Item1) * t3);
+            float x = 0.5f * ((2.0f * p1.Item1) +
+                              (-p0.Item1 + p2.Item1) * t +
+                              (2.0f * p0.Item1 - 5.0f * p1.Item1 + 4.0f * p2.Item1 - p3.Item1) * t2 +
+                              (-p0.Item1 + 3.0f * p1.Item1 - 3.0f * p2.Item1 + p3.Item1) * t3);
 
             float y = 0.5f * ((2.0f * p1.Item2) +
                               (-p0.Item2 + p2.Item2) * t +
@@ -740,6 +760,7 @@ namespace modularDollyCam
             //groupBox1.Enabled = true;
             groupBox8.Enabled = true;
             groupBox9.Enabled = true;
+            saveGroupbox.Enabled = true;
             lockHotkeys = false;
             BackColor = Color.FromArgb(245, 245, 245);
         }
