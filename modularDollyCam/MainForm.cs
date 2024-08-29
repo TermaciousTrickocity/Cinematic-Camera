@@ -37,7 +37,6 @@ namespace modularDollyCam
         public string LoadedMap;
 
         public bool modulesUpdated = false;
-
         public bool isCheckingTime = false;
 
         private Thread cameraThread;
@@ -86,8 +85,6 @@ namespace modularDollyCam
             GetModules();
             GetData();
             SetupDataGridView();
-
-            
 
             _proc = HookCallback;
             _hookID = SetHook(_proc);
@@ -382,6 +379,7 @@ namespace modularDollyCam
             }
         }
 
+        /*
         static Tuple<float, float, float, float, float, float, float> CatmullRomPositionInterpolation(Tuple<float, float, float, float, float, float, float> p0, Tuple<float, float, float, float, float, float, float> p1, Tuple<float, float, float, float, float, float, float> p2, Tuple<float, float, float, float, float, float, float> p3, float t)
         {
             float t2 = t * t;
@@ -395,6 +393,47 @@ namespace modularDollyCam
             float pitch = coefficients[0] * p0.Item5 + coefficients[1] * p1.Item5 + coefficients[2] * p2.Item5 + coefficients[3] * p3.Item5;
             float roll = coefficients[0] * p0.Item6 + coefficients[1] * p1.Item6 + coefficients[2] * p2.Item6 + coefficients[3] * p3.Item6;
             float fov = coefficients[0] * p0.Item7 + coefficients[1] * p1.Item7 + coefficients[2] * p2.Item7 + coefficients[3] * p3.Item7;
+
+            return new Tuple<float, float, float, float, float, float, float>(x, y, z, yaw, pitch, roll, fov);
+        }
+        */
+
+        private Tuple<float, float, float, float, float, float, float> CatmullRomPositionInterpolation(Tuple<float, float, float, float, float, float, float> p0, Tuple<float, float, float, float, float, float, float> p1, Tuple<float, float, float, float, float, float, float> p2, Tuple<float, float, float, float, float, float, float> p3, float t)
+        {
+            float t2 = t * t;
+            float t3 = t2 * t;
+
+            float x = 0.5f * ((2.0f * p1.Item1) + (-p0.Item1 + p2.Item1) * t + (2.0f * p0.Item1 - 5.0f * p1.Item1 + 4.0f * p2.Item1 - p3.Item1) * t2 + (-p0.Item1 + 3.0f * p1.Item1 - 3.0f * p2.Item1 + p3.Item1) * t3);
+
+            float y = 0.5f * ((2.0f * p1.Item2) +
+                              (-p0.Item2 + p2.Item2) * t +
+                              (2.0f * p0.Item2 - 5.0f * p1.Item2 + 4.0f * p2.Item2 - p3.Item2) * t2 +
+                              (-p0.Item2 + 3.0f * p1.Item2 - 3.0f * p2.Item2 + p3.Item2) * t3);
+
+            float z = 0.5f * ((2.0f * p1.Item3) +
+                              (-p0.Item3 + p2.Item3) * t +
+                              (2.0f * p0.Item3 - 5.0f * p1.Item3 + 4.0f * p2.Item3 - p3.Item3) * t2 +
+                              (-p0.Item3 + 3.0f * p1.Item3 - 3.0f * p2.Item3 + p3.Item3) * t3);
+
+            float yaw = 0.5f * ((2.0f * p1.Item4) +
+                                (-p0.Item4 + p2.Item4) * t +
+                                (2.0f * p0.Item4 - 5.0f * p1.Item4 + 4.0f * p2.Item4 - p3.Item4) * t2 +
+                                (-p0.Item4 + 3.0f * p1.Item4 - 3.0f * p2.Item4 + p3.Item4) * t3);
+
+            float pitch = 0.5f * ((2.0f * p1.Item5) +
+                                  (-p0.Item5 + p2.Item5) * t +
+                                  (2.0f * p0.Item5 - 5.0f * p1.Item5 + 4.0f * p2.Item5 - p3.Item5) * t2 +
+                                  (-p0.Item5 + 3.0f * p1.Item5 - 3.0f * p2.Item5 + p3.Item5) * t3);
+
+            float roll = 0.5f * ((2.0f * p1.Item6) +
+                                 (-p0.Item6 + p2.Item6) * t +
+                                 (2.0f * p0.Item6 - 5.0f * p1.Item6 + 4.0f * p2.Item6 - p3.Item6) * t2 +
+                                 (-p0.Item6 + 3.0f * p1.Item6 - 3.0f * p2.Item6 + p3.Item6) * t3);
+
+            float fov = 0.5f * ((2.0f * p1.Item7) +
+                                (-p0.Item7 + p2.Item7) * t +
+                                (2.0f * p0.Item7 - 5.0f * p1.Item7 + 4.0f * p2.Item7 - p3.Item7) * t2 +
+                                (-p0.Item7 + 3.0f * p1.Item7 - 3.0f * p2.Item7 + p3.Item7) * t3);
 
             return new Tuple<float, float, float, float, float, float, float>(x, y, z, yaw, pitch, roll, fov);
         }
@@ -440,6 +479,10 @@ namespace modularDollyCam
                         float endTime = keyTimes[i + 1];
                         float segmentDuration = endTime - startTime;
 
+                        float tNormalizedStart = 0.0f;
+                        float tNormalizedEnd = 1.0f;
+                        float tIncrement = 1.0f / segmentDuration;
+
                         while (true)
                         {
                             if (isHeaderLoaded == false)
@@ -451,43 +494,39 @@ namespace modularDollyCam
                                 float currentTheaterTime = memory.ReadFloat(theaterTime);
 
                                 if (currentTheaterTime >= endTime)
-                                {   
+                                {
                                     pathStart_checkbox.Checked = false;
                                     break;
                                 }
 
                                 if (currentTheaterTime < startTime)
                                 {
-                                    float x = Convert.ToSingle(keyframeDataGridView.Rows[0].Cells["X"].Value);
-                                    float y = Convert.ToSingle(keyframeDataGridView.Rows[0].Cells["Y"].Value);
-                                    float z = Convert.ToSingle(keyframeDataGridView.Rows[0].Cells["Z"].Value);
-                                    float yaw = Convert.ToSingle(keyframeDataGridView.Rows[0].Cells["Yaw"].Value);
-                                    float pitch = Convert.ToSingle(keyframeDataGridView.Rows[0].Cells["Pitch"].Value);
-                                    float roll = Convert.ToSingle(keyframeDataGridView.Rows[0].Cells["Roll"].Value);
-                                    float fov = Convert.ToSingle(keyframeDataGridView.Rows[0].Cells["FOV"].Value);
-
-                                    memory.WriteMemory(xPos, "float", $"{x}");
-                                    memory.WriteMemory(yPos, "float", $"{y}");
-                                    memory.WriteMemory(zPos, "float", $"{z}");
-                                    memory.WriteMemory(yawAng, "float", $"{yaw}");
-                                    memory.WriteMemory(pitchAng, "float", $"{pitch}");
-                                    memory.WriteMemory(rollAng, "float", $"{roll}");
-                                    memory.WriteMemory(playerFov, "float", $"{fov}");
+                                    var firstPoint = keyPoints[0];
+                                    memory.WriteMemory(xPos, "float", $"{firstPoint.Item1}");
+                                    memory.WriteMemory(yPos, "float", $"{firstPoint.Item2}");
+                                    memory.WriteMemory(zPos, "float", $"{firstPoint.Item3}");
+                                    memory.WriteMemory(yawAng, "float", $"{firstPoint.Item4}");
+                                    memory.WriteMemory(pitchAng, "float", $"{firstPoint.Item5}");
+                                    memory.WriteMemory(rollAng, "float", $"{firstPoint.Item6}");
+                                    memory.WriteMemory(playerFov, "float", $"{firstPoint.Item7}");
                                 }
                                 else
                                 {
                                     float tNormalized = (currentTheaterTime - startTime) / segmentDuration;
+
                                     var interpolatedPosition = CatmullRomPositionInterpolation(p0, p1, p2, p3, tNormalized);
 
                                     memory.WriteMemory(xPos, "float", $"{interpolatedPosition.Item1}");
                                     memory.WriteMemory(yPos, "float", $"{interpolatedPosition.Item2}");
                                     memory.WriteMemory(zPos, "float", $"{interpolatedPosition.Item3}");
-
                                     memory.WriteMemory(yawAng, "float", $"{interpolatedPosition.Item4}");
                                     memory.WriteMemory(pitchAng, "float", $"{interpolatedPosition.Item5}");
                                     memory.WriteMemory(rollAng, "float", $"{interpolatedPosition.Item6}");
                                     memory.WriteMemory(playerFov, "float", $"{interpolatedPosition.Item7}");
                                 }
+
+                                tNormalizedStart += tIncrement;
+                                tNormalizedEnd += tIncrement;
 
                                 await Task.Delay(1);
                             }
