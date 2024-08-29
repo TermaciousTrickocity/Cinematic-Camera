@@ -35,6 +35,7 @@ namespace modularDollyCam
         public string Header;
         public string BuildTag;
         public string LoadedMap;
+        public string gameFramerate;
 
         public bool modulesUpdated = false;
         public bool isCheckingTime = false;
@@ -209,7 +210,31 @@ namespace modularDollyCam
                                 float Time = Convert.ToSingle(keyframeDataGridView.Rows[selectedIndex].Cells["Transition Time"].Value);
                                 TimeSpan timeSpan = TimeSpan.FromSeconds(Time);
                                 string formattedTime = timeSpan.ToString(@"hh\:mm\:ss");
-                                MessageBox.Show("Time: " + formattedTime + $"\nTime (in seconds): {Time}", "Float to time format converter!", MessageBoxButtons.OK);
+                                string map = memory.ReadString(LoadedMap, "", 50);
+                                string build = memory.ReadString(BuildTag, "", 25);
+                                byte[] framerate = memory.ReadBytes(gameFramerate, 4);
+                                int framerateValue = BitConverter.ToInt32(framerate, 0);
+                                string framerateString = framerateValue.ToString();
+                                if (framerateString == "0")
+                                {
+                                    framerateString = "Unlimited";
+                                }
+
+                                if (isHeaderLoaded == true)
+                                {
+                                    MessageBox.Show($"Game stats:\n" +
+                                        $"********************************************************************************\n" +
+                                        $"Build: {build}\n" +
+                                        $"Current Map: {map}\n" +
+                                        $"Game Framerate: {framerateString}\n" +
+                                        $"\nKeyframe stats:\n" +
+                                        $"********************************************************************************\n" +
+                                        $"Selected Keyframe: {selectedIndex + 1}\n" +
+                                        $"Time: {formattedTime}\n" +
+                                        $"Time (in seconds): {Time}",
+                                        "Debug", MessageBoxButtons.OK);
+                                }
+                                
                             }
                             break;
                         default:
@@ -396,7 +421,7 @@ namespace modularDollyCam
             return new Tuple<float, float, float, float, float, float, float>(x, y, z, yaw, pitch, roll, fov);
         }
 
-        private Tuple<float, float, float, float, float, float, float> CatmullRomPositionInterpolation(Tuple<float, float, float, float, float, float, float> p0, Tuple<float, float, float, float, float, float, float> p1, Tuple<float, float, float, float, float, float, float> p2, Tuple<float, float, float, float, float, float, float> p3, float t)
+        private Tuple<float, float, float, float, float, float, float> Interpolation(Tuple<float, float, float, float, float, float, float> p0, Tuple<float, float, float, float, float, float, float> p1, Tuple<float, float, float, float, float, float, float> p2, Tuple<float, float, float, float, float, float, float> p3, float t)
         {
             float t2 = t * t;
             float t3 = t2 * t;
@@ -512,7 +537,7 @@ namespace modularDollyCam
                                 {
                                     float tNormalized = (currentTheaterTime - startTime) / segmentDuration;
 
-                                    var interpolatedPosition = CatmullRomPositionInterpolation(p0, p1, p2, p3, tNormalized);
+                                    var interpolatedPosition = Interpolation(p0, p1, p2, p3, tNormalized);
 
                                     memory.WriteMemory(xPos, "float", $"{interpolatedPosition.Item1}");
                                     memory.WriteMemory(yPos, "float", $"{interpolatedPosition.Item2}");
@@ -758,6 +783,7 @@ namespace modularDollyCam
                             offsetMagic = addresses[12];
                             difference = addresses[13];
                             theaterTime = addresses[14];
+                            gameFramerate = addresses[15];
 
                             GetModules();
 
