@@ -379,7 +379,6 @@ namespace modularDollyCam
             }
         }
 
-        /*
         static Tuple<float, float, float, float, float, float, float> CatmullRomPositionInterpolation(Tuple<float, float, float, float, float, float, float> p0, Tuple<float, float, float, float, float, float, float> p1, Tuple<float, float, float, float, float, float, float> p2, Tuple<float, float, float, float, float, float, float> p3, float t)
         {
             float t2 = t * t;
@@ -396,7 +395,6 @@ namespace modularDollyCam
 
             return new Tuple<float, float, float, float, float, float, float>(x, y, z, yaw, pitch, roll, fov);
         }
-        */
 
         private Tuple<float, float, float, float, float, float, float> CatmullRomPositionInterpolation(Tuple<float, float, float, float, float, float, float> p0, Tuple<float, float, float, float, float, float, float> p1, Tuple<float, float, float, float, float, float, float> p2, Tuple<float, float, float, float, float, float, float> p3, float t)
         {
