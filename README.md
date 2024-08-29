@@ -3,7 +3,7 @@
 > (support for Halo 2, Halo 4, and Legacy Xbox 360 Halo titles coming soon!)
 
 ## Prerequisites
-Grab the .NET Desktop Runtime 8.0.8 from [here](https://dotnet.microsoft.com/en-us/download/dotnet/8.0).
+Grab .NET Runtime 8.0.8 and .NET Desktop Runtime 8.0.8 from [here](https://dotnet.microsoft.com/en-us/download/dotnet/8.0).
 
 ## Hotkeys
 ```M``` Starts path
