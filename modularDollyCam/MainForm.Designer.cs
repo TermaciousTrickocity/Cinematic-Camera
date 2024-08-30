@@ -435,11 +435,11 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(819, 26);
+            label3.Location = new Point(815, 26);
             label3.Name = "label3";
-            label3.Size = new Size(80, 17);
+            label3.Size = new Size(88, 17);
             label3.TabIndex = 34;
-            label3.Text = "Current time";
+            label3.Text = "(Current time)";
             // 
             // CurrentTimeTextbox
             // 

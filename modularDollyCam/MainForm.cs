@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using Memory;
 using Newtonsoft.Json;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace modularDollyCam
 {
@@ -25,7 +26,7 @@ namespace modularDollyCam
         public string playerFov; // Scan for float;
 
         public string theaterTime; // Scan for float; Convert theater time into seconds (ex: 25:07 is 1507)
-        /* I have ASLR disabled for MCC, 7FF47EFC0018, 7FF47EFAC528, 7FF47EB30018, 7FF47EB1C528 */
+        /*7FF47EFC0018, 7FF47EFAC528, 7FF47EB30018, 7FF47EB1C528 */
 
         public string locationTargetBase; // Scan for string; 'havok proxies'
         public string targetBaseOffset; // Base offset from pointer
@@ -204,55 +205,102 @@ namespace modularDollyCam
                             addKey();
                             break;
                         case VK_Home:
-
-                            int selectedIndex = keyframeDataGridView.SelectedRows[0].Index;
-                            float Time = Convert.ToSingle(keyframeDataGridView.Rows[selectedIndex].Cells["Transition Time"].Value);
-                            TimeSpan timeSpan = TimeSpan.FromSeconds(Time);
-                            string formattedTime = timeSpan.ToString(@"hh\:mm\:ss");
-
-                            string map = memory.ReadString(LoadedMap, "", 50);
-                            string build = memory.ReadString(BuildTag, "", 25);
-
-                            byte[] framerate = memory.ReadBytes(gameFramerate, 4);
-                            int framerateValue = BitConverter.ToInt32(framerate, 0);
-                            string framerateString = framerateValue.ToString();
-
-                            if (framerateString == "0")
+                            if (keyframeDataGridView.RowCount > 0)
                             {
-                                framerateString = "Unlimited";
-                            }
+                                if (isHeaderLoaded == true)
+                                {
+                                    int selectedIndex = keyframeDataGridView.SelectedRows[0].Index;
+                                    float Time = Convert.ToSingle(keyframeDataGridView.Rows[selectedIndex].Cells["Transition Time"].Value);
+                                    TimeSpan timeSpan = TimeSpan.FromSeconds(Time);
+                                    string formattedTime = timeSpan.ToString(@"hh\:mm\:ss");
 
-                            if (isHeaderLoaded == true)
+                                    string map = memory.ReadString(LoadedMap, "", 50);
+                                    string build = memory.ReadString(BuildTag, "", 25);
+
+                                    byte[] framerate = memory.ReadBytes(gameFramerate, 4);
+                                    int framerateValue = BitConverter.ToInt32(framerate, 0);
+                                    string framerateString = framerateValue.ToString();
+
+                                    if (framerateString == "0")
+                                    {
+                                        framerateString = "Unlimited";
+                                    }
+
+                                    if (useTheaterTime.Checked == true)
+                                    {
+                                        MessageBox.Show($"Game stats:\n" +
+                                            $"********************************************************************************\n" +
+                                            $"Build: {build}\n" +
+                                            $"Current Map: {map}\n" +
+                                            $"Game Framerate: {framerateString}\n" +
+                                            $"\nKeyframe stats:\n" +
+                                            $"********************************************************************************\n" +
+                                            $"Selected Keyframe: {selectedIndex + 1}\n" +
+                                            $"Time: {formattedTime}\n" +
+                                            $"Time (in seconds): {Time}\n" +
+                                            $"\n Plugin details:\n" +
+                                            $"********************************************************************************\n" +
+                                            $"X: {xPos}\n" +
+                                            $"Y: {yPos}\n" +
+                                            $"Z: {zPos}\n" +
+                                            $"Yaw: {yawAng}\n" +
+                                            $"Pitch: {pitchAng}\n" +
+                                            $"Roll: {rollAng}\n" +
+                                            $"Fov: {playerFov}\n" +
+                                            $"Theater time: {theaterTime}\n",
+                                            "Debug", MessageBoxButtons.OK);
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show($"Game stats:\n" +
+                                            $"********************************************************************************\n" +
+                                            $"Build: {build}\n" +
+                                            $"Current Map: {map}\n" +
+                                            $"Game Framerate: {framerateString}\n" +
+                                            $"\nKeyframe stats:\n" +
+                                            $"********************************************************************************\n" +
+                                            $"Selected Keyframe: {selectedIndex + 1}\n" +
+                                            $"Time (in seconds): {Time}\n" +
+                                            $"\n Plugin details:\n" +
+                                            $"********************************************************************************\n" +
+                                            $"X: {xPos}\n" +
+                                            $"Y: {yPos}\n" +
+                                            $"Z: {zPos}\n" +
+                                            $"Yaw: {yawAng}\n" +
+                                            $"Pitch: {pitchAng}\n" +
+                                            $"Roll: {rollAng}\n" +
+                                            $"Fov: {playerFov}\n" +
+                                            $"Theater time: {theaterTime}\n",
+                                            "Debug", MessageBoxButtons.OK);
+                                    }
+                                }
+                            }
+                            else
                             {
-                                if (useTheaterTime.Checked == true)
-                                {
-                                    MessageBox.Show($"Game stats:\n" +
-                                        $"********************************************************************************\n" +
-                                        $"Build: {build}\n" +
-                                        $"Current Map: {map}\n" +
-                                        $"Game Framerate: {framerateString}\n" +
-                                        $"\nKeyframe stats:\n" +
-                                        $"********************************************************************************\n" +
-                                        $"Selected Keyframe: {selectedIndex + 1}\n" +
-                                        $"Time: {formattedTime}\n" +
-                                        $"Time (in seconds): {Time}",
-                                        "Debug", MessageBoxButtons.OK);
-                                }
-                                else
-                                {
-                                    MessageBox.Show($"Game stats:\n" +
-                                        $"********************************************************************************\n" +
-                                        $"Build: {build}\n" +
-                                        $"Current Map: {map}\n" +
-                                        $"Game Framerate: {framerateString}\n" +
-                                        $"\nKeyframe stats:\n" +
-                                        $"********************************************************************************\n" +
-                                        $"Selected Keyframe: {selectedIndex + 1}\n" +
-                                        $"Time (in seconds): {Time}",
-                                        "Debug", MessageBoxButtons.OK);
-                                }
-                            }
+                                string map = memory.ReadString(LoadedMap, "", 50);
+                                string build = memory.ReadString(BuildTag, "", 25);
 
+                                byte[] framerate = memory.ReadBytes(gameFramerate, 4);
+                                int framerateValue = BitConverter.ToInt32(framerate, 0);
+                                string framerateString = framerateValue.ToString();
+
+                                MessageBox.Show($"Game stats:\n" +
+                                            $"********************************************************************************\n" +
+                                            $"Build: {build}\n" +
+                                            $"Current Map: {map}\n" +
+                                            $"Game Framerate: {framerateString}\n" +
+                                            $"\n Plugin details:\n" +
+                                            $"********************************************************************************\n" +
+                                            $"X: {xPos}\n" +
+                                            $"Y: {yPos}\n" +
+                                            $"Z: {zPos}\n" +
+                                            $"Yaw: {yawAng}\n" +
+                                            $"Pitch: {pitchAng}\n" +
+                                            $"Roll: {rollAng}\n" +
+                                            $"Fov: {playerFov}\n" +
+                                            $"Theater time: {theaterTime}\n",
+                                            "Debug", MessageBoxButtons.OK);
+                            }
                             break;
                         default:
                             break;
@@ -689,18 +737,28 @@ namespace modularDollyCam
 
         void addKey()
         {
-            float x = memory.ReadFloat(xPos);
-            float y = memory.ReadFloat(yPos);
-            float z = memory.ReadFloat(zPos);
-            float yaw = memory.ReadFloat(yawAng);
-            float pitch = memory.ReadFloat(pitchAng);
-            float roll = memory.ReadFloat(rollAng);
+            byte[] CameraXBytes = memory.ReadBytes(xPos, 4);
+            float x = (float)Math.Round(BitConverter.ToSingle(CameraXBytes, 0), 7);
+            byte[] CameraYBytes = memory.ReadBytes(yPos, 4);
+            float y = (float)Math.Round(BitConverter.ToSingle(CameraYBytes, 0), 7);
+            byte[] CameraZBytes = memory.ReadBytes(zPos, 4);
+            float z = (float)Math.Round(BitConverter.ToSingle(CameraZBytes, 0), 7);
+            byte[] CameraYawBytes = memory.ReadBytes(yawAng, 4);
+            float yaw = (float)Math.Round(BitConverter.ToSingle(CameraYawBytes, 0), 7);
+            byte[] CameraPitchBytes = memory.ReadBytes(pitchAng, 4);
+            float pitch = (float)Math.Round(BitConverter.ToSingle(CameraPitchBytes, 0), 7);
+            byte[] CameraRollBytes = memory.ReadBytes(rollAng, 4);
+            float roll = (float)Math.Round(BitConverter.ToSingle(CameraRollBytes, 0), 7);
+
             float fov = memory.ReadFloat(playerFov);
+
             float transitionTime;
 
             if (useTheaterTime.Checked == true)
             {
-                transitionTime = memory.ReadFloat(theaterTime);
+                byte[] timeBytes = memory.ReadBytes(theaterTime, 4);
+                float time = (float)Math.Round(BitConverter.ToSingle(timeBytes, 0), 6);
+                transitionTime = time;
             }
             else
             {
@@ -709,6 +767,15 @@ namespace modularDollyCam
 
 
             AddKeyPointRow(x, y, z, yaw, pitch, roll, fov, transitionTime);
+        }
+
+        public static byte[] SwapByteOrder(byte[] bytes)
+        {
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+            return bytes;
         }
 
         void rotateCameraClockwise()
@@ -757,7 +824,6 @@ namespace modularDollyCam
 
         void unlockUI()
         {
-            //groupBox1.Enabled = true;
             groupBox8.Enabled = true;
             groupBox9.Enabled = true;
             saveGroupbox.Enabled = true;
