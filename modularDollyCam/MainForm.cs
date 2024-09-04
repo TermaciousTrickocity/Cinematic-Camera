@@ -1027,12 +1027,18 @@ namespace modularDollyCam
             {
                 int selectedIndex = keyframeDataGridView.SelectedRows[0].Index;
 
-                float x = memory.ReadFloat(xPos);
-                float y = memory.ReadFloat(yPos);
-                float z = memory.ReadFloat(zPos);
-                float yaw = memory.ReadFloat(yawAng);
-                float pitch = memory.ReadFloat(pitchAng);
-                float roll = memory.ReadFloat(rollAng);
+                byte[] CameraXBytes = memory.ReadBytes(xPos, 4);
+                float x = (float)Math.Round(BitConverter.ToSingle(CameraXBytes, 0), 7);
+                byte[] CameraYBytes = memory.ReadBytes(yPos, 4);
+                float y = (float)Math.Round(BitConverter.ToSingle(CameraYBytes, 0), 7);
+                byte[] CameraZBytes = memory.ReadBytes(zPos, 4);
+                float z = (float)Math.Round(BitConverter.ToSingle(CameraZBytes, 0), 7);
+                byte[] CameraYawBytes = memory.ReadBytes(yawAng, 4);
+                float yaw = (float)Math.Round(BitConverter.ToSingle(CameraYawBytes, 0), 7);
+                byte[] CameraPitchBytes = memory.ReadBytes(pitchAng, 4);
+                float pitch = (float)Math.Round(BitConverter.ToSingle(CameraPitchBytes, 0), 7);
+                byte[] CameraRollBytes = memory.ReadBytes(rollAng, 4);
+                float roll = (float)Math.Round(BitConverter.ToSingle(CameraRollBytes, 0), 7);
                 float fov = memory.ReadFloat(playerFov);
                 float transitionTime = Convert.ToSingle(keyframeDataGridView.Rows[selectedIndex].Cells["Transition Time"].Value);
 
