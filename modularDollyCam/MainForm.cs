@@ -872,14 +872,13 @@ namespace modularDollyCam
                             theaterTime = addresses[14];
                             gameFramerate = addresses[15];
 
-                            GetModules();
-
                             Console.WriteLine("Loaded: " + selectedFileName);
 
                             Process[] processes = Process.GetProcessesByName(selectedProcessName);
-                            updateModules.Text = $"{selectedProcessName + " (" + processes[0].Id + ")\n" + selectedFileName} (click again to change plugins)";
+                            updateModules.Text = $"Loaded: {selectedFileName}\n(click again to change plugins)"; // String was broken causing non-mcc processes to never work due to cross threading UI trying to grab strings that hadn't been set yet.
                             isHeaderLoaded = true;
 
+                            GetModules();
                             unlockUI();
 
                             headerCheck = new Thread(async () => { await CheckForMapHeader(); });
