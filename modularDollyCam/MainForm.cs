@@ -1,8 +1,8 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
+using System.Dynamic;
 using System.Runtime.InteropServices;
 using Memory;
 using Newtonsoft.Json;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace modularDollyCam
 {
@@ -26,7 +26,6 @@ namespace modularDollyCam
         public string playerFov; // Scan for float;
 
         public string theaterTime; // Scan for float; Convert theater time into seconds (ex: 25:07 is 1507)
-        /*7FF47EFC0018, 7FF47EFAC528, 7FF47EB30018, 7FF47EB1C528 */
 
         public string locationTargetBase; // Scan for string; 'havok proxies'
         public string targetBaseOffset; // Base offset from pointer
@@ -36,9 +35,9 @@ namespace modularDollyCam
         public string Header;
         public string BuildTag;
         public string LoadedMap;
-        public string gameFramerate;
 
         public bool modulesUpdated = false;
+
         public bool isCheckingTime = false;
 
         private Thread cameraThread;
@@ -205,101 +204,13 @@ namespace modularDollyCam
                             addKey();
                             break;
                         case VK_Home:
-                            if (keyframeDataGridView.RowCount > 0)
+                            if (useTheaterTime.Checked == true)
                             {
-                                if (isHeaderLoaded == true)
-                                {
-                                    int selectedIndex = keyframeDataGridView.SelectedRows[0].Index;
-                                    float Time = Convert.ToSingle(keyframeDataGridView.Rows[selectedIndex].Cells["Transition Time"].Value);
-                                    TimeSpan timeSpan = TimeSpan.FromSeconds(Time);
-                                    string formattedTime = timeSpan.ToString(@"hh\:mm\:ss");
-
-                                    string map = memory.ReadString(LoadedMap, "", 50);
-                                    string build = memory.ReadString(BuildTag, "", 25);
-
-                                    byte[] framerate = memory.ReadBytes(gameFramerate, 4);
-                                    int framerateValue = BitConverter.ToInt32(framerate, 0);
-                                    string framerateString = framerateValue.ToString();
-
-                                    if (framerateString == "0")
-                                    {
-                                        framerateString = "Unlimited";
-                                    }
-
-                                    if (useTheaterTime.Checked == true)
-                                    {
-                                        MessageBox.Show($"Game stats:\n" +
-                                            $"********************************************************************************\n" +
-                                            $"Build: {build}\n" +
-                                            $"Current Map: {map}\n" +
-                                            $"Game Framerate: {framerateString}\n" +
-                                            $"\nKeyframe stats:\n" +
-                                            $"********************************************************************************\n" +
-                                            $"Selected Keyframe: {selectedIndex + 1}\n" +
-                                            $"Time: {formattedTime}\n" +
-                                            $"Time (in seconds): {Time}\n" +
-                                            $"\n Plugin details:\n" +
-                                            $"********************************************************************************\n" +
-                                            $"X: {xPos}\n" +
-                                            $"Y: {yPos}\n" +
-                                            $"Z: {zPos}\n" +
-                                            $"Yaw: {yawAng}\n" +
-                                            $"Pitch: {pitchAng}\n" +
-                                            $"Roll: {rollAng}\n" +
-                                            $"Fov: {playerFov}\n" +
-                                            $"Theater time: {theaterTime}\n",
-                                            "Debug", MessageBoxButtons.OK);
-                                    }
-                                    else
-                                    {
-                                        MessageBox.Show($"Game stats:\n" +
-                                            $"********************************************************************************\n" +
-                                            $"Build: {build}\n" +
-                                            $"Current Map: {map}\n" +
-                                            $"Game Framerate: {framerateString}\n" +
-                                            $"\nKeyframe stats:\n" +
-                                            $"********************************************************************************\n" +
-                                            $"Selected Keyframe: {selectedIndex + 1}\n" +
-                                            $"Time (in seconds): {Time}\n" +
-                                            $"\n Plugin details:\n" +
-                                            $"********************************************************************************\n" +
-                                            $"X: {xPos}\n" +
-                                            $"Y: {yPos}\n" +
-                                            $"Z: {zPos}\n" +
-                                            $"Yaw: {yawAng}\n" +
-                                            $"Pitch: {pitchAng}\n" +
-                                            $"Roll: {rollAng}\n" +
-                                            $"Fov: {playerFov}\n" +
-                                            $"Theater time: {theaterTime}\n",
-                                            "Debug", MessageBoxButtons.OK);
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                string map = memory.ReadString(LoadedMap, "", 50);
-                                string build = memory.ReadString(BuildTag, "", 25);
-
-                                byte[] framerate = memory.ReadBytes(gameFramerate, 4);
-                                int framerateValue = BitConverter.ToInt32(framerate, 0);
-                                string framerateString = framerateValue.ToString();
-
-                                MessageBox.Show($"Game stats:\n" +
-                                            $"********************************************************************************\n" +
-                                            $"Build: {build}\n" +
-                                            $"Current Map: {map}\n" +
-                                            $"Game Framerate: {framerateString}\n" +
-                                            $"\n Plugin details:\n" +
-                                            $"********************************************************************************\n" +
-                                            $"X: {xPos}\n" +
-                                            $"Y: {yPos}\n" +
-                                            $"Z: {zPos}\n" +
-                                            $"Yaw: {yawAng}\n" +
-                                            $"Pitch: {pitchAng}\n" +
-                                            $"Roll: {rollAng}\n" +
-                                            $"Fov: {playerFov}\n" +
-                                            $"Theater time: {theaterTime}\n",
-                                            "Debug", MessageBoxButtons.OK);
+                                int selectedIndex = keyframeDataGridView.SelectedRows[0].Index;
+                                float Time = Convert.ToSingle(keyframeDataGridView.Rows[selectedIndex].Cells["Transition Time"].Value);
+                                TimeSpan timeSpan = TimeSpan.FromSeconds(Time);
+                                string formattedTime = timeSpan.ToString(@"hh\:mm\:ss");
+                                MessageBox.Show("Time: " + formattedTime + $"\nTime (in seconds): {Time}", "Float to time format converter!", MessageBoxButtons.OK);
                             }
                             break;
                         default:
@@ -328,11 +239,21 @@ namespace modularDollyCam
                         selectedProcessName = mccProcessSteam;
                         break;
                     }
-                    else if (process.ProcessName.Equals(mccProcessWinstore, StringComparison.OrdinalIgnoreCase))
+                    if (process.ProcessName.Equals(mccProcessWinstore, StringComparison.OrdinalIgnoreCase))
                     {
                         selectedProcessName = mccProcessWinstore;
                         break;
                     }
+
+                    if (process.ProcessName != mccProcessSteam || process.ProcessName != mccProcessSteam)
+                    {
+                        return;
+                    }
+                }
+
+                if (string.IsNullOrEmpty(selectedProcessName))
+                {
+                    return;
                 }
 
                 p = Process.GetProcessesByName(selectedProcessName)[0];
@@ -370,7 +291,7 @@ namespace modularDollyCam
             }
             catch (Exception ex)
             {
-                Console.WriteLine("The MCC process was not found... Please open MCC and try again.");
+                Console.WriteLine(ex.ToString());
             }
         }
 
@@ -486,49 +407,6 @@ namespace modularDollyCam
             return new Tuple<float, float, float, float, float, float, float>(x, y, z, yaw, pitch, roll, fov);
         }
 
-        private Tuple<float, float, float, float, float, float, float> Interpolation(Tuple<float, float, float, float, float, float, float> p0, Tuple<float, float, float, float, float, float, float> p1, Tuple<float, float, float, float, float, float, float> p2, Tuple<float, float, float, float, float, float, float> p3, float t)
-        {
-            float t2 = t * t;
-            float t3 = t2 * t;
-
-            float x = 0.5f * ((2.0f * p1.Item1) +
-                              (-p0.Item1 + p2.Item1) * t +
-                              (2.0f * p0.Item1 - 5.0f * p1.Item1 + 4.0f * p2.Item1 - p3.Item1) * t2 +
-                              (-p0.Item1 + 3.0f * p1.Item1 - 3.0f * p2.Item1 + p3.Item1) * t3);
-
-            float y = 0.5f * ((2.0f * p1.Item2) +
-                              (-p0.Item2 + p2.Item2) * t +
-                              (2.0f * p0.Item2 - 5.0f * p1.Item2 + 4.0f * p2.Item2 - p3.Item2) * t2 +
-                              (-p0.Item2 + 3.0f * p1.Item2 - 3.0f * p2.Item2 + p3.Item2) * t3);
-
-            float z = 0.5f * ((2.0f * p1.Item3) +
-                              (-p0.Item3 + p2.Item3) * t +
-                              (2.0f * p0.Item3 - 5.0f * p1.Item3 + 4.0f * p2.Item3 - p3.Item3) * t2 +
-                              (-p0.Item3 + 3.0f * p1.Item3 - 3.0f * p2.Item3 + p3.Item3) * t3);
-
-            float yaw = 0.5f * ((2.0f * p1.Item4) +
-                                (-p0.Item4 + p2.Item4) * t +
-                                (2.0f * p0.Item4 - 5.0f * p1.Item4 + 4.0f * p2.Item4 - p3.Item4) * t2 +
-                                (-p0.Item4 + 3.0f * p1.Item4 - 3.0f * p2.Item4 + p3.Item4) * t3);
-
-            float pitch = 0.5f * ((2.0f * p1.Item5) +
-                                  (-p0.Item5 + p2.Item5) * t +
-                                  (2.0f * p0.Item5 - 5.0f * p1.Item5 + 4.0f * p2.Item5 - p3.Item5) * t2 +
-                                  (-p0.Item5 + 3.0f * p1.Item5 - 3.0f * p2.Item5 + p3.Item5) * t3);
-
-            float roll = 0.5f * ((2.0f * p1.Item6) +
-                                 (-p0.Item6 + p2.Item6) * t +
-                                 (2.0f * p0.Item6 - 5.0f * p1.Item6 + 4.0f * p2.Item6 - p3.Item6) * t2 +
-                                 (-p0.Item6 + 3.0f * p1.Item6 - 3.0f * p2.Item6 + p3.Item6) * t3);
-
-            float fov = 0.5f * ((2.0f * p1.Item7) +
-                                (-p0.Item7 + p2.Item7) * t +
-                                (2.0f * p0.Item7 - 5.0f * p1.Item7 + 4.0f * p2.Item7 - p3.Item7) * t2 +
-                                (-p0.Item7 + 3.0f * p1.Item7 - 3.0f * p2.Item7 + p3.Item7) * t3);
-
-            return new Tuple<float, float, float, float, float, float, float>(x, y, z, yaw, pitch, roll, fov);
-        }
-
         public async Task MoveCamera()
         {
             try
@@ -570,10 +448,6 @@ namespace modularDollyCam
                         float endTime = keyTimes[i + 1];
                         float segmentDuration = endTime - startTime;
 
-                        float tNormalizedStart = 0.0f;
-                        float tNormalizedEnd = 1.0f;
-                        float tIncrement = 1.0f / segmentDuration;
-
                         while (true)
                         {
                             if (isHeaderLoaded == false)
@@ -585,39 +459,43 @@ namespace modularDollyCam
                                 float currentTheaterTime = memory.ReadFloat(theaterTime);
 
                                 if (currentTheaterTime >= endTime)
-                                {
+                                {   
                                     pathStart_checkbox.Checked = false;
                                     break;
                                 }
 
                                 if (currentTheaterTime < startTime)
                                 {
-                                    var firstPoint = keyPoints[0];
-                                    memory.WriteMemory(xPos, "float", $"{firstPoint.Item1}");
-                                    memory.WriteMemory(yPos, "float", $"{firstPoint.Item2}");
-                                    memory.WriteMemory(zPos, "float", $"{firstPoint.Item3}");
-                                    memory.WriteMemory(yawAng, "float", $"{firstPoint.Item4}");
-                                    memory.WriteMemory(pitchAng, "float", $"{firstPoint.Item5}");
-                                    memory.WriteMemory(rollAng, "float", $"{firstPoint.Item6}");
-                                    memory.WriteMemory(playerFov, "float", $"{firstPoint.Item7}");
+                                    float x = Convert.ToSingle(keyframeDataGridView.Rows[0].Cells["X"].Value);
+                                    float y = Convert.ToSingle(keyframeDataGridView.Rows[0].Cells["Y"].Value);
+                                    float z = Convert.ToSingle(keyframeDataGridView.Rows[0].Cells["Z"].Value);
+                                    float yaw = Convert.ToSingle(keyframeDataGridView.Rows[0].Cells["Yaw"].Value);
+                                    float pitch = Convert.ToSingle(keyframeDataGridView.Rows[0].Cells["Pitch"].Value);
+                                    float roll = Convert.ToSingle(keyframeDataGridView.Rows[0].Cells["Roll"].Value);
+                                    float fov = Convert.ToSingle(keyframeDataGridView.Rows[0].Cells["FOV"].Value);
+
+                                    memory.WriteMemory(xPos, "float", $"{x}");
+                                    memory.WriteMemory(yPos, "float", $"{y}");
+                                    memory.WriteMemory(zPos, "float", $"{z}");
+                                    memory.WriteMemory(yawAng, "float", $"{yaw}");
+                                    memory.WriteMemory(pitchAng, "float", $"{pitch}");
+                                    memory.WriteMemory(rollAng, "float", $"{roll}");
+                                    memory.WriteMemory(playerFov, "float", $"{fov}");
                                 }
                                 else
                                 {
                                     float tNormalized = (currentTheaterTime - startTime) / segmentDuration;
-
-                                    var interpolatedPosition = Interpolation(p0, p1, p2, p3, tNormalized);
+                                    var interpolatedPosition = CatmullRomPositionInterpolation(p0, p1, p2, p3, tNormalized);
 
                                     memory.WriteMemory(xPos, "float", $"{interpolatedPosition.Item1}");
                                     memory.WriteMemory(yPos, "float", $"{interpolatedPosition.Item2}");
                                     memory.WriteMemory(zPos, "float", $"{interpolatedPosition.Item3}");
+
                                     memory.WriteMemory(yawAng, "float", $"{interpolatedPosition.Item4}");
                                     memory.WriteMemory(pitchAng, "float", $"{interpolatedPosition.Item5}");
                                     memory.WriteMemory(rollAng, "float", $"{interpolatedPosition.Item6}");
                                     memory.WriteMemory(playerFov, "float", $"{interpolatedPosition.Item7}");
                                 }
-
-                                tNormalizedStart += tIncrement;
-                                tNormalizedEnd += tIncrement;
 
                                 await Task.Delay(1);
                             }
@@ -737,28 +615,18 @@ namespace modularDollyCam
 
         void addKey()
         {
-            byte[] CameraXBytes = memory.ReadBytes(xPos, 4);
-            float x = (float)Math.Round(BitConverter.ToSingle(CameraXBytes, 0), 7);
-            byte[] CameraYBytes = memory.ReadBytes(yPos, 4);
-            float y = (float)Math.Round(BitConverter.ToSingle(CameraYBytes, 0), 7);
-            byte[] CameraZBytes = memory.ReadBytes(zPos, 4);
-            float z = (float)Math.Round(BitConverter.ToSingle(CameraZBytes, 0), 7);
-            byte[] CameraYawBytes = memory.ReadBytes(yawAng, 4);
-            float yaw = (float)Math.Round(BitConverter.ToSingle(CameraYawBytes, 0), 7);
-            byte[] CameraPitchBytes = memory.ReadBytes(pitchAng, 4);
-            float pitch = (float)Math.Round(BitConverter.ToSingle(CameraPitchBytes, 0), 7);
-            byte[] CameraRollBytes = memory.ReadBytes(rollAng, 4);
-            float roll = (float)Math.Round(BitConverter.ToSingle(CameraRollBytes, 0), 7);
-
+            float x = memory.ReadFloat(xPos);
+            float y = memory.ReadFloat(yPos);
+            float z = memory.ReadFloat(zPos);
+            float yaw = memory.ReadFloat(yawAng);
+            float pitch = memory.ReadFloat(pitchAng);
+            float roll = memory.ReadFloat(rollAng);
             float fov = memory.ReadFloat(playerFov);
-
             float transitionTime;
 
             if (useTheaterTime.Checked == true)
             {
-                byte[] timeBytes = memory.ReadBytes(theaterTime, 4);
-                float time = (float)Math.Round(BitConverter.ToSingle(timeBytes, 0), 6);
-                transitionTime = time;
+                transitionTime = memory.ReadFloat(theaterTime);
             }
             else
             {
@@ -767,15 +635,6 @@ namespace modularDollyCam
 
 
             AddKeyPointRow(x, y, z, yaw, pitch, roll, fov, transitionTime);
-        }
-
-        public static byte[] SwapByteOrder(byte[] bytes)
-        {
-            if (BitConverter.IsLittleEndian)
-            {
-                Array.Reverse(bytes);
-            }
-            return bytes;
         }
 
         void rotateCameraClockwise()
@@ -824,9 +683,9 @@ namespace modularDollyCam
 
         void unlockUI()
         {
+            //groupBox1.Enabled = true;
             groupBox8.Enabled = true;
             groupBox9.Enabled = true;
-            saveGroupbox.Enabled = true;
             lockHotkeys = false;
             BackColor = Color.FromArgb(245, 245, 245);
         }
@@ -870,19 +729,18 @@ namespace modularDollyCam
                             offsetMagic = addresses[12];
                             difference = addresses[13];
                             theaterTime = addresses[14];
-                            gameFramerate = addresses[15];
 
                             Console.WriteLine("Loaded: " + selectedFileName);
 
                             Process[] processes = Process.GetProcessesByName(selectedProcessName);
-                            updateModules.Text = $"Loaded: {selectedFileName}\n(click again to change plugins)"; // String was broken causing non-mcc processes to never work due to cross threading UI trying to grab strings that hadn't been set yet.
+                            updateModules.Text = $"Loaded: {selectedFileName}\n(click again to change plugins)";
                             isHeaderLoaded = true;
 
-                            GetModules();
                             unlockUI();
+                            GetModules();
 
-                            headerCheck = new Thread(async () => { await CheckForMapHeader(); });
-                            headerCheck.Start();
+                            //headerCheck = new Thread(async () => { await CheckForMapHeader(); });
+                            //headerCheck.Start();
                         }
                         else
                         {
@@ -1026,18 +884,12 @@ namespace modularDollyCam
             {
                 int selectedIndex = keyframeDataGridView.SelectedRows[0].Index;
 
-                byte[] CameraXBytes = memory.ReadBytes(xPos, 4);
-                float x = (float)Math.Round(BitConverter.ToSingle(CameraXBytes, 0), 7);
-                byte[] CameraYBytes = memory.ReadBytes(yPos, 4);
-                float y = (float)Math.Round(BitConverter.ToSingle(CameraYBytes, 0), 7);
-                byte[] CameraZBytes = memory.ReadBytes(zPos, 4);
-                float z = (float)Math.Round(BitConverter.ToSingle(CameraZBytes, 0), 7);
-                byte[] CameraYawBytes = memory.ReadBytes(yawAng, 4);
-                float yaw = (float)Math.Round(BitConverter.ToSingle(CameraYawBytes, 0), 7);
-                byte[] CameraPitchBytes = memory.ReadBytes(pitchAng, 4);
-                float pitch = (float)Math.Round(BitConverter.ToSingle(CameraPitchBytes, 0), 7);
-                byte[] CameraRollBytes = memory.ReadBytes(rollAng, 4);
-                float roll = (float)Math.Round(BitConverter.ToSingle(CameraRollBytes, 0), 7);
+                float x = memory.ReadFloat(xPos);
+                float y = memory.ReadFloat(yPos);
+                float z = memory.ReadFloat(zPos);
+                float yaw = memory.ReadFloat(yawAng);
+                float pitch = memory.ReadFloat(pitchAng);
+                float roll = memory.ReadFloat(rollAng);
                 float fov = memory.ReadFloat(playerFov);
                 float transitionTime = Convert.ToSingle(keyframeDataGridView.Rows[selectedIndex].Cells["Transition Time"].Value);
 
