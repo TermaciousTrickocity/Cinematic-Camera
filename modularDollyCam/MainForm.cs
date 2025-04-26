@@ -925,7 +925,7 @@ namespace modularDollyCam
 
             if (processes.Length > 0)
             {
-                string selectedProcessName = $"{processes[0].ProcessName}";
+                selectedProcessName = $"{processes[0].ProcessName}";
                 ProcessSelected(selectedProcessName);
             }
             else
@@ -934,7 +934,7 @@ namespace modularDollyCam
                 {
                     if (processDialog.ShowDialog() == DialogResult.OK)
                     {
-                        string selectedProcessName = processDialog.SelectedProcess;
+                        selectedProcessName = processDialog.SelectedProcess;
                         ProcessSelected(selectedProcessName);
 
                         if (selectedProcessName != null)
