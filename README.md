@@ -1,5 +1,8 @@
 # Multi Halo Cinematic Camera
-(Beware of jank, needs a rewrite!)
+
+beware of jank
+> Produces stuttery garbage please dont use!
+                     
 
 > Supports Halo: Reach, Halo 3, Halo 3: ODST, & Halo 4
 > (support for Halo 2, and Legacy Xbox 360 Halo titles coming soon!)
