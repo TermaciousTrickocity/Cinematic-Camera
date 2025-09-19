@@ -4,8 +4,7 @@ beware of jank
 > Produces stuttery garbage please dont use!
                      
 
-> Supports Halo: Reach, Halo 3, Halo 3: ODST, & Halo 4
-> (support for Halo 2, and Legacy Xbox 360 Halo titles coming soon!)
+> Supports Halo: The Master Chief Collection
 
 ## Prerequisites
 Grab .NET Runtime 8.0.8 and .NET Desktop Runtime 8.0.8 from [here](https://dotnet.microsoft.com/en-us/download/dotnet/8.0).
