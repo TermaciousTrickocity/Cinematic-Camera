@@ -48,7 +48,7 @@
             startFromSelection_checkbox = new CheckBox();
             pathStart_checkbox = new CheckBox();
             clearList_Button = new Button();
-            fpsTextbox = new TextBox();
+            hzTextbox = new TextBox();
             label2 = new Label();
             updateModules = new Button();
             sortUp_button = new Button();
@@ -57,10 +57,10 @@
             groupBox1 = new GroupBox();
             trackingDataGrid = new DataGridView();
             keyframeDataGridGroupBox = new GroupBox();
-            label3 = new Label();
-            CurrentTimeTextbox = new TextBox();
             label7 = new Label();
             button1 = new Button();
+            label3 = new Label();
+            CurrentTimeTextbox = new TextBox();
             groupBox8 = new GroupBox();
             groupBox11 = new GroupBox();
             button2 = new Button();
@@ -255,7 +255,7 @@
             // startFromSelection_checkbox
             // 
             startFromSelection_checkbox.AutoSize = true;
-            startFromSelection_checkbox.Location = new Point(254, 22);
+            startFromSelection_checkbox.Location = new Point(125, 22);
             startFromSelection_checkbox.Name = "startFromSelection_checkbox";
             startFromSelection_checkbox.Size = new Size(129, 19);
             startFromSelection_checkbox.TabIndex = 15;
@@ -265,7 +265,7 @@
             // pathStart_checkbox
             // 
             pathStart_checkbox.AutoSize = true;
-            pathStart_checkbox.Location = new Point(164, 22);
+            pathStart_checkbox.Location = new Point(42, 22);
             pathStart_checkbox.Name = "pathStart_checkbox";
             pathStart_checkbox.Size = new Size(77, 19);
             pathStart_checkbox.TabIndex = 14;
@@ -283,22 +283,23 @@
             clearList_Button.UseVisualStyleBackColor = true;
             clearList_Button.Click += clearList_Button_Click;
             // 
-            // fpsTextbox
+            // hzTextbox
             // 
-            fpsTextbox.Location = new Point(74, 20);
-            fpsTextbox.Name = "fpsTextbox";
-            fpsTextbox.Size = new Size(40, 23);
-            fpsTextbox.TabIndex = 11;
-            fpsTextbox.Text = "60";
+            hzTextbox.Location = new Point(803, 18);
+            hzTextbox.Name = "hzTextbox";
+            hzTextbox.Size = new Size(40, 23);
+            hzTextbox.TabIndex = 11;
+            hzTextbox.Text = "60";
+            hzTextbox.TextAlign = HorizontalAlignment.Right;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(42, 23);
+            label2.Location = new Point(843, 21);
             label2.Name = "label2";
-            label2.Size = new Size(26, 15);
+            label2.Size = new Size(19, 15);
             label2.TabIndex = 10;
-            label2.Text = "FPS";
+            label2.Text = "hz";
             // 
             // updateModules
             // 
@@ -378,13 +379,11 @@
             // 
             // keyframeDataGridGroupBox
             // 
-            keyframeDataGridGroupBox.Controls.Add(label3);
             keyframeDataGridGroupBox.Controls.Add(keyframeDataGridView);
-            keyframeDataGridGroupBox.Controls.Add(CurrentTimeTextbox);
             keyframeDataGridGroupBox.Controls.Add(pathStart_checkbox);
             keyframeDataGridGroupBox.Controls.Add(startFromSelection_checkbox);
             keyframeDataGridGroupBox.Controls.Add(label2);
-            keyframeDataGridGroupBox.Controls.Add(fpsTextbox);
+            keyframeDataGridGroupBox.Controls.Add(hzTextbox);
             keyframeDataGridGroupBox.Controls.Add(sortDown_button);
             keyframeDataGridGroupBox.Controls.Add(sortUp_button);
             keyframeDataGridGroupBox.Controls.Add(label7);
@@ -395,28 +394,10 @@
             keyframeDataGridGroupBox.TabStop = false;
             keyframeDataGridGroupBox.Text = "Keyframes";
             // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(815, 23);
-            label3.Name = "label3";
-            label3.Size = new Size(82, 15);
-            label3.TabIndex = 34;
-            label3.Text = "(Current time)";
-            // 
-            // CurrentTimeTextbox
-            // 
-            CurrentTimeTextbox.Enabled = false;
-            CurrentTimeTextbox.Location = new Point(740, 20);
-            CurrentTimeTextbox.Name = "CurrentTimeTextbox";
-            CurrentTimeTextbox.Size = new Size(73, 23);
-            CurrentTimeTextbox.TabIndex = 36;
-            CurrentTimeTextbox.Text = "00:00:00";
-            // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(0, 133);
+            label7.Location = new Point(2, 133);
             label7.Name = "label7";
             label7.Size = new Size(35, 15);
             label7.TabIndex = 16;
@@ -430,6 +411,26 @@
             button1.TabIndex = 17;
             button1.Text = "Relocate path";
             button1.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(525, 33);
+            label3.Name = "label3";
+            label3.Size = new Size(82, 15);
+            label3.TabIndex = 34;
+            label3.Text = "(Current time)";
+            label3.Visible = false;
+            // 
+            // CurrentTimeTextbox
+            // 
+            CurrentTimeTextbox.Enabled = false;
+            CurrentTimeTextbox.Location = new Point(450, 30);
+            CurrentTimeTextbox.Name = "CurrentTimeTextbox";
+            CurrentTimeTextbox.Size = new Size(73, 23);
+            CurrentTimeTextbox.TabIndex = 36;
+            CurrentTimeTextbox.Text = "00:00:00";
+            CurrentTimeTextbox.Visible = false;
             // 
             // groupBox8
             // 
@@ -580,7 +581,9 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlLight;
             ClientSize = new Size(954, 583);
+            Controls.Add(label3);
             Controls.Add(updateModules);
+            Controls.Add(CurrentTimeTextbox);
             Controls.Add(groupBox8);
             Controls.Add(groupBox9);
             Controls.Add(saveGroupbox);
@@ -603,6 +606,7 @@
             groupBox10.ResumeLayout(false);
             groupBox10.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -619,7 +623,7 @@
         private Button dupeSelection_Button;
         private Button teleportCamera_Button;
         private GroupBox saveGroupbox;
-        private TextBox fpsTextbox;
+        private TextBox hzTextbox;
         private Label label2;
         private Button button10;
         private Button button11;

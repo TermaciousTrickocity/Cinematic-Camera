@@ -1,7 +1,13 @@
-﻿namespace modularDollyCam
+﻿using System.Diagnostics;
+using System.Numerics;
+using System.Runtime.CompilerServices;
+
+namespace modularDollyCam
 {
     public partial class MainForm : Form
     {
+        List<Tuple<float, float, float, float, float, float, float>> keyFrames = new List<Tuple<float, float, float, float, float, float, float>>();
+
         private Thread cameraThread;
 
         public string xPos; // Scan for float; Camera 'X'
@@ -12,23 +18,57 @@
         public string rollAng; // +20
         public string playerFov; // Scan for float;
 
-        static Tuple<float, float, float, float, float, float, float> CatmullRomPositionInterpolation(Tuple<float, float, float, float, float, float, float> p0, Tuple<float, float, float, float, float, float, float> p1, Tuple<float, float, float, float, float, float, float> p2, Tuple<float, float, float, float, float, float, float> p3, float t)
+        bool lookTracking = false;
+        public string trackingTarget;
+        private Vector3 targetPosition;
+
+        private void SetupDataGridView()
+        {
+            keyframeDataGridView.ColumnCount = 8;
+
+            keyframeDataGridView.Columns[0].Name = "X";
+            keyframeDataGridView.Columns[1].Name = "Y";
+            keyframeDataGridView.Columns[2].Name = "Z";
+            keyframeDataGridView.Columns[3].Name = "Yaw";
+            keyframeDataGridView.Columns[4].Name = "Pitch";
+            keyframeDataGridView.Columns[5].Name = "Roll";
+            keyframeDataGridView.Columns[6].Name = "FOV";
+            keyframeDataGridView.Columns[7].Name = "Transition Time";
+
+            keyframeDataGridView.AllowUserToAddRows = false;
+            keyframeDataGridView.AllowUserToDeleteRows = false;
+            keyframeDataGridView.AllowUserToOrderColumns = false;
+            keyframeDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            keyframeDataGridView.MultiSelect = false;
+        }
+
+        private void AddKeyPointRow(float x, float y, float z, float yaw, float pitch, float roll, float fov, float transitionTime)
+        {
+            keyframeDataGridView.Rows.Add(x, y, z, yaw, pitch, roll, fov, transitionTime);
+        }
+
+        static Tuple<float, float, float, float, float, float, float> CatmullRomInterpolation(Tuple<float, float, float, float, float, float, float> p0, Tuple<float, float, float, float, float, float, float> p1, Tuple<float, float, float, float, float, float, float> p2, Tuple<float, float, float, float, float, float, float> p3, float t)
         {
             float t2 = t * t;
             float t3 = t2 * t;
-            float[] coefficients = new float[4] { -0.5f * t3 + t2 - 0.5f * t, 1.5f * t3 - 2.5f * t2 + 1.0f, -1.5f * t3 + 2.0f * t2 + 0.5f * t, 0.5f * t3 - 0.5f * t2 };
 
-            float x = coefficients[0] * p0.Item1 + coefficients[1] * p1.Item1 + coefficients[2] * p2.Item1 + coefficients[3] * p3.Item1;
-            float y = coefficients[0] * p0.Item2 + coefficients[1] * p1.Item2 + coefficients[2] * p2.Item2 + coefficients[3] * p3.Item2;
-            float z = coefficients[0] * p0.Item3 + coefficients[1] * p1.Item3 + coefficients[2] * p2.Item3 + coefficients[3] * p3.Item3;
-            float yaw = coefficients[0] * p0.Item4 + coefficients[1] * p1.Item4 + coefficients[2] * p2.Item4 + coefficients[3] * p3.Item4;
-            float pitch = coefficients[0] * p0.Item5 + coefficients[1] * p1.Item5 + coefficients[2] * p2.Item5 + coefficients[3] * p3.Item5;
-            float roll = coefficients[0] * p0.Item6 + coefficients[1] * p1.Item6 + coefficients[2] * p2.Item6 + coefficients[3] * p3.Item6;
-            float fov = coefficients[0] * p0.Item7 + coefficients[1] * p1.Item7 + coefficients[2] * p2.Item7 + coefficients[3] * p3.Item7;
+            float c0 = -0.5f * t3 + t2 - 0.5f * t;
+            float c1 = 1.5f * t3 - 2.5f * t2 + 1.0f;
+            float c2 = -1.5f * t3 + 2.0f * t2 + 0.5f * t;
+            float c3 = 0.5f * t3 - 0.5f * t2;
+
+            float x = c0 * p0.Item1 + c1 * p1.Item1 + c2 * p2.Item1 + c3 * p3.Item1;
+            float y = c0 * p0.Item2 + c1 * p1.Item2 + c2 * p2.Item2 + c3 * p3.Item2;
+            float z = c0 * p0.Item3 + c1 * p1.Item3 + c2 * p2.Item3 + c3 * p3.Item3;
+            float yaw = c0 * p0.Item4 + c1 * p1.Item4 + c2 * p2.Item4 + c3 * p3.Item4;
+            float pitch = c0 * p0.Item5 + c1 * p1.Item5 + c2 * p2.Item5 + c3 * p3.Item5;
+            float roll = c0 * p0.Item6 + c1 * p1.Item6 + c2 * p2.Item6 + c3 * p3.Item6;
+            float fov = c0 * p0.Item7 + c1 * p1.Item7 + c2 * p2.Item7 + c3 * p3.Item7;
 
             return new Tuple<float, float, float, float, float, float, float>(x, y, z, yaw, pitch, roll, fov);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public async Task MoveCamera()
         {
             try
@@ -36,20 +76,19 @@
                 int originalSelectedRow = keyframeDataGridView.CurrentCell.RowIndex;
                 int originalSelectedColumn = keyframeDataGridView.CurrentCell.ColumnIndex;
 
-                float fps = Convert.ToSingle(fpsTextbox.Text);
+                targetPosition = new Vector3(0, 0, 0);
+
+                float targetHz = float.Parse(hzTextbox.Text);
+                int delayMs = (int)(1000f / targetHz);
 
                 List<Tuple<float, float, float, float, float, float, float>> keyPoints = new List<Tuple<float, float, float, float, float, float, float>>();
                 List<float> transitionTimes = new List<float>();
 
                 int startIndex;
                 if (startFromSelection_checkbox.Checked && keyframeDataGridView.SelectedRows.Count > 0)
-                {
                     startIndex = keyframeDataGridView.SelectedRows[0].Index;
-                }
                 else
-                {
                     startIndex = 0;
-                }
 
                 for (int i = startIndex; i < keyframeDataGridView.Rows.Count; i++)
                 {
@@ -59,20 +98,13 @@
                     float yaw = Convert.ToSingle(keyframeDataGridView.Rows[i].Cells["Yaw"].Value);
                     float pitch = Convert.ToSingle(keyframeDataGridView.Rows[i].Cells["Pitch"].Value);
                     float roll = Convert.ToSingle(keyframeDataGridView.Rows[i].Cells["Roll"].Value);
-                    float playerFov = Convert.ToSingle(keyframeDataGridView.Rows[i].Cells["FOV"].Value);
+                    float playerFovVal = Convert.ToSingle(keyframeDataGridView.Rows[i].Cells["FOV"].Value);
                     float transitionTime = Convert.ToSingle(keyframeDataGridView.Rows[i].Cells["Transition Time"].Value);
 
-                    keyPoints.Add(new Tuple<float, float, float, float, float, float, float>(x, y, z, yaw, pitch, roll, playerFov));
+                    keyPoints.Add(new Tuple<float, float, float, float, float, float, float>(x, y, z, yaw, pitch, roll, playerFovVal));
                     transitionTimes.Add(transitionTime);
                 }
 
-                int totalFrames = 0;
-                foreach (var time in transitionTimes)
-                {
-                    totalFrames += (int)(time * fps);
-                }
-
-                int currentFrame = 0;
                 for (int i = 0; i < keyPoints.Count - 1; i++)
                 {
                     var p0 = (i == 0) ? keyPoints[0] : keyPoints[i - 1];
@@ -81,31 +113,50 @@
                     var p3 = (i + 2 < keyPoints.Count) ? keyPoints[i + 2] : p2;
 
                     float segmentTime = transitionTimes[i];
-                    int frames = (int)(segmentTime * fps);
 
-                    for (int frame = 0; frame <= frames; frame++)
+                    Stopwatch sw = Stopwatch.StartNew();
+
+                    while (sw.Elapsed.TotalSeconds < segmentTime)
                     {
-                        if (pathStart_checkbox.Checked == false) return;
+                        if (!pathStart_checkbox.Checked) return;
 
-                        float tNormalized = (float)frame / frames;
-                        float t = tNormalized;
-                        var interpolatedPosition = CatmullRomPositionInterpolation(p0, p1, p2, p3, t);
+                        float t = (float)(sw.Elapsed.TotalSeconds / segmentTime);
+                        t = Math.Clamp(t, 0f, 1f);
+
+                        var interpolatedPosition = CatmullRomInterpolation(p0, p1, p2, p3, t);
 
                         memory.WriteMemory(xPos, "float", $"{interpolatedPosition.Item1}");
                         memory.WriteMemory(yPos, "float", $"{interpolatedPosition.Item2}");
                         memory.WriteMemory(zPos, "float", $"{interpolatedPosition.Item3}");
 
-                        memory.WriteMemory(yawAng, "float", $"{interpolatedPosition.Item4}");
-                        memory.WriteMemory(pitchAng, "float", $"{interpolatedPosition.Item5}");
+                        if (lookTracking == true)
+                        {
+                            Vector3 cameraPosition = new Vector3(memory.ReadFloat(xPos, "", false), memory.ReadFloat(yPos, "", false), memory.ReadFloat(zPos, "", false));
+                            Vector3 direction = targetPosition - cameraPosition;
+
+                            float yaw = (float)Math.Atan2(direction.Y, direction.X);
+                            float pitch = (float)Math.Atan2(direction.Z, direction.Length());
+
+                            yaw %= 2 * (float)Math.PI;
+                            pitch %= 2 * (float)Math.PI;
+
+                            memory.WriteMemory(yawAng, "float", $"{yaw}");
+                            memory.WriteMemory(pitchAng, "float", $"{pitch}");
+                        }
+                        else
+                        {
+                            memory.WriteMemory(yawAng, "float", $"{interpolatedPosition.Item4}");
+                            memory.WriteMemory(pitchAng, "float", $"{interpolatedPosition.Item5}");
+                        }
+
                         memory.WriteMemory(rollAng, "float", $"{interpolatedPosition.Item6}");
                         memory.WriteMemory(playerFov, "float", $"{interpolatedPosition.Item7}");
 
-                        await Task.Delay((int)(1000 / fps));
-                        currentFrame++;
+                        await Task.Delay(delayMs);
                     }
                 }
-                pathStart_checkbox.Checked = false;
 
+                pathStart_checkbox.Checked = false;
                 keyframeDataGridView.Rows[originalSelectedRow].Cells[originalSelectedColumn].Selected = true;
             }
             catch (Exception ex)

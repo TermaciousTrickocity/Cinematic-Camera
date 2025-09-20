@@ -14,7 +14,7 @@ namespace modularDollyCam
         private string selectedProcessName;
         public bool modulesUpdated = false;
 
-        private void updateModules_Click(object sender, EventArgs e)
+        private async void updateModules_Click(object sender, EventArgs e)
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
 
@@ -30,7 +30,7 @@ namespace modularDollyCam
                     string jsonData = File.ReadAllText(fileDialog.FileName);
                     List<string> addresses = JsonConvert.DeserializeObject<List<string>>(jsonData);
 
-                    if (addresses.Count >= 7)
+                    if (addresses.Count >= 9)
                     {
                         selectedProcessName = addresses[0];
                         xPos = addresses[1];
@@ -40,8 +40,9 @@ namespace modularDollyCam
                         pitchAng = addresses[5];
                         rollAng = addresses[6];
                         playerFov = addresses[7];
+                        trackingTarget = addresses[8];
 
-                        GetModules();
+                        await GetModules();
                         unlockUI();
 
                         updateModules.Text = $"Loaded: {Path.GetFileName(fileDialog.FileName)}\n(click again to change plugins)";

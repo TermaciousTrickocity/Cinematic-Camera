@@ -75,8 +75,8 @@ namespace modularDollyCam
                             memory.WriteMemory(playerFov, "float", (memory.ReadFloat(playerFov) - 1f <= 5 ? "5.0" : (memory.ReadFloat(playerFov) - 1f).ToString()));
                             break;
                         case VK_K:
-                            AddKeyPointRow(memory.ReadFloat(xPos), memory.ReadFloat(yPos), memory.ReadFloat(zPos), memory.ReadFloat(yawAng), memory.ReadFloat(pitchAng), memory.ReadFloat(rollAng), memory.ReadFloat(playerFov), 1);
-                            break;
+                        AddKeyPointRow(memory.ReadFloat(xPos, "", false), memory.ReadFloat(yPos, "", false), memory.ReadFloat(zPos, "", false), memory.ReadFloat(yawAng, "", false), memory.ReadFloat(pitchAng, "", false), memory.ReadFloat(rollAng, "", false), memory.ReadFloat(playerFov, "", false), 1);
+                        break;
                         case VK_Home:
                             Console.WriteLine("home!");
                             break;
