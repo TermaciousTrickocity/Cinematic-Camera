@@ -1,9 +1,6 @@
 # Multi Halo Cinematic Camera
 
 beware of jank
-> Produces stuttery garbage please dont use!
-                     
-
 > Supports Halo: The Master Chief Collection
 
 ## Prerequisites
