@@ -30,19 +30,21 @@ namespace modularDollyCam
                     string jsonData = File.ReadAllText(fileDialog.FileName);
                     List<string> addresses = JsonConvert.DeserializeObject<List<string>>(jsonData);
 
-                    if (addresses.Count >= 9)
+                    if (addresses.Count >= 10)
                     {
                         selectedProcessName = addresses[0];
-                        xPos = addresses[1];
-                        yPos = addresses[2];
-                        zPos = addresses[3];
-                        yawAng = addresses[4];
-                        pitchAng = addresses[5];
-                        rollAng = addresses[6];
-                        playerFov = addresses[7];
-                        trackingTarget = addresses[8];
+                        mapHeader = addresses[1];
+                        xPos = addresses[2];
+                        yPos = addresses[3];
+                        zPos = addresses[4];
+                        yawAng = addresses[5];
+                        pitchAng = addresses[6];
+                        rollAng = addresses[7];
+                        playerFov = addresses[8];
+                        trackingTargetAddress = addresses[9];
 
                         await GetModules();
+                        getPlayerList();
                         unlockUI();
 
                         updateModules.Text = $"Loaded: {Path.GetFileName(fileDialog.FileName)}\n(click again to change plugins)";

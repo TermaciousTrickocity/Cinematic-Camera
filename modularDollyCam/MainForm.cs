@@ -1,8 +1,10 @@
-using System.Diagnostics;
-using System.Dynamic;
-using System.Runtime.InteropServices;
 using Memory;
 using Newtonsoft.Json;
+using System.Diagnostics;
+using System.Dynamic;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace modularDollyCam
 {
@@ -74,6 +76,11 @@ namespace modularDollyCam
             groupBox8.Enabled = true;
             groupBox9.Enabled = true;
             BackColor = Color.FromArgb(245, 245, 245);
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            lookTracking = !lookTracking;
         }
     }
 }

@@ -57,6 +57,8 @@
             groupBox1 = new GroupBox();
             trackingDataGrid = new DataGridView();
             keyframeDataGridGroupBox = new GroupBox();
+            trackListCombo = new ComboBox();
+            timesyncCheckbox = new CheckBox();
             label7 = new Label();
             button1 = new Button();
             label3 = new Label();
@@ -75,6 +77,7 @@
             lookTrackingSmoothing_Textbox = new TextBox();
             label5 = new Label();
             lookTracking_Combobox = new ComboBox();
+            trackingCheckbox = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)keyframeDataGridView).BeginInit();
             saveGroupbox.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -127,7 +130,7 @@
             // 
             // teleportToPlayer_Button
             // 
-            teleportToPlayer_Button.Location = new Point(632, 55);
+            teleportToPlayer_Button.Location = new Point(632, 50);
             teleportToPlayer_Button.Name = "teleportToPlayer_Button";
             teleportToPlayer_Button.Size = new Size(129, 26);
             teleportToPlayer_Button.TabIndex = 34;
@@ -137,7 +140,7 @@
             // 
             // teleportZ
             // 
-            teleportZ.Location = new Point(862, 27);
+            teleportZ.Location = new Point(862, 19);
             teleportZ.Name = "teleportZ";
             teleportZ.Size = new Size(45, 23);
             teleportZ.TabIndex = 17;
@@ -145,7 +148,7 @@
             // 
             // teleportY
             // 
-            teleportY.Location = new Point(811, 27);
+            teleportY.Location = new Point(811, 19);
             teleportY.Name = "teleportY";
             teleportY.Size = new Size(45, 23);
             teleportY.TabIndex = 16;
@@ -153,7 +156,7 @@
             // 
             // teleportX
             // 
-            teleportX.Location = new Point(760, 27);
+            teleportX.Location = new Point(760, 19);
             teleportX.Name = "teleportX";
             teleportX.Size = new Size(45, 23);
             teleportX.TabIndex = 15;
@@ -171,7 +174,7 @@
             // 
             // teleportCamera_Button
             // 
-            teleportCamera_Button.Location = new Point(666, 25);
+            teleportCamera_Button.Location = new Point(666, 19);
             teleportCamera_Button.Name = "teleportCamera_Button";
             teleportCamera_Button.Size = new Size(88, 26);
             teleportCamera_Button.TabIndex = 8;
@@ -181,7 +184,7 @@
             // 
             // teleportToSelection_Button
             // 
-            teleportToSelection_Button.Location = new Point(767, 55);
+            teleportToSelection_Button.Location = new Point(767, 50);
             teleportToSelection_Button.Name = "teleportToSelection_Button";
             teleportToSelection_Button.Size = new Size(140, 26);
             teleportToSelection_Button.TabIndex = 6;
@@ -379,6 +382,9 @@
             // 
             // keyframeDataGridGroupBox
             // 
+            keyframeDataGridGroupBox.Controls.Add(trackingCheckbox);
+            keyframeDataGridGroupBox.Controls.Add(trackListCombo);
+            keyframeDataGridGroupBox.Controls.Add(timesyncCheckbox);
             keyframeDataGridGroupBox.Controls.Add(keyframeDataGridView);
             keyframeDataGridGroupBox.Controls.Add(pathStart_checkbox);
             keyframeDataGridGroupBox.Controls.Add(startFromSelection_checkbox);
@@ -393,6 +399,26 @@
             keyframeDataGridGroupBox.TabIndex = 34;
             keyframeDataGridGroupBox.TabStop = false;
             keyframeDataGridGroupBox.Text = "Keyframes";
+            // 
+            // trackListCombo
+            // 
+            trackListCombo.FormattingEnabled = true;
+            trackListCombo.Items.AddRange(new object[] { "none" });
+            trackListCombo.Location = new Point(386, 20);
+            trackListCombo.Name = "trackListCombo";
+            trackListCombo.Size = new Size(138, 23);
+            trackListCombo.TabIndex = 36;
+            trackListCombo.Text = "Players";
+            // 
+            // timesyncCheckbox
+            // 
+            timesyncCheckbox.AutoSize = true;
+            timesyncCheckbox.Location = new Point(690, 21);
+            timesyncCheckbox.Name = "timesyncCheckbox";
+            timesyncCheckbox.Size = new Size(107, 19);
+            timesyncCheckbox.TabIndex = 17;
+            timesyncCheckbox.Text = "Start Time Sync";
+            timesyncCheckbox.UseVisualStyleBackColor = true;
             // 
             // label7
             // 
@@ -575,6 +601,17 @@
             lookTracking_Combobox.TabIndex = 38;
             lookTracking_Combobox.Text = "(havok proxies)";
             // 
+            // trackingCheckbox
+            // 
+            trackingCheckbox.AutoSize = true;
+            trackingCheckbox.Location = new Point(310, 22);
+            trackingCheckbox.Name = "trackingCheckbox";
+            trackingCheckbox.Size = new Size(70, 19);
+            trackingCheckbox.TabIndex = 37;
+            trackingCheckbox.Text = "Tracking";
+            trackingCheckbox.UseVisualStyleBackColor = true;
+            trackingCheckbox.CheckedChanged += checkBox1_CheckedChanged;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -663,5 +700,8 @@
         private DataGridView trackingDataGrid;
         private TextBox CurrentTimeTextbox;
         private Label label3;
+        private CheckBox timesyncCheckbox;
+        private ComboBox trackListCombo;
+        private CheckBox trackingCheckbox;
     }
 }

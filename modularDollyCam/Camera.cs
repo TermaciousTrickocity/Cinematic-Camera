@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace modularDollyCam
 {
@@ -19,8 +20,11 @@ namespace modularDollyCam
         public string playerFov; // Scan for float;
 
         bool lookTracking = false;
-        public string trackingTarget;
+        public string trackingTargetAddress;
         private Vector3 targetPosition;
+
+
+        private string mapHeader;
 
         private void SetupDataGridView()
         {
@@ -68,15 +72,12 @@ namespace modularDollyCam
             return new Tuple<float, float, float, float, float, float, float>(x, y, z, yaw, pitch, roll, fov);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public async Task MoveCamera()
         {
             try
             {
                 int originalSelectedRow = keyframeDataGridView.CurrentCell.RowIndex;
                 int originalSelectedColumn = keyframeDataGridView.CurrentCell.ColumnIndex;
-
-                targetPosition = new Vector3(0, 0, 0);
 
                 float targetHz = float.Parse(hzTextbox.Text);
                 int delayMs = (int)(1000f / targetHz);
@@ -131,7 +132,47 @@ namespace modularDollyCam
 
                         if (lookTracking == true)
                         {
-                            Vector3 cameraPosition = new Vector3(memory.ReadFloat(xPos, "", false), memory.ReadFloat(yPos, "", false), memory.ReadFloat(zPos, "", false));
+                            int selectedIndex = trackListCombo.SelectedIndex;
+
+                            long baseAddr = long.Parse(trackingTargetAddress, System.Globalization.NumberStyles.HexNumber);
+                            long offset = 0;
+
+                            switch (selectedIndex)
+                            {
+                                case 0:
+                                    offset = 0xA8;
+                                    break;
+                                case 1:
+                                    offset = 0x538;
+                                    break;
+                                case 2:
+                                    offset = 0x9C8;
+                                    break;
+                                case 3:
+                                    offset = 0xE58;
+                                    break;
+                            }
+
+                            long trackXAddr = baseAddr + offset;
+                            long trackYAddr = trackXAddr + 0x04;
+                            long trackZAddr = trackXAddr + 0x08;
+
+                            string trackXHex = "0x" + trackXAddr.ToString("X");
+                            string trackYHex = "0x" + trackYAddr.ToString("X");
+                            string trackZHex = "0x" + trackZAddr.ToString("X");
+
+                            targetPosition = new Vector3(
+                                memory.ReadFloat(trackXHex, "", false),
+                                memory.ReadFloat(trackYHex, "", false),
+                                memory.ReadFloat(trackZHex, "", false)
+                            );
+
+                            Vector3 cameraPosition = new Vector3(
+                                memory.ReadFloat(xPos, "", false),
+                                memory.ReadFloat(yPos, "", false), 
+                                memory.ReadFloat(zPos, "", false)
+                            );
+
                             Vector3 direction = targetPosition - cameraPosition;
 
                             float yaw = (float)Math.Atan2(direction.Y, direction.X);
@@ -161,8 +202,32 @@ namespace modularDollyCam
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error", ex.ToString(), MessageBoxButtons.OK);
+                MessageBox.Show(ex.ToString(), "error", MessageBoxButtons.OK);
                 pathStart_checkbox.Checked = false;
+            }
+        }
+
+        public async Task getPlayerList()
+        {
+            trackListCombo.Items.Clear();
+
+            int[] offsets =
+            {
+                0x120,
+                0x5B0,
+                0xA40,
+                0xED0
+            };
+
+            long baseAddr = long.Parse(trackingTargetAddress, System.Globalization.NumberStyles.HexNumber);
+
+            foreach (int offset in offsets)
+            {
+                string currentAddress = (baseAddr + offset).ToString("X");
+                byte[] name = memory.ReadBytes(currentAddress, 30);
+                string result = Encoding.Unicode.GetString(name);
+
+                trackListCombo.Items.Add(result);
             }
         }
     }
