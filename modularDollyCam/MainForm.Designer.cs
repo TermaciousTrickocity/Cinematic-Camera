@@ -57,6 +57,7 @@
             groupBox1 = new GroupBox();
             trackingDataGrid = new DataGridView();
             keyframeDataGridGroupBox = new GroupBox();
+            trackingCheckbox = new CheckBox();
             trackListCombo = new ComboBox();
             timesyncCheckbox = new CheckBox();
             label7 = new Label();
@@ -77,7 +78,6 @@
             lookTrackingSmoothing_Textbox = new TextBox();
             label5 = new Label();
             lookTracking_Combobox = new ComboBox();
-            trackingCheckbox = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)keyframeDataGridView).BeginInit();
             saveGroupbox.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -400,6 +400,17 @@
             keyframeDataGridGroupBox.TabStop = false;
             keyframeDataGridGroupBox.Text = "Keyframes";
             // 
+            // trackingCheckbox
+            // 
+            trackingCheckbox.AutoSize = true;
+            trackingCheckbox.Location = new Point(310, 22);
+            trackingCheckbox.Name = "trackingCheckbox";
+            trackingCheckbox.Size = new Size(70, 19);
+            trackingCheckbox.TabIndex = 37;
+            trackingCheckbox.Text = "Tracking";
+            trackingCheckbox.UseVisualStyleBackColor = true;
+            trackingCheckbox.CheckedChanged += checkBox1_CheckedChanged;
+            // 
             // trackListCombo
             // 
             trackListCombo.FormattingEnabled = true;
@@ -419,6 +430,7 @@
             timesyncCheckbox.TabIndex = 17;
             timesyncCheckbox.Text = "Start Time Sync";
             timesyncCheckbox.UseVisualStyleBackColor = true;
+            timesyncCheckbox.Visible = false;
             // 
             // label7
             // 
@@ -600,17 +612,6 @@
             lookTracking_Combobox.Size = new Size(160, 23);
             lookTracking_Combobox.TabIndex = 38;
             lookTracking_Combobox.Text = "(havok proxies)";
-            // 
-            // trackingCheckbox
-            // 
-            trackingCheckbox.AutoSize = true;
-            trackingCheckbox.Location = new Point(310, 22);
-            trackingCheckbox.Name = "trackingCheckbox";
-            trackingCheckbox.Size = new Size(70, 19);
-            trackingCheckbox.TabIndex = 37;
-            trackingCheckbox.Text = "Tracking";
-            trackingCheckbox.UseVisualStyleBackColor = true;
-            trackingCheckbox.CheckedChanged += checkBox1_CheckedChanged;
             // 
             // MainForm
             // 

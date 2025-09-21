@@ -137,21 +137,7 @@ namespace modularDollyCam
                             long baseAddr = long.Parse(trackingTargetAddress, System.Globalization.NumberStyles.HexNumber);
                             long offset = 0;
 
-                            switch (selectedIndex)
-                            {
-                                case 0:
-                                    offset = 0xA8;
-                                    break;
-                                case 1:
-                                    offset = 0x538;
-                                    break;
-                                case 2:
-                                    offset = 0x9C8;
-                                    break;
-                                case 3:
-                                    offset = 0xE58;
-                                    break;
-                            }
+                            offset = (selectedIndex == 0) ? 0xA8 : 0x538 + (selectedIndex - 1) * 0x490;
 
                             long trackXAddr = baseAddr + offset;
                             long trackYAddr = trackXAddr + 0x04;
@@ -211,12 +197,24 @@ namespace modularDollyCam
         {
             trackListCombo.Items.Clear();
 
-            int[] offsets =
+            int[] offsets = // diff 0x490
             {
-                0x120,
-                0x5B0,
-                0xA40,
-                0xED0
+                0x120,      // Player 0
+                0x5B0,      // Player 1
+                0xA40,      // ...
+                0xED0,      // ..
+                0x1360,     // .
+                0x17F0,     // 
+                0x1C80,
+                0x2110,     // you get the point
+                0x25A0,
+                0x2A30,
+                0x2EC0,
+                0x3350,
+                0x37E0,
+                0x3C70,
+                0x4100,
+                0x4590      // Player 16
             };
 
             long baseAddr = long.Parse(trackingTargetAddress, System.Globalization.NumberStyles.HexNumber);
@@ -226,6 +224,9 @@ namespace modularDollyCam
                 string currentAddress = (baseAddr + offset).ToString("X");
                 byte[] name = memory.ReadBytes(currentAddress, 30);
                 string result = Encoding.Unicode.GetString(name);
+
+                if (result == null) 
+                    break;
 
                 trackListCombo.Items.Add(result);
             }
