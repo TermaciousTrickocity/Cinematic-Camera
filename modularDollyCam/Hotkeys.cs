@@ -58,43 +58,43 @@ namespace modularDollyCam
             {
                 int vkCode = Marshal.ReadInt32(lParam);
 
-                    switch (vkCode)
-                    {
-                        case VK_M:
-                            pathStart_checkbox.Checked = true;
-                            break;
-                        case VK_N:
-                            pathStart_checkbox.Checked = false;
-                            break;
-                        case VK_T:
-                            lookTracking = !lookTracking;
-                            break;
-                        case VK_H:
-                            getPlayerList();
-                            break;
-                        case VK_Y:
-                            targetPosition = new Vector3(memory.ReadFloat(xPos), memory.ReadFloat(yPos), memory.ReadFloat(zPos));
-                            break;
-                        case VK_P:
-                            memory.WriteMemory(rollAng, "float", (memory.ReadFloat(rollAng) + 0.1f).ToString());
-                            break;
-                        case VK_O:
-                            memory.WriteMemory(rollAng, "float", (memory.ReadFloat(rollAng) - 0.1f).ToString());
-                            break;
-                        case VK_I:
-                            memory.WriteMemory(playerFov, "float", (memory.ReadFloat(playerFov) + 1f >= 145 ? "145.0" : (memory.ReadFloat(playerFov) + 1f).ToString()));
-                            break;
-                        case VK_U:
-                            memory.WriteMemory(playerFov, "float", (memory.ReadFloat(playerFov) - 1f <= 5 ? "5.0" : (memory.ReadFloat(playerFov) - 1f).ToString()));
-                            break;
-                        case VK_K:
-                            AddKeyPointRow(memory.ReadFloat(xPos, "", false), memory.ReadFloat(yPos, "", false), memory.ReadFloat(zPos, "", false), memory.ReadFloat(yawAng, "", false), memory.ReadFloat(pitchAng, "", false), memory.ReadFloat(rollAng, "", false), memory.ReadFloat(playerFov, "", false), 1);
+                switch (vkCode)
+                {
+                    case VK_M:
+                        pathStart_checkbox.Checked = true;
                         break;
-                        case VK_Home:
-                            Console.WriteLine("home!");
-                            break;
-                        default:
-                            break;
+                    case VK_N:
+                        pathStart_checkbox.Checked = false;
+                        break;
+                    case VK_T:
+                        lookTracking = !lookTracking;
+                        break;
+                    case VK_H:
+                        getPlayerList();
+                        break;
+                    case VK_Y:
+                        targetPosition = new Vector3(memory.ReadFloat(xPos), memory.ReadFloat(yPos), memory.ReadFloat(zPos));
+                        break;
+                    case VK_P:
+                        memory.WriteMemory(rollAng, "float", (memory.ReadFloat(rollAng) + 0.1f).ToString());
+                        break;
+                    case VK_O:
+                        memory.WriteMemory(rollAng, "float", (memory.ReadFloat(rollAng) - 0.1f).ToString());
+                        break;
+                    case VK_I:
+                        memory.WriteMemory(playerFov, "float", (memory.ReadFloat(playerFov) + 1f >= 145 ? "145.0" : (memory.ReadFloat(playerFov) + 1f).ToString()));
+                        break;
+                    case VK_U:
+                        memory.WriteMemory(playerFov, "float", (memory.ReadFloat(playerFov) - 1f <= 5 ? "5.0" : (memory.ReadFloat(playerFov) - 1f).ToString()));
+                        break;
+                    case VK_K:
+                        AddKeyPointRow(memory.ReadFloat(xPos, "", false), memory.ReadFloat(yPos, "", false), memory.ReadFloat(zPos, "", false), memory.ReadFloat(yawAng, "", false), memory.ReadFloat(pitchAng, "", false), memory.ReadFloat(rollAng, "", false), memory.ReadFloat(playerFov, "", false), 1);
+                    break;
+                    case VK_Home:
+                        Console.WriteLine("home!");
+                        break;
+                    default:
+                        break;
                 }
             }
 

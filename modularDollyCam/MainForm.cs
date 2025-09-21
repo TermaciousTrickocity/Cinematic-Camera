@@ -77,10 +77,5 @@ namespace modularDollyCam
             groupBox9.Enabled = true;
             BackColor = Color.FromArgb(245, 245, 245);
         }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            lookTracking = !lookTracking;
-        }
     }
 }

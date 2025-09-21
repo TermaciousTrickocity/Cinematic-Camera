@@ -300,5 +300,10 @@ namespace modularDollyCam
                 memory.ReadFloat(playerFov, "", false), 
                 1);
         }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            lookTracking = !lookTracking;
+        }
     }
 }
