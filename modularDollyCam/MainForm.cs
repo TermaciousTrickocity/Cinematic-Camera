@@ -62,6 +62,7 @@ namespace modularDollyCam
 
             teleportToSelection_Button.Click += teleportToSelection_Button_Click;
             replaceCurrent_Button.Click += replaceCurrent_Button_Click;
+            timeSyncTextbox.TextChanged += timeSyncTextbox_TextChanged;
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -75,6 +76,29 @@ namespace modularDollyCam
             groupBox8.Enabled = true;
             groupBox9.Enabled = true;
             BackColor = Color.FromArgb(245, 245, 245);
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void setSyncStart_Click(object sender, EventArgs e)
+        {
+            startSync = memory.ReadFloat(theaterTime, "", false);
+            timeSyncTextbox.Text = startSync.ToString();
+        }
+
+        private void timeSyncTextbox_TextChanged(object sender, EventArgs e)
+        {
+            if (float.TryParse(timeSyncTextbox.Text, out float value))
+            {
+                startSync = value;
+            }
+            else
+            {
+                startSync = 0f;
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace modularDollyCam
@@ -24,6 +25,8 @@ namespace modularDollyCam
         private Vector3 targetPosition;
 
         private string mapHeader;
+        private string theaterTime;
+        public float startSync;
 
         private void SetupDataGridView()
         {
@@ -76,6 +79,15 @@ namespace modularDollyCam
             try
             {
                 int.TryParse(StartDelayTextbox.Text, out int delaySeconds);
+
+                if (timesyncCheckbox.Checked == true)
+                {
+                    while (true)
+                    {
+                        float time = memory.ReadFloat(theaterTime);
+                        if (time >= startSync) break;
+                    }
+                }
 
                 if (delaySeconds > 0)
                 {
@@ -223,6 +235,20 @@ namespace modularDollyCam
                     break;
 
                 trackListCombo.Items.Add(result);
+            }
+        }
+
+        public async Task getCurrentTime()
+        {
+            while (true)
+            {
+                float time = memory.ReadFloat(theaterTime);
+                TimeSpan timeSpan = TimeSpan.FromSeconds(time);
+                string formattedTime = timeSpan.ToString(@"hh\:mm\:ss\:fff");
+                
+                CurrentTimeTextbox.Text = formattedTime;
+
+                await Task.Delay(1);
             }
         }
     }

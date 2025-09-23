@@ -23,14 +23,15 @@ namespace modularDollyCam
 
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
-                if (!File.Exists(fileDialog.FileName)) MessageBox.Show("The selected JSON file does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (!File.Exists(fileDialog.FileName)) 
+                    MessageBox.Show("The selected JSON file does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 try
                 {
                     string jsonData = File.ReadAllText(fileDialog.FileName);
                     List<string> addresses = JsonConvert.DeserializeObject<List<string>>(jsonData);
 
-                    if (addresses.Count >= 10)
+                    if (addresses.Count >= 11)
                     {
                         selectedProcessName = addresses[0];
                         mapHeader = addresses[1];
@@ -42,12 +43,14 @@ namespace modularDollyCam
                         rollAng = addresses[7];
                         playerFov = addresses[8];
                         trackingTargetAddress = addresses[9];
+                        theaterTime = addresses[10];
 
                         await GetModules();
-                        getPlayerList();
+                        getPlayerList();       
                         unlockUI();
-
                         updateModules.Text = $"Loaded: {Path.GetFileName(fileDialog.FileName)}\n(click again to change plugins)";
+
+                        await getCurrentTime();
                     }
                     else
                     {
