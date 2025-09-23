@@ -78,6 +78,8 @@
             lookTrackingSmoothing_Textbox = new TextBox();
             label5 = new Label();
             lookTracking_Combobox = new ComboBox();
+            StartDelayTextbox = new TextBox();
+            label1 = new Label();
             ((System.ComponentModel.ISupportInitialize)keyframeDataGridView).BeginInit();
             saveGroupbox.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -92,10 +94,10 @@
             // keyframeDataGridView
             // 
             keyframeDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            keyframeDataGridView.Location = new Point(42, 49);
+            keyframeDataGridView.Location = new Point(42, 47);
             keyframeDataGridView.Name = "keyframeDataGridView";
             keyframeDataGridView.RowTemplate.Height = 25;
-            keyframeDataGridView.Size = new Size(857, 360);
+            keyframeDataGridView.Size = new Size(857, 362);
             keyframeDataGridView.TabIndex = 0;
             // 
             // AddKey_Button
@@ -258,7 +260,7 @@
             // startFromSelection_checkbox
             // 
             startFromSelection_checkbox.AutoSize = true;
-            startFromSelection_checkbox.Location = new Point(125, 22);
+            startFromSelection_checkbox.Location = new Point(251, 20);
             startFromSelection_checkbox.Name = "startFromSelection_checkbox";
             startFromSelection_checkbox.Size = new Size(129, 19);
             startFromSelection_checkbox.TabIndex = 15;
@@ -268,7 +270,7 @@
             // pathStart_checkbox
             // 
             pathStart_checkbox.AutoSize = true;
-            pathStart_checkbox.Location = new Point(42, 22);
+            pathStart_checkbox.Location = new Point(168, 20);
             pathStart_checkbox.Name = "pathStart_checkbox";
             pathStart_checkbox.Size = new Size(77, 19);
             pathStart_checkbox.TabIndex = 14;
@@ -382,9 +384,11 @@
             // 
             // keyframeDataGridGroupBox
             // 
+            keyframeDataGridGroupBox.Controls.Add(label1);
+            keyframeDataGridGroupBox.Controls.Add(StartDelayTextbox);
+            keyframeDataGridGroupBox.Controls.Add(timesyncCheckbox);
             keyframeDataGridGroupBox.Controls.Add(trackingCheckbox);
             keyframeDataGridGroupBox.Controls.Add(trackListCombo);
-            keyframeDataGridGroupBox.Controls.Add(timesyncCheckbox);
             keyframeDataGridGroupBox.Controls.Add(keyframeDataGridView);
             keyframeDataGridGroupBox.Controls.Add(pathStart_checkbox);
             keyframeDataGridGroupBox.Controls.Add(startFromSelection_checkbox);
@@ -403,7 +407,7 @@
             // trackingCheckbox
             // 
             trackingCheckbox.AutoSize = true;
-            trackingCheckbox.Location = new Point(310, 22);
+            trackingCheckbox.Location = new Point(441, 20);
             trackingCheckbox.Name = "trackingCheckbox";
             trackingCheckbox.Size = new Size(70, 19);
             trackingCheckbox.TabIndex = 37;
@@ -415,16 +419,16 @@
             // 
             trackListCombo.FormattingEnabled = true;
             trackListCombo.Items.AddRange(new object[] { "none" });
-            trackListCombo.Location = new Point(386, 20);
+            trackListCombo.Location = new Point(517, 18);
             trackListCombo.Name = "trackListCombo";
-            trackListCombo.Size = new Size(138, 23);
+            trackListCombo.Size = new Size(107, 23);
             trackListCombo.TabIndex = 36;
             trackListCombo.Text = "Players";
             // 
             // timesyncCheckbox
             // 
             timesyncCheckbox.AutoSize = true;
-            timesyncCheckbox.Location = new Point(690, 21);
+            timesyncCheckbox.Location = new Point(639, 20);
             timesyncCheckbox.Name = "timesyncCheckbox";
             timesyncCheckbox.Size = new Size(107, 19);
             timesyncCheckbox.TabIndex = 17;
@@ -613,6 +617,24 @@
             lookTracking_Combobox.TabIndex = 38;
             lookTracking_Combobox.Text = "(havok proxies)";
             // 
+            // StartDelayTextbox
+            // 
+            StartDelayTextbox.Location = new Point(110, 18);
+            StartDelayTextbox.Name = "StartDelayTextbox";
+            StartDelayTextbox.Size = new Size(41, 23);
+            StartDelayTextbox.TabIndex = 38;
+            StartDelayTextbox.Text = "0";
+            StartDelayTextbox.TextAlign = HorizontalAlignment.Right;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(42, 21);
+            label1.Name = "label1";
+            label1.Size = new Size(62, 15);
+            label1.TabIndex = 39;
+            label1.Text = "Start delay";
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -704,5 +726,7 @@
         private CheckBox timesyncCheckbox;
         private ComboBox trackListCombo;
         private CheckBox trackingCheckbox;
+        private Label label1;
+        private TextBox StartDelayTextbox;
     }
 }

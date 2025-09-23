@@ -75,6 +75,13 @@ namespace modularDollyCam
         {
             try
             {
+                int.TryParse(StartDelayTextbox.Text, out int delaySeconds);
+
+                if (delaySeconds > 0)
+                {
+                    await Task.Delay(delaySeconds * 1000);
+                }
+
                 int originalSelectedRow = keyframeDataGridView.CurrentCell.RowIndex;
                 int originalSelectedColumn = keyframeDataGridView.CurrentCell.ColumnIndex;
 
