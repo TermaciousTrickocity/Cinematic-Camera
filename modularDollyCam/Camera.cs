@@ -23,7 +23,6 @@ namespace modularDollyCam
         public string trackingTargetAddress;
         private Vector3 targetPosition;
 
-
         private string mapHeader;
 
         private void SetupDataGridView()
@@ -147,25 +146,13 @@ namespace modularDollyCam
                             string trackYHex = "0x" + trackYAddr.ToString("X");
                             string trackZHex = "0x" + trackZAddr.ToString("X");
 
-                            targetPosition = new Vector3(
-                                memory.ReadFloat(trackXHex, "", false),
-                                memory.ReadFloat(trackYHex, "", false),
-                                memory.ReadFloat(trackZHex, "", false)
-                            );
+                            targetPosition = new Vector3(memory.ReadFloat(trackXHex, "", false), memory.ReadFloat(trackYHex, "", false), memory.ReadFloat(trackZHex, "", false));
 
-                            Vector3 cameraPosition = new Vector3(
-                                memory.ReadFloat(xPos, "", false),
-                                memory.ReadFloat(yPos, "", false), 
-                                memory.ReadFloat(zPos, "", false)
-                            );
-
+                            Vector3 cameraPosition = new Vector3(memory.ReadFloat(xPos, "", false), memory.ReadFloat(yPos, "", false), memory.ReadFloat(zPos, "", false));
                             Vector3 direction = targetPosition - cameraPosition;
 
-                            float yaw = (float)Math.Atan2(direction.Y, direction.X);
-                            float pitch = (float)Math.Atan2(direction.Z, direction.Length());
-
-                            yaw %= 2 * (float)Math.PI;
-                            pitch %= 2 * (float)Math.PI;
+                            float yaw = (float)Math.Atan2(direction.Y, direction.X) % (2 * (float)Math.PI);
+                            float pitch = (float)Math.Atan2(direction.Z, direction.Length()) % (2 * (float)Math.PI);
 
                             memory.WriteMemory(yawAng, "float", $"{yaw}");
                             memory.WriteMemory(pitchAng, "float", $"{pitch}");
