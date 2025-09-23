@@ -85,8 +85,11 @@ namespace modularDollyCam
 
         private void setSyncStart_Click(object sender, EventArgs e)
         {
-            startSync = memory.ReadFloat(theaterTime, "", false);
-            timeSyncTextbox.Text = startSync.ToString();
+            if (theaterTime != null)
+            {
+                startSync = memory.ReadFloat(theaterTime, "", false);
+                timeSyncTextbox.Text = startSync.ToString();
+            }
         }
 
         private void timeSyncTextbox_TextChanged(object sender, EventArgs e)

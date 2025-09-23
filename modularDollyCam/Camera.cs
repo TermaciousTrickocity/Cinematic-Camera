@@ -80,7 +80,7 @@ namespace modularDollyCam
             {
                 int.TryParse(StartDelayTextbox.Text, out int delaySeconds);
 
-                if (timesyncCheckbox.Checked == true)
+                if (timesyncCheckbox.Checked == true && theaterTime != null)
                 {
                     while (true)
                     {
@@ -148,7 +148,7 @@ namespace modularDollyCam
                         memory.WriteMemory(yPos, "float", $"{interpolatedPosition.Item2}");
                         memory.WriteMemory(zPos, "float", $"{interpolatedPosition.Item3}");
 
-                        if (lookTracking == true)
+                        if (lookTracking == true && trackingTargetAddress != null)
                         {
                             int selectedIndex = trackListCombo.SelectedIndex;
 
@@ -240,15 +240,18 @@ namespace modularDollyCam
 
         public async Task getCurrentTime()
         {
-            while (true)
+            if (theaterTime != null)
             {
-                float time = memory.ReadFloat(theaterTime);
-                TimeSpan timeSpan = TimeSpan.FromSeconds(time);
-                string formattedTime = timeSpan.ToString(@"hh\:mm\:ss\:fff");
-                
-                CurrentTimeTextbox.Text = formattedTime;
+                while (true)
+                {
+                    float time = memory.ReadFloat(theaterTime);
+                    TimeSpan timeSpan = TimeSpan.FromSeconds(time);
+                    string formattedTime = timeSpan.ToString(@"hh\:mm\:ss\:fff");
 
-                await Task.Delay(1);
+                    CurrentTimeTextbox.Text = formattedTime;
+
+                    await Task.Delay(1);
+                }
             }
         }
     }
