@@ -73,20 +73,17 @@ namespace modularDollyCam
 
             if (game != null)
             {
-                // Parse build numbers as Version and sort descending so the largest version is first.
                 var sortedBuilds = game.Builds
                     .OrderByDescending(b =>
                     {
                         if (Version.TryParse(b.Number, out var v))
                             return v;
-                        // fallback very small version if parsing fails (shouldn't happen for 1.xxxx.0.0)
                         return new Version(0, 0, 0, 0);
                     })
                     .ToList();
 
                 comboBoxBuilds.DataSource = sortedBuilds.Select(b => b.Number).ToList();
 
-                // select the largest build (first in the sorted list)
                 if (comboBoxBuilds.Items.Count > 0)
                 {
                     comboBoxBuilds.SelectedIndex = 0;
@@ -120,6 +117,7 @@ namespace modularDollyCam
                 rollAng = p?.Roll;
                 playerFov = p?.FOV;
                 theaterTime = p?.TickCount;
+                tickSpeed = p?.TickSpeed;
 
                 GetModules();
             }

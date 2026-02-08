@@ -117,6 +117,7 @@ namespace modularDollyCam
                                 memory.ReadFloat(pitchAng, "", false),
                                 memory.ReadFloat(rollAng, "", false),
                                 memory.ReadFloat(playerFov, "", false),
+                                1, 
                                 1
                             );
                             break;

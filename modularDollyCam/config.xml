@@ -2,9 +2,11 @@
   <Processes>
     <Process>MCC-Win64-Shipping</Process>
     <Process>MCCWinStore-Win64-Shipping</Process>
+	 <Process>MCCWinStore-Win64-Shipping</Process>
   </Processes>
 
 <!-- you get the idea, it's not that hard -->
+	<!-- please for the love of God I beg that there will never be an update for MCC ever again -->
 
   <Games>
     <Game name="Reach">
@@ -17,6 +19,7 @@
           <Pitch>haloreach.dll+0192DDF0,0x38</Pitch>
           <Roll>haloreach.dll+0192DDF0,0x3C</Roll>
           <FOV>haloreach.dll+2A03D4C</FOV>
+          <TickSpeed>haloreach.dll+278EEDC</TickSpeed>
           <TheaterTime></TheaterTime>
         </Pointers>
       </Build>
@@ -29,6 +32,7 @@
           <Pitch>haloreach.dll+01901ED0,0x38</Pitch>
           <Roll>haloreach.dll+01901ED0,0x3C</Roll>
           <FOV>haloreach.dll+2A03CDC</FOV>
+          <TickSpeed></TickSpeed>
           <TheaterTime></TheaterTime>
         </Pointers>
       </Build>
@@ -44,6 +48,7 @@
           <Pitch>halo3.dll+0125BAA4,0x38</Pitch>
           <Roll>halo3.dll+0125BAA4,0x3C</Roll>
           <FOV>halo3.dll+2D3DDE4</FOV>
+          <TickSpeed></TickSpeed>
           <TheaterTime></TheaterTime>
         </Pointers>
       </Build>
@@ -56,6 +61,7 @@
           <Pitch>halo3.dll+0125CB24,0x38</Pitch>
           <Roll>halo3.dll+0125CB24,0x3C</Roll>
           <FOV>halo3.dll+2D3EDE4</FOV>
+          <TickSpeed></TickSpeed>
           <TheaterTime></TheaterTime>
         </Pointers>
       </Build>
@@ -71,6 +77,7 @@
           <Pitch>halo3odst.dll+012C196C,0x38</Pitch>
           <Roll>halo3odst.dll+012C196C,0x3C</Roll>
           <FOV>halo3odst.dll+2D818D8</FOV>
+          <TickSpeed></TickSpeed>
           <TheaterTime></TheaterTime>
         </Pointers>
       </Build>
@@ -84,6 +91,7 @@
           <Pitch>halo3odst.dll+012C196C,0x38</Pitch>
           <Roll>halo3odst.dll+012C196C,0x3C</Roll>
           <FOV>halo3odst.dll+2D818D8</FOV>
+          <TickSpeed></TickSpeed>
           <TheaterTime></TheaterTime>
         </Pointers>
       </Build>
@@ -100,6 +108,7 @@
           <Pitch></Pitch>
           <Roll></Roll>
           <FOV></FOV>
+          <TickSpeed></TickSpeed>
           <TheaterTime></TheaterTime>
         </Pointers>
       </Build>
@@ -112,6 +121,7 @@
           <Pitch></Pitch>
           <Roll></Roll>
           <FOV></FOV>
+          <TickSpeed></TickSpeed>
           <TheaterTime></TheaterTime>
         </Pointers>
       </Build>

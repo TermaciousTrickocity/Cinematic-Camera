@@ -29,7 +29,7 @@ namespace modularDollyCam
 
                     foreach (KeypointExports keypoint in keyPoints)
                     {
-                        AddKeyPointRow(keypoint.xPos, keypoint.yPos, keypoint.zPos, keypoint.yawAng, keypoint.pitchAng, keypoint.rollAng, keypoint.playerFov, keypoint.transitionTime);
+                        AddKeyPointRow(keypoint.xPos, keypoint.yPos, keypoint.zPos, keypoint.yawAng, keypoint.pitchAng, keypoint.rollAng, keypoint.playerFov, keypoint.transitionTime, keypoint.tickSpeed);
                     }
                 }
                 catch (Exception ex)
@@ -89,7 +89,8 @@ namespace modularDollyCam
                             pitchAng = ParseCell(row.Cells["Pitch"].Value),
                             rollAng = ParseCell(row.Cells["Roll"].Value),
                             playerFov = ParseCell(row.Cells["FOV"].Value),
-                            transitionTime = ParseCell(row.Cells["Transition Time"].Value)
+                            transitionTime = ParseCell(row.Cells["Transition Time"].Value),
+                            tickSpeed = ParseCell(row.Cells["Tick Speed"].Value)
                         };
 
                         exports.Add(kp);
@@ -167,6 +168,7 @@ namespace modularDollyCam
                 keyframeDataGridView.Rows[selectedIndex].Cells["Roll"].Value = memory.ReadFloat(rollAng, "", false);
                 keyframeDataGridView.Rows[selectedIndex].Cells["FOV"].Value = memory.ReadFloat(playerFov);
                 keyframeDataGridView.Rows[selectedIndex].Cells["Transition Time"].Value = transitionTime;
+                // keep existing Tick Speed value untouched to avoid losing user data
             }
         }
 
@@ -200,7 +202,24 @@ namespace modularDollyCam
             {
                 int selectedIndex = keyframeDataGridView.SelectedRows[0].Index;
 
-                AddKeyPointRow(Convert.ToSingle(keyframeDataGridView.Rows[selectedIndex].Cells["X"].Value), Convert.ToSingle(keyframeDataGridView.Rows[selectedIndex].Cells["Y"].Value), Convert.ToSingle(keyframeDataGridView.Rows[selectedIndex].Cells["Z"].Value), Convert.ToSingle(keyframeDataGridView.Rows[selectedIndex].Cells["Yaw"].Value), Convert.ToSingle(keyframeDataGridView.Rows[selectedIndex].Cells["Pitch"].Value), Convert.ToSingle(keyframeDataGridView.Rows[selectedIndex].Cells["Roll"].Value), Convert.ToSingle(keyframeDataGridView.Rows[selectedIndex].Cells["FOV"].Value), Convert.ToSingle(keyframeDataGridView.Rows[selectedIndex].Cells["Transition Time"].Value));
+                float GetCellFloat(DataGridViewRow r, string name)
+                {
+                    var v = r.Cells[name].Value;
+                    if (v == null) return 0f;
+                    return Convert.ToSingle(v);
+                }
+
+                AddKeyPointRow(
+                    GetCellFloat(keyframeDataGridView.Rows[selectedIndex], "X"),
+                    GetCellFloat(keyframeDataGridView.Rows[selectedIndex], "Y"),
+                    GetCellFloat(keyframeDataGridView.Rows[selectedIndex], "Z"),
+                    GetCellFloat(keyframeDataGridView.Rows[selectedIndex], "Yaw"),
+                    GetCellFloat(keyframeDataGridView.Rows[selectedIndex], "Pitch"),
+                    GetCellFloat(keyframeDataGridView.Rows[selectedIndex], "Roll"),
+                    GetCellFloat(keyframeDataGridView.Rows[selectedIndex], "FOV"),
+                    GetCellFloat(keyframeDataGridView.Rows[selectedIndex], "Transition Time"),
+                    GetCellFloat(keyframeDataGridView.Rows[selectedIndex], "Tick Speed")
+                );
             }
             else
             {
@@ -305,7 +324,7 @@ namespace modularDollyCam
                             float newY = keypoint.yPos + offsetY;
                             float newZ = keypoint.zPos + offsetZ;
 
-                            AddKeyPointRow(newX, newY, newZ, keypoint.yawAng, keypoint.pitchAng, keypoint.rollAng, keypoint.playerFov, keypoint.transitionTime);
+                            AddKeyPointRow(newX, newY, newZ, keypoint.yawAng, keypoint.pitchAng, keypoint.rollAng, keypoint.playerFov, keypoint.transitionTime, keypoint.tickSpeed);
                         }
 
                         MessageBox.Show("Key points imported with offset successfully!");
@@ -334,6 +353,7 @@ namespace modularDollyCam
                 memory.ReadFloat(pitchAng, "", false),
                 memory.ReadFloat(rollAng, "", false), 
                 memory.ReadFloat(playerFov, "", false), 
+                1,
                 1);
         }
 

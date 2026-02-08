@@ -16,5 +16,6 @@ namespace modularDollyCam
         public float rollAng { get; set; }
         public float playerFov { get; set; }
         public float transitionTime { get; set; }
+        public float tickSpeed { get; set; }
     }
 }

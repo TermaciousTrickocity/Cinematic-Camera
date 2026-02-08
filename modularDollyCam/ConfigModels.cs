@@ -41,5 +41,6 @@ namespace modularDollyCam
         public string Roll { get; set; }
         public string FOV { get; set; }
         public string TickCount { get; set; }
+        public string TickSpeed { get; set; }
     }
 }
