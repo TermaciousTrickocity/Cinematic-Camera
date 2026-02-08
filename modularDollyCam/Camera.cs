@@ -24,7 +24,6 @@ namespace modularDollyCam
         public string trackingTargetAddress;
         private Vector3 targetPosition;
 
-        private string mapHeader;
         private string theaterTime;
         public float startSync;
 
@@ -53,7 +52,12 @@ namespace modularDollyCam
             keyframeDataGridView.Rows.Add(x, y, z, yaw, pitch, roll, fov, transitionTime);
         }
 
-        static Tuple<float, float, float, float, float, float, float> CatmullRomInterpolation(Tuple<float, float, float, float, float, float, float> p0, Tuple<float, float, float, float, float, float, float> p1, Tuple<float, float, float, float, float, float, float> p2, Tuple<float, float, float, float, float, float, float> p3, float t)
+        static Tuple<float, float, float, float, float, float, float> CatmullRomInterpolation(
+            Tuple<float, float, float, float, float, float, float> p0, 
+            Tuple<float, float, float, float, float, float, float> p1, 
+            Tuple<float, float, float, float, float, float, float> p2, 
+            Tuple<float, float, float, float, float, float, float> p3, 
+            float t)
         {
             float t2 = t * t;
             float t3 = t2 * t;
@@ -244,7 +248,7 @@ namespace modularDollyCam
             {
                 while (true)
                 {
-                    float time = memory.ReadFloat(theaterTime);
+                    float time = memory.ReadFloat(theaterTime, "", false);
                     TimeSpan timeSpan = TimeSpan.FromSeconds(time);
                     string formattedTime = timeSpan.ToString(@"hh\:mm\:ss\:fff");
 

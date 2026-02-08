@@ -16,6 +16,8 @@ namespace modularDollyCam
 
         private async void updateModules_Click(object sender, EventArgs e)
         {
+            /*
+
             OpenFileDialog fileDialog = new OpenFileDialog();
 
             fileDialog.InitialDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins");
@@ -46,7 +48,7 @@ namespace modularDollyCam
                         theaterTime = addresses[10];
 
                         await GetModules();
-                        getPlayerList();       
+                        //getPlayerList();       
                         unlockUI();
                         updateModules.Text = $"Loaded: {Path.GetFileName(fileDialog.FileName)}\n(click again to change plugins)";
 
@@ -62,6 +64,8 @@ namespace modularDollyCam
                     MessageBox.Show("Error reading JSON file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+            */
+
         }
 
         public async Task GetModules()

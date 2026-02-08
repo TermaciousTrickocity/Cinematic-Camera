@@ -12,6 +12,9 @@ namespace modularDollyCam
         private void importPath_Button_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+            string programDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string subfolderPath = Path.Combine(programDirectory, "paths");
+            openFileDialog.InitialDirectory = subfolderPath;
             openFileDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
             openFileDialog.RestoreDirectory = true;
 
@@ -28,19 +31,28 @@ namespace modularDollyCam
                     {
                         AddKeyPointRow(keypoint.xPos, keypoint.yPos, keypoint.zPos, keypoint.yawAng, keypoint.pitchAng, keypoint.rollAng, keypoint.playerFov, keypoint.transitionTime);
                     }
-
-                    MessageBox.Show("Key points imported successfully!");
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error importing key points: " + ex.Message);
+
                 }
             }
         }
 
         private void exportPath_Button_Click(object sender, EventArgs e)
         {
+            int dataRowCount = keyframeDataGridView.Rows.Cast<System.Windows.Forms.DataGridViewRow>().Count(r => !r.IsNewRow);
+            if (dataRowCount == 0)
+            {
+                MessageBox.Show("There are no key points to export.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            string programDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string subfolderPath = Path.Combine(programDirectory, "paths");
+
             SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.InitialDirectory = subfolderPath;
             saveFileDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
             saveFileDialog.RestoreDirectory = true;
 
@@ -48,23 +60,47 @@ namespace modularDollyCam
             {
                 try
                 {
-                    string json = JsonConvert.SerializeObject(keyFrames.Select(kp => new KeypointExports
+                    List<KeypointExports> exports = new List<KeypointExports>();
+
+                    foreach (DataGridViewRow row in keyframeDataGridView.Rows)
                     {
-                        xPos = kp.Item1,
-                        yPos = kp.Item2,
-                        zPos = kp.Item3,
-                        yawAng = kp.Item4,
-                        pitchAng = kp.Item5,
-                        rollAng = kp.Item6,
-                        playerFov = kp.Item7,
-                        transitionTime = Convert.ToSingle(keyframeDataGridView.Rows[keyFrames.IndexOf(kp)].Cells["Transition Time"].Value)
-                    }));
+                        if (row.IsNewRow)
+                            continue;
+
+                        float ParseCell(object val)
+                        {
+                            if (val == null) return 0f;
+                            if (val is float f) return f;
+                            var s = val.ToString();
+                            if (string.IsNullOrWhiteSpace(s)) return 0f;
+                            if (float.TryParse(s, System.Globalization.NumberStyles.Float | System.Globalization.NumberStyles.AllowThousands, System.Globalization.CultureInfo.InvariantCulture, out var r))
+                                return r;
+                            if (float.TryParse(s, out r))
+                                return r;
+                            return 0f;
+                        }
+
+                        var kp = new KeypointExports
+                        {
+                            xPos = ParseCell(row.Cells["X"].Value),
+                            yPos = ParseCell(row.Cells["Y"].Value),
+                            zPos = ParseCell(row.Cells["Z"].Value),
+                            yawAng = ParseCell(row.Cells["Yaw"].Value),
+                            pitchAng = ParseCell(row.Cells["Pitch"].Value),
+                            rollAng = ParseCell(row.Cells["Roll"].Value),
+                            playerFov = ParseCell(row.Cells["FOV"].Value),
+                            transitionTime = ParseCell(row.Cells["Transition Time"].Value)
+                        };
+
+                        exports.Add(kp);
+                    }
+
+                    string json = JsonConvert.SerializeObject(exports, Formatting.Indented);
                     File.WriteAllText(saveFileDialog.FileName, json);
-                    MessageBox.Show("Key points exported successfully!");
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error exporting key points: " + ex.Message);
+
                 }
             }
         }
@@ -83,9 +119,9 @@ namespace modularDollyCam
 
         private void resetCameraRotation_Button_Click(object sender, EventArgs e)
         {
-            memory.WriteMemory(yawAng, "Float", "0");
-            memory.WriteMemory(pitchAng, "Float", "0");
-            memory.WriteMemory(rollAng, "Float", "0");
+            memory.WriteMemory(yawAng, "float", "0");
+            memory.WriteMemory(pitchAng, "float", "0");
+            memory.WriteMemory(rollAng, "float", "0");
         }
 
         private void teleportToSelection_Button_Click(object sender, EventArgs e)
@@ -303,7 +339,7 @@ namespace modularDollyCam
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            lookTracking = !lookTracking;
+            //lookTracking = !lookTracking;
         }
     }
 }

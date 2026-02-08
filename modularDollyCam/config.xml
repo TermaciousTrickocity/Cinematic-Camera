@@ -1,0 +1,120 @@
+<Configuration>
+  <Processes>
+    <Process>MCC-Win64-Shipping</Process>
+    <Process>MCCWinStore-Win64-Shipping</Process>
+  </Processes>
+
+<!-- you get the idea, it's not that hard -->
+
+  <Games>
+    <Game name="Reach">
+      <Build number="1.3385.0.0">
+        <Pointers>
+          <X>haloreach.dll+0192DDF0,0x28</X>
+          <Y>haloreach.dll+0192DDF0,0x2C</Y>
+          <Z>haloreach.dll+0192DDF0,0x30</Z>
+          <Yaw>haloreach.dll+0192DDF0,0x34</Yaw>
+          <Pitch>haloreach.dll+0192DDF0,0x38</Pitch>
+          <Roll>haloreach.dll+0192DDF0,0x3C</Roll>
+          <FOV>haloreach.dll+2A03D4C</FOV>
+          <TheaterTime></TheaterTime>
+        </Pointers>
+      </Build>
+      <Build number="1.3495.0.0">
+        <Pointers>
+          <X>haloreach.dll+01901ED0,0x28</X>
+          <Y>haloreach.dll+01901ED0,0x2C</Y>
+          <Z>haloreach.dll+01901ED0,0x30</Z>
+          <Yaw>haloreach.dll+01901ED0,0x34</Yaw>
+          <Pitch>haloreach.dll+01901ED0,0x38</Pitch>
+          <Roll>haloreach.dll+01901ED0,0x3C</Roll>
+          <FOV>haloreach.dll+2A03CDC</FOV>
+          <TheaterTime></TheaterTime>
+        </Pointers>
+      </Build>
+    </Game>
+
+    <Game name="Halo 3">
+      <Build number="1.3385.0.0">
+        <Pointers>
+          <X>halo3.dll+0125BAA4,0x28</X>
+          <Y>halo3.dll+0125BAA4,0x2C</Y>
+          <Z>halo3.dll+0125BAA4,0x30</Z>
+          <Yaw>halo3.dll+0125BAA4,0x34</Yaw>
+          <Pitch>halo3.dll+0125BAA4,0x38</Pitch>
+          <Roll>halo3.dll+0125BAA4,0x3C</Roll>
+          <FOV>halo3.dll+2D3DDE4</FOV>
+          <TheaterTime></TheaterTime>
+        </Pointers>
+      </Build>
+      <Build number="1.3495.0.0">
+        <Pointers>
+          <X>halo3.dll+0125CB24,0x28</X>
+          <Y>halo3.dll+0125CB24,0x2C</Y>
+          <Z>halo3.dll+0125CB24,0x30</Z>
+          <Yaw>halo3.dll+0125CB24,0x34</Yaw>
+          <Pitch>halo3.dll+0125CB24,0x38</Pitch>
+          <Roll>halo3.dll+0125CB24,0x3C</Roll>
+          <FOV>halo3.dll+2D3EDE4</FOV>
+          <TheaterTime></TheaterTime>
+        </Pointers>
+      </Build>
+    </Game>
+
+    <Game name="ODST">
+      <Build number="1.3385.0.0">
+        <Pointers>
+          <X>halo3odst.dll+012C196C,0x28</X>
+          <Y>halo3odst.dll+012C196C,0x2C</Y>
+          <Z>halo3odst.dll+012C196C,0x30</Z>
+          <Yaw>halo3odst.dll+012C196C,0x34</Yaw>
+          <Pitch>halo3odst.dll+012C196C,0x38</Pitch>
+          <Roll>halo3odst.dll+012C196C,0x3C</Roll>
+          <FOV>halo3odst.dll+2D818D8</FOV>
+          <TheaterTime></TheaterTime>
+        </Pointers>
+      </Build>
+      <!-- pointers are same as 1.3385.0.0 -->
+      <Build number="1.3495.0.0">
+        <Pointers>
+          <X>halo3odst.dll+012C196C,0x28</X>
+          <Y>halo3odst.dll+012C196C,0x2C</Y>
+          <Z>halo3odst.dll+012C196C,0x30</Z>
+          <Yaw>halo3odst.dll+012C196C,0x34</Yaw>
+          <Pitch>halo3odst.dll+012C196C,0x38</Pitch>
+          <Roll>halo3odst.dll+012C196C,0x3C</Roll>
+          <FOV>halo3odst.dll+2D818D8</FOV>
+          <TheaterTime></TheaterTime>
+        </Pointers>
+      </Build>
+    </Game>
+
+    <Game name="Halo 4">
+      <!-- will update this at somepoint... -->
+      <Build number="1.3385.0.0">
+        <Pointers>
+          <X></X>
+          <Y></Y>
+          <Z></Z>
+          <Yaw></Yaw>
+          <Pitch></Pitch>
+          <Roll></Roll>
+          <FOV></FOV>
+          <TheaterTime></TheaterTime>
+        </Pointers>
+      </Build>
+      <Build number="1.3495.0.0">
+        <Pointers>
+          <X></X>
+          <Y></Y>
+          <Z></Z>
+          <Yaw></Yaw>
+          <Pitch></Pitch>
+          <Roll></Roll>
+          <FOV></FOV>
+          <TheaterTime></TheaterTime>
+        </Pointers>
+      </Build>
+    </Game>
+  </Games>
+</Configuration>

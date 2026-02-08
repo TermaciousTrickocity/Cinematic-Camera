@@ -54,9 +54,9 @@
             sortUp_button = new Button();
             sortDown_button = new Button();
             groupBox9 = new GroupBox();
-            groupBox1 = new GroupBox();
-            trackingDataGrid = new DataGridView();
             keyframeDataGridGroupBox = new GroupBox();
+            BlockKeyPress = new CheckBox();
+            SekelaTranslationBox = new TextBox();
             setSyncStart = new Button();
             label3 = new Label();
             timeSyncTextbox = new TextBox();
@@ -67,6 +67,8 @@
             trackingCheckbox = new CheckBox();
             trackListCombo = new ComboBox();
             button1 = new Button();
+            groupBox1 = new GroupBox();
+            trackingDataGrid = new DataGridView();
             groupBox8 = new GroupBox();
             groupBox11 = new GroupBox();
             button2 = new Button();
@@ -81,15 +83,31 @@
             lookTrackingSmoothing_Textbox = new TextBox();
             label5 = new Label();
             lookTracking_Combobox = new ComboBox();
+            dataGridView1 = new DataGridView();
+            groupBox2 = new GroupBox();
+            button3 = new Button();
+            TabControl = new TabControl();
+            tabPage1 = new TabPage();
+            tabPage2 = new TabPage();
+            comboBoxBuilds = new ComboBox();
+            comboBoxGames = new ComboBox();
+            tabPage3 = new TabPage();
+            DebugTabpage = new TabPage();
+            comboBoxProcesses = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)keyframeDataGridView).BeginInit();
             saveGroupbox.SuspendLayout();
             groupBox9.SuspendLayout();
+            keyframeDataGridGroupBox.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)trackingDataGrid).BeginInit();
-            keyframeDataGridGroupBox.SuspendLayout();
             groupBox8.SuspendLayout();
             groupBox11.SuspendLayout();
             groupBox10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            groupBox2.SuspendLayout();
+            TabControl.SuspendLayout();
+            tabPage1.SuspendLayout();
+            tabPage2.SuspendLayout();
             SuspendLayout();
             // 
             // keyframeDataGridView
@@ -97,7 +115,6 @@
             keyframeDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             keyframeDataGridView.Location = new Point(23, 45);
             keyframeDataGridView.Name = "keyframeDataGridView";
-            keyframeDataGridView.RowTemplate.Height = 25;
             keyframeDataGridView.Size = new Size(876, 336);
             keyframeDataGridView.TabIndex = 0;
             // 
@@ -241,7 +258,7 @@
             saveGroupbox.Controls.Add(importPathWithOffset);
             saveGroupbox.Controls.Add(exportPath_Button);
             saveGroupbox.Enabled = false;
-            saveGroupbox.Location = new Point(666, 11);
+            saveGroupbox.Location = new Point(684, 12);
             saveGroupbox.Name = "saveGroupbox";
             saveGroupbox.Size = new Size(272, 48);
             saveGroupbox.TabIndex = 9;
@@ -261,7 +278,7 @@
             // startFromSelection_checkbox
             // 
             startFromSelection_checkbox.AutoSize = true;
-            startFromSelection_checkbox.Location = new Point(289, 18);
+            startFromSelection_checkbox.Location = new Point(178, 18);
             startFromSelection_checkbox.Name = "startFromSelection_checkbox";
             startFromSelection_checkbox.Size = new Size(129, 19);
             startFromSelection_checkbox.TabIndex = 15;
@@ -306,7 +323,6 @@
             label2.Size = new Size(19, 15);
             label2.TabIndex = 10;
             label2.Text = "hz";
-            label2.Click += label2_Click;
             // 
             // updateModules
             // 
@@ -316,6 +332,7 @@
             updateModules.TabIndex = 19;
             updateModules.Text = "Load plugin";
             updateModules.UseVisualStyleBackColor = true;
+            updateModules.Visible = false;
             updateModules.Click += updateModules_Click;
             // 
             // sortUp_button
@@ -330,7 +347,7 @@
             // 
             // sortDown_button
             // 
-            sortDown_button.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            sortDown_button.Font = new Font("Segoe UI", 9F);
             sortDown_button.Location = new Point(6, 219);
             sortDown_button.Name = "sortDown_button";
             sortDown_button.Size = new Size(11, 162);
@@ -341,7 +358,6 @@
             // 
             // groupBox9
             // 
-            groupBox9.Controls.Add(groupBox1);
             groupBox9.Controls.Add(teleportZ);
             groupBox9.Controls.Add(resetCameraRotation_Button);
             groupBox9.Controls.Add(teleportToPlayer_Button);
@@ -357,39 +373,22 @@
             groupBox9.Controls.Add(AddKey_Button);
             groupBox9.Controls.Add(deleteKey_Button);
             groupBox9.Enabled = false;
-            groupBox9.Location = new Point(12, 65);
+            groupBox9.Location = new Point(6, 13);
             groupBox9.Name = "groupBox9";
-            groupBox9.Size = new Size(926, 510);
+            groupBox9.Size = new Size(924, 507);
             groupBox9.TabIndex = 14;
             groupBox9.TabStop = false;
             groupBox9.Text = "Control";
             // 
-            // groupBox1
-            // 
-            groupBox1.Controls.Add(trackingDataGrid);
-            groupBox1.Location = new Point(923, 113);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(449, 574);
-            groupBox1.TabIndex = 35;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Tracking";
-            groupBox1.Visible = false;
-            // 
-            // trackingDataGrid
-            // 
-            trackingDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            trackingDataGrid.Location = new Point(6, 22);
-            trackingDataGrid.Name = "trackingDataGrid";
-            trackingDataGrid.RowTemplate.Height = 25;
-            trackingDataGrid.Size = new Size(437, 546);
-            trackingDataGrid.TabIndex = 0;
-            // 
             // keyframeDataGridGroupBox
             // 
+            keyframeDataGridGroupBox.Controls.Add(BlockKeyPress);
+            keyframeDataGridGroupBox.Controls.Add(SekelaTranslationBox);
             keyframeDataGridGroupBox.Controls.Add(setSyncStart);
             keyframeDataGridGroupBox.Controls.Add(label3);
             keyframeDataGridGroupBox.Controls.Add(timeSyncTextbox);
             keyframeDataGridGroupBox.Controls.Add(label1);
+            keyframeDataGridGroupBox.Controls.Add(startFromSelection_checkbox);
             keyframeDataGridGroupBox.Controls.Add(CurrentTimeTextbox);
             keyframeDataGridGroupBox.Controls.Add(timesyncCheckbox);
             keyframeDataGridGroupBox.Controls.Add(StartDelayTextbox);
@@ -397,7 +396,6 @@
             keyframeDataGridGroupBox.Controls.Add(trackListCombo);
             keyframeDataGridGroupBox.Controls.Add(keyframeDataGridView);
             keyframeDataGridGroupBox.Controls.Add(pathStart_checkbox);
-            keyframeDataGridGroupBox.Controls.Add(startFromSelection_checkbox);
             keyframeDataGridGroupBox.Controls.Add(label2);
             keyframeDataGridGroupBox.Controls.Add(hzTextbox);
             keyframeDataGridGroupBox.Controls.Add(sortDown_button);
@@ -409,11 +407,33 @@
             keyframeDataGridGroupBox.TabStop = false;
             keyframeDataGridGroupBox.Text = "Keyframes";
             // 
+            // BlockKeyPress
+            // 
+            BlockKeyPress.AutoSize = true;
+            BlockKeyPress.Checked = true;
+            BlockKeyPress.CheckState = CheckState.Checked;
+            BlockKeyPress.Location = new Point(586, 18);
+            BlockKeyPress.Name = "BlockKeyPress";
+            BlockKeyPress.Size = new Size(105, 19);
+            BlockKeyPress.TabIndex = 37;
+            BlockKeyPress.Text = "Block keybinds";
+            BlockKeyPress.UseVisualStyleBackColor = true;
+            // 
+            // SekelaTranslationBox
+            // 
+            SekelaTranslationBox.Enabled = false;
+            SekelaTranslationBox.Location = new Point(300, 387);
+            SekelaTranslationBox.Name = "SekelaTranslationBox";
+            SekelaTranslationBox.ReadOnly = true;
+            SekelaTranslationBox.Size = new Size(73, 23);
+            SekelaTranslationBox.TabIndex = 41;
+            SekelaTranslationBox.Text = "00:00:00";
+            // 
             // setSyncStart
             // 
             setSyncStart.Location = new Point(210, 387);
             setSyncStart.Name = "setSyncStart";
-            setSyncStart.Size = new Size(84, 26);
+            setSyncStart.Size = new Size(84, 23);
             setSyncStart.TabIndex = 36;
             setSyncStart.Text = "grab current";
             setSyncStart.UseVisualStyleBackColor = true;
@@ -422,7 +442,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(379, 391);
+            label3.Location = new Point(671, 390);
             label3.Name = "label3";
             label3.Size = new Size(82, 15);
             label3.TabIndex = 34;
@@ -430,7 +450,7 @@
             // 
             // timeSyncTextbox
             // 
-            timeSyncTextbox.Location = new Point(131, 388);
+            timeSyncTextbox.Location = new Point(131, 387);
             timeSyncTextbox.Name = "timeSyncTextbox";
             timeSyncTextbox.Size = new Size(73, 23);
             timeSyncTextbox.TabIndex = 40;
@@ -449,7 +469,7 @@
             // CurrentTimeTextbox
             // 
             CurrentTimeTextbox.Enabled = false;
-            CurrentTimeTextbox.Location = new Point(300, 388);
+            CurrentTimeTextbox.Location = new Point(759, 387);
             CurrentTimeTextbox.Name = "CurrentTimeTextbox";
             CurrentTimeTextbox.ReadOnly = true;
             CurrentTimeTextbox.Size = new Size(73, 23);
@@ -505,12 +525,31 @@
             button1.Text = "Relocate path";
             button1.UseVisualStyleBackColor = true;
             // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(trackingDataGrid);
+            groupBox1.Location = new Point(1128, 465);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(449, 574);
+            groupBox1.TabIndex = 35;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Tracking";
+            groupBox1.Visible = false;
+            // 
+            // trackingDataGrid
+            // 
+            trackingDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            trackingDataGrid.Location = new Point(6, 22);
+            trackingDataGrid.Name = "trackingDataGrid";
+            trackingDataGrid.Size = new Size(437, 546);
+            trackingDataGrid.TabIndex = 0;
+            // 
             // groupBox8
             // 
             groupBox8.Controls.Add(groupBox11);
             groupBox8.Controls.Add(groupBox10);
             groupBox8.Enabled = false;
-            groupBox8.Location = new Point(1390, 24);
+            groupBox8.Location = new Point(1683, 52);
             groupBox8.Name = "groupBox8";
             groupBox8.Size = new Size(302, 226);
             groupBox8.TabIndex = 33;
@@ -648,34 +687,147 @@
             lookTracking_Combobox.TabIndex = 38;
             lookTracking_Combobox.Text = "(havok proxies)";
             // 
+            // dataGridView1
+            // 
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(6, 128);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.Size = new Size(428, 332);
+            dataGridView1.TabIndex = 34;
+            // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(button3);
+            groupBox2.Controls.Add(dataGridView1);
+            groupBox2.Location = new Point(1267, 163);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(440, 503);
+            groupBox2.TabIndex = 35;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "groupBox2";
+            // 
+            // button3
+            // 
+            button3.Location = new Point(6, 20);
+            button3.Name = "button3";
+            button3.Size = new Size(75, 23);
+            button3.TabIndex = 35;
+            button3.Text = "Add event";
+            button3.UseVisualStyleBackColor = true;
+            // 
+            // TabControl
+            // 
+            TabControl.Controls.Add(tabPage1);
+            TabControl.Controls.Add(tabPage2);
+            TabControl.Controls.Add(tabPage3);
+            TabControl.Controls.Add(DebugTabpage);
+            TabControl.Location = new Point(12, 59);
+            TabControl.Name = "TabControl";
+            TabControl.SelectedIndex = 0;
+            TabControl.Size = new Size(948, 551);
+            TabControl.TabIndex = 36;
+            // 
+            // tabPage1
+            // 
+            tabPage1.Controls.Add(groupBox9);
+            tabPage1.Location = new Point(4, 24);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Padding = new Padding(3);
+            tabPage1.Size = new Size(940, 523);
+            tabPage1.TabIndex = 0;
+            tabPage1.Text = "Control";
+            tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            tabPage2.Controls.Add(comboBoxProcesses);
+            tabPage2.Controls.Add(comboBoxBuilds);
+            tabPage2.Controls.Add(comboBoxGames);
+            tabPage2.Location = new Point(4, 24);
+            tabPage2.Name = "tabPage2";
+            tabPage2.Padding = new Padding(3);
+            tabPage2.Size = new Size(940, 523);
+            tabPage2.TabIndex = 1;
+            tabPage2.Text = "Advanced";
+            tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // comboBoxBuilds
+            // 
+            comboBoxBuilds.FormattingEnabled = true;
+            comboBoxBuilds.Location = new Point(11, 39);
+            comboBoxBuilds.Name = "comboBoxBuilds";
+            comboBoxBuilds.Size = new Size(206, 23);
+            comboBoxBuilds.TabIndex = 1;
+            // 
+            // comboBoxGames
+            // 
+            comboBoxGames.FormattingEnabled = true;
+            comboBoxGames.Location = new Point(11, 10);
+            comboBoxGames.Name = "comboBoxGames";
+            comboBoxGames.Size = new Size(206, 23);
+            comboBoxGames.TabIndex = 0;
+            // 
+            // tabPage3
+            // 
+            tabPage3.Location = new Point(4, 24);
+            tabPage3.Name = "tabPage3";
+            tabPage3.Size = new Size(940, 523);
+            tabPage3.TabIndex = 2;
+            tabPage3.Text = "Memory";
+            tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // DebugTabpage
+            // 
+            DebugTabpage.Location = new Point(4, 24);
+            DebugTabpage.Name = "DebugTabpage";
+            DebugTabpage.Size = new Size(940, 523);
+            DebugTabpage.TabIndex = 3;
+            DebugTabpage.Text = "Debug";
+            DebugTabpage.UseVisualStyleBackColor = true;
+            // 
+            // comboBoxProcesses
+            // 
+            comboBoxProcesses.FormattingEnabled = true;
+            comboBoxProcesses.Location = new Point(11, 68);
+            comboBoxProcesses.Name = "comboBoxProcesses";
+            comboBoxProcesses.Size = new Size(206, 23);
+            comboBoxProcesses.TabIndex = 2;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlLight;
-            ClientSize = new Size(954, 583);
+            ClientSize = new Size(969, 619);
+            Controls.Add(groupBox1);
+            Controls.Add(TabControl);
+            Controls.Add(groupBox2);
             Controls.Add(updateModules);
             Controls.Add(groupBox8);
-            Controls.Add(groupBox9);
             Controls.Add(saveGroupbox);
             MaximizeBox = false;
-            MaximumSize = new Size(970, 622);
-            MinimumSize = new Size(970, 622);
+            MaximumSize = new Size(985, 658);
+            MinimumSize = new Size(985, 658);
             Name = "MainForm";
             Text = "Halo camera tool";
             ((System.ComponentModel.ISupportInitialize)keyframeDataGridView).EndInit();
             saveGroupbox.ResumeLayout(false);
             groupBox9.ResumeLayout(false);
             groupBox9.PerformLayout();
-            groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)trackingDataGrid).EndInit();
             keyframeDataGridGroupBox.ResumeLayout(false);
             keyframeDataGridGroupBox.PerformLayout();
+            groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)trackingDataGrid).EndInit();
             groupBox8.ResumeLayout(false);
             groupBox11.ResumeLayout(false);
             groupBox11.PerformLayout();
             groupBox10.ResumeLayout(false);
             groupBox10.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            groupBox2.ResumeLayout(false);
+            TabControl.ResumeLayout(false);
+            tabPage1.ResumeLayout(false);
+            tabPage2.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -739,5 +891,19 @@
         private TextBox StartDelayTextbox;
         private TextBox timeSyncTextbox;
         private Button setSyncStart;
+        private DataGridView dataGridView1;
+        private GroupBox groupBox2;
+        private Button button3;
+        private TextBox SekelaTranslationBox;
+        private TabControl TabControl;
+        private TabPage tabPage1;
+        private TabPage tabPage2;
+        private TabPage tabPage3;
+        private GroupBox groupBox3;
+        private TabPage DebugTabpage;
+        private CheckBox BlockKeyPress;
+        private ComboBox comboBoxGames;
+        private ComboBox comboBoxBuilds;
+        private ComboBox comboBoxProcesses;
     }
 }
