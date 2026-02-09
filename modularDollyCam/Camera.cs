@@ -103,9 +103,6 @@ namespace modularDollyCam
         {
             try
             {
-                int.TryParse(StartDelayTextbox.Text, out int delaySeconds);
-
-
                 // Tick timesync
                 if (timesyncCheckbox.Checked && tickCount != null)
                 {
@@ -117,7 +114,10 @@ namespace modularDollyCam
                 }
 
                 // Delay start
-                if (delaySeconds > 0) await Task.Delay(delaySeconds * 1000);
+                if (int.TryParse(StartDelayTextbox.Text, out int delayStartSeconds) && delayStartSeconds > 0)
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(delayStartSeconds));
+                }
 
                 int originalSelectedRow = keyframeDataGridView.CurrentCell.RowIndex;
                 int originalSelectedColumn = keyframeDataGridView.CurrentCell.ColumnIndex;
@@ -214,6 +214,16 @@ namespace modularDollyCam
 
                 pathStart_checkbox.Checked = false;
                 keyframeDataGridView.Rows[originalSelectedRow].Cells[originalSelectedColumn].Selected = true;
+
+                if (pauseTicks.Checked == true && tickSpeed != null)
+                {
+                    if (int.TryParse(endDelay.Text, out int delayEndSeconds) && delayEndSeconds > 0)
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(delayEndSeconds));
+                    }
+
+                    memory.WriteMemory(tickSpeed, "float", $"0");
+                }
             }
             catch (Exception ex)
             {
