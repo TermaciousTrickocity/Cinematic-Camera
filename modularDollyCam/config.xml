@@ -1,128 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
-  <Processes>
-    <Process>MCC-Win64-Shipping</Process>
-    <Process>MCCWinStore-Win64-Shipping</Process>
-	 <Process>MCCWinStore-Win64-Shipping</Process>
-  </Processes>
-
-<!-- you get the idea, it's not that hard -->
+	<Processes>
+		<Process>MCC-Win64-Shipping</Process>
+		<Process>MCCWinStore-Win64-Shipping</Process>
+		<Process>HaloInfinite</Process>
+	</Processes>
+	<!-- you get the idea, it's not that hard -->
 	<!-- please for the love of God I beg that there will never be an update for MCC ever again -->
-
-  <Games>
-    <Game name="Reach">
-      <Build number="1.3385.0.0">
-        <Pointers>
-          <X>haloreach.dll+0192DDF0,0x28</X>
-          <Y>haloreach.dll+0192DDF0,0x2C</Y>
-          <Z>haloreach.dll+0192DDF0,0x30</Z>
-          <Yaw>haloreach.dll+0192DDF0,0x34</Yaw>
-          <Pitch>haloreach.dll+0192DDF0,0x38</Pitch>
-          <Roll>haloreach.dll+0192DDF0,0x3C</Roll>
-          <FOV>haloreach.dll+2A03D4C</FOV>
-		  <TickCount>haloreach.dll+019D2230,0x174</TickCount>
-          <TickSpeed>haloreach.dll+278EEDC</TickSpeed>
-        </Pointers>
-      </Build>
-      <Build number="1.3528.0.0">
-        <Pointers>
-          <X>haloreach.dll+01901ED0,0x28</X>
-          <Y>haloreach.dll+01901ED0,0x2C</Y>
-          <Z>haloreach.dll+01901ED0,0x30</Z>
-          <Yaw>haloreach.dll+01901ED0,0x34</Yaw>
-          <Pitch>haloreach.dll+01901ED0,0x38</Pitch>
-          <Roll>haloreach.dll+01901ED0,0x3C</Roll>
-		<!-- Set FOV to and from 70F & 120 in-game -->
-          <FOV>haloreach.dll+2A03CDC</FOV>
-		<!-- Stolen straight from HCM (burnts notes below) -->
-		<!-- scan nw "89 8b 64 01 00 00 b9 08 00 00 00" check what mov [rbx+164] accesses -->
-		  <TickCount>haloreach.dll+019A6310,0x174</TickCount>
-		<!-- 0 is paused, 1.0 normal speed, 3.0 is "max" speed -->
-          <TickSpeed>haloreach.dll+278EE3C</TickSpeed>
-        </Pointers>
-      </Build>
-    </Game>
-
-    <Game name="Halo 3">
-      <Build number="1.3385.0.0">
-        <Pointers>
-          <X>halo3.dll+0125BAA4,0x28</X>
-          <Y>halo3.dll+0125BAA4,0x2C</Y>
-          <Z>halo3.dll+0125BAA4,0x30</Z>
-          <Yaw>halo3.dll+0125BAA4,0x34</Yaw>
-          <Pitch>halo3.dll+0125BAA4,0x38</Pitch>
-          <Roll>halo3.dll+0125BAA4,0x3C</Roll>
-          <FOV>halo3.dll+2D3DDE4</FOV>
-          <TickSpeed></TickSpeed>
-        </Pointers>
-      </Build>
-      <Build number="1.3495.0.0">
-        <Pointers>
-          <X>halo3.dll+0125CB24,0x28</X>
-          <Y>halo3.dll+0125CB24,0x2C</Y>
-          <Z>halo3.dll+0125CB24,0x30</Z>
-          <Yaw>halo3.dll+0125CB24,0x34</Yaw>
-          <Pitch>halo3.dll+0125CB24,0x38</Pitch>
-          <Roll>halo3.dll+0125CB24,0x3C</Roll>
-          <FOV>halo3.dll+2D3EDE4</FOV>
-          <TickSpeed></TickSpeed>
-        </Pointers>
-      </Build>
-    </Game>
-
-    <Game name="ODST">
-      <Build number="1.3385.0.0">
-        <Pointers>
-          <X>halo3odst.dll+012C196C,0x28</X>
-          <Y>halo3odst.dll+012C196C,0x2C</Y>
-          <Z>halo3odst.dll+012C196C,0x30</Z>
-          <Yaw>halo3odst.dll+012C196C,0x34</Yaw>
-          <Pitch>halo3odst.dll+012C196C,0x38</Pitch>
-          <Roll>halo3odst.dll+012C196C,0x3C</Roll>
-          <FOV>halo3odst.dll+2D818D8</FOV>
-          <TickSpeed></TickSpeed>
-        </Pointers>
-      </Build>
-      <!-- pointers are same as 1.3385.0.0 -->
-      <Build number="1.3495.0.0">
-        <Pointers>
-          <X>halo3odst.dll+012C196C,0x28</X>
-          <Y>halo3odst.dll+012C196C,0x2C</Y>
-          <Z>halo3odst.dll+012C196C,0x30</Z>
-          <Yaw>halo3odst.dll+012C196C,0x34</Yaw>
-          <Pitch>halo3odst.dll+012C196C,0x38</Pitch>
-          <Roll>halo3odst.dll+012C196C,0x3C</Roll>
-          <FOV>halo3odst.dll+2D818D8</FOV>
-          <TickSpeed></TickSpeed>
-        </Pointers>
-      </Build>
-    </Game>
-
-    <Game name="Halo 4">
-      <!-- will update this at somepoint... -->
-      <Build number="1.3385.0.0">
-        <Pointers>
-          <X></X>
-          <Y></Y>
-          <Z></Z>
-          <Yaw></Yaw>
-          <Pitch></Pitch>
-          <Roll></Roll>
-          <FOV></FOV>
-          <TickSpeed></TickSpeed>
-        </Pointers>
-      </Build>
-      <Build number="1.3495.0.0">
-        <Pointers>
-          <X></X>
-          <Y></Y>
-          <Z></Z>
-          <Yaw></Yaw>
-          <Pitch></Pitch>
-          <Roll></Roll>
-          <FOV></FOV>
-          <TickSpeed></TickSpeed>
-        </Pointers>
-      </Build>
-    </Game>
-  </Games>
+	<Games>
+		<Game name="Reach">
+			<Build number="1.3385.0.0">
+				<Pointers>
+					<X>haloreach.dll+0192DDF0,0x28</X>
+					<Y>haloreach.dll+0192DDF0,0x2C</Y>
+					<Z>haloreach.dll+0192DDF0,0x30</Z>
+					<Yaw>haloreach.dll+0192DDF0,0x34</Yaw>
+					<Pitch>haloreach.dll+0192DDF0,0x38</Pitch>
+					<Roll>haloreach.dll+0192DDF0,0x3C</Roll>
+					<FOV>haloreach.dll+2A03D4C</FOV>
+					<TickCount>haloreach.dll+019D2230,0x174</TickCount>
+					<TickSpeed>haloreach.dll+278EEDC</TickSpeed>
+				</Pointers>
+			</Build>
+			<Build number="1.3528.0.0">
+				<Pointers>
+					<X>haloreach.dll+01901ED0,0x28</X>
+					<Y>haloreach.dll+01901ED0,0x2C</Y>
+					<Z>haloreach.dll+01901ED0,0x30</Z>
+					<Yaw>haloreach.dll+01901ED0,0x34</Yaw>
+					<Pitch>haloreach.dll+01901ED0,0x38</Pitch>
+					<Roll>haloreach.dll+01901ED0,0x3C</Roll>
+					<!-- Set FOV to and from 70F & 120 in-game -->
+					<FOV>haloreach.dll+2A03CDC</FOV>
+					<!-- Stolen straight from HCM (burnts notes below) -->
+					<!-- scan nw "89 8b 64 01 00 00 b9 08 00 00 00" check what mov [rbx+164] accesses -->
+					<TickCount>haloreach.dll+019A6310,0x174</TickCount>
+					<!-- 0 is paused, 1.0 normal speed, 3.0 is "max" speed -->
+					<TickSpeed>haloreach.dll+278EE3C</TickSpeed>
+				</Pointers>
+			</Build>
+		</Game>
+		<Game name="Halo 3">
+			<Build number="1.3385.0.0">
+				<Pointers>
+					<X>halo3.dll+0125BAA4,0x28</X>
+					<Y>halo3.dll+0125BAA4,0x2C</Y>
+					<Z>halo3.dll+0125BAA4,0x30</Z>
+					<Yaw>halo3.dll+0125BAA4,0x34</Yaw>
+					<Pitch>halo3.dll+0125BAA4,0x38</Pitch>
+					<Roll>halo3.dll+0125BAA4,0x3C</Roll>
+					<FOV>halo3.dll+2D3DDE4</FOV>
+					<TickCount />
+					<TickSpeed />
+				</Pointers>
+			</Build>
+			<Build number="1.3495.0.0">
+				<Pointers>
+					<X>halo3.dll+0125CB24,0x28</X>
+					<Y>halo3.dll+0125CB24,0x2C</Y>
+					<Z>halo3.dll+0125CB24,0x30</Z>
+					<Yaw>halo3.dll+0125CB24,0x34</Yaw>
+					<Pitch>halo3.dll+0125CB24,0x38</Pitch>
+					<Roll>halo3.dll+0125CB24,0x3C</Roll>
+					<FOV>halo3.dll+2D3EDE4</FOV>
+					<TickCount />
+					<TickSpeed />
+				</Pointers>
+			</Build>
+		</Game>
+		<Game name="ODST">
+			<Build number="1.3385.0.0">
+				<Pointers>
+					<X>halo3odst.dll+012C196C,0x28</X>
+					<Y>halo3odst.dll+012C196C,0x2C</Y>
+					<Z>halo3odst.dll+012C196C,0x30</Z>
+					<Yaw>halo3odst.dll+012C196C,0x34</Yaw>
+					<Pitch>halo3odst.dll+012C196C,0x38</Pitch>
+					<Roll>halo3odst.dll+012C196C,0x3C</Roll>
+					<FOV>halo3odst.dll+2D818D8</FOV>
+					<TickCount />
+					<TickSpeed />
+				</Pointers>
+			</Build>
+			<!-- pointers are same as 1.3385.0.0 -->
+			<Build number="1.3495.0.0">
+				<Pointers>
+					<X>halo3odst.dll+012C196C,0x28</X>
+					<Y>halo3odst.dll+012C196C,0x2C</Y>
+					<Z>halo3odst.dll+012C196C,0x30</Z>
+					<Yaw>halo3odst.dll+012C196C,0x34</Yaw>
+					<Pitch>halo3odst.dll+012C196C,0x38</Pitch>
+					<Roll>halo3odst.dll+012C196C,0x3C</Roll>
+					<FOV>halo3odst.dll+2D818D8</FOV>
+					<TickCount />
+					<TickSpeed />
+				</Pointers>
+			</Build>
+		</Game>
+		<Game name="Halo 4">
+			<!-- will update this at somepoint... -->
+			<Build number="1.3385.0.0">
+				<Pointers>
+					<X />
+					<Y />
+					<Z />
+					<Yaw />
+					<Pitch />
+					<Roll />
+					<FOV />
+					<TickCount />
+					<TickSpeed />
+				</Pointers>
+			</Build>
+			<Build number="1.3495.0.0">
+				<Pointers>
+					<X />
+					<Y />
+					<Z />
+					<Yaw />
+					<Pitch />
+					<Roll />
+					<FOV />
+					<TickCount />
+					<TickSpeed />
+				</Pointers>
+			</Build>
+		</Game>
+		
+		<Game name="Halo Infinite">
+				<!-- placeholder for when it's needed -->
+			<!-- Campaign freecam speedrun patch -->
+			<Build number="6.10021.16272.0">
+				<Pointers>
+					<X />
+					<Y />
+					<Z />
+					<Yaw />
+					<Pitch />
+					<Roll />
+					<FOV />
+					<TickCount />
+					<TickSpeed />
+				</Pointers>
+			</Build>
+			<!-- Latest campaign release -->
+			<Build number="6.10026.18197.0">
+				<Pointers>
+					<X />
+					<Y />
+					<Z />
+					<Yaw />
+					<Pitch />
+					<Roll />
+					<FOV />
+					<TickCount />
+					<TickSpeed />
+				</Pointers>
+			</Build>
+		</Game>
+		
+	</Games>
 </Configuration>
