@@ -116,7 +116,7 @@ namespace modularDollyCam
                 pitchAng = p?.Pitch;
                 rollAng = p?.Roll;
                 playerFov = p?.FOV;
-                theaterTime = p?.TickCount;
+                tickCount = p?.TickCount;
                 tickSpeed = p?.TickSpeed;
 
                 GetModules();
@@ -139,7 +139,7 @@ namespace modularDollyCam
 
         private void setSyncStart_Click(object sender, EventArgs e)
         {
-
+            setCurrentTick();
         }
 
         private void timeSyncTextbox_TextChanged(object sender, EventArgs e)

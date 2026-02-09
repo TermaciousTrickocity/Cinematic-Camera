@@ -19,7 +19,8 @@ namespace modularDollyCam
         public float startSync;
         public string trackingTargetAddress;
 
-        // Memory addresses
+        public int startTick;
+
         public string xPos;
         public string yPos;
         public string zPos;
@@ -27,9 +28,9 @@ namespace modularDollyCam
         public string pitchAng;
         public string rollAng;
         public string playerFov;
+        public string tickCount;
         public string tickSpeed;
-
-        // Keyframes list
+        
         List<Keyframe> keyFrames = new List<Keyframe>();
 
         private void SetupDataGridView()
@@ -58,7 +59,6 @@ namespace modularDollyCam
             keyframeDataGridView.Rows.Add(x, y, z, yaw, pitch, roll, fov, transitionTime, tickSpeed);
         }
 
-        // Keyframe class for cleaner data
         public class Keyframe
         {
             public float X, Y, Z;
@@ -77,7 +77,6 @@ namespace modularDollyCam
             }
         }
 
-        // Catmull-Rom interpolation
         static Keyframe CatmullRomInterpolation(Keyframe p0, Keyframe p1, Keyframe p2, Keyframe p3, float t)
         {
             float t2 = t * t;
@@ -97,7 +96,7 @@ namespace modularDollyCam
             float fov = c0 * p0.FOV + c1 * p1.FOV + c2 * p2.FOV + c3 * p3.FOV;
             float tick = c0 * p0.TickSpeed + c1 * p1.TickSpeed + c2 * p2.TickSpeed + c3 * p3.TickSpeed;
 
-            return new Keyframe(x, y, z, yaw, pitch, roll, fov, 0, tick); // TransitionTime not used here
+            return new Keyframe(x, y, z, yaw, pitch, roll, fov, 0, tick);
         }
 
         public async Task MoveCamera()
@@ -106,17 +105,19 @@ namespace modularDollyCam
             {
                 int.TryParse(StartDelayTextbox.Text, out int delaySeconds);
 
-                if (timesyncCheckbox.Checked && theaterTime != null)
+
+                // Tick timesync
+                if (timesyncCheckbox.Checked && tickCount != null)
                 {
                     while (true)
                     {
-                        float time = memory.ReadFloat(theaterTime);
-                        if (time >= startSync) break;
+                        int time = memory.ReadInt(tickCount);
+                        if (time >= startTick) break;
                     }
                 }
 
-                if (delaySeconds > 0)
-                    await Task.Delay(delaySeconds * 1000);
+                // Delay start
+                if (delaySeconds > 0) await Task.Delay(delaySeconds * 1000);
 
                 int originalSelectedRow = keyframeDataGridView.CurrentCell.RowIndex;
                 int originalSelectedColumn = keyframeDataGridView.CurrentCell.ColumnIndex;
@@ -126,9 +127,7 @@ namespace modularDollyCam
 
                 keyFrames.Clear();
 
-                int startIndex = (startFromSelection_checkbox.Checked && keyframeDataGridView.SelectedRows.Count > 0)
-                    ? keyframeDataGridView.SelectedRows[0].Index
-                    : 0;
+                int startIndex = (startFromSelection_checkbox.Checked && keyframeDataGridView.SelectedRows.Count > 0) ? keyframeDataGridView.SelectedRows[0].Index : 0;
 
                 for (int i = startIndex; i < keyframeDataGridView.Rows.Count; i++)
                 {
@@ -173,7 +172,11 @@ namespace modularDollyCam
                         memory.WriteMemory(pitchAng, "float", $"{interpolated.Pitch}");
                         memory.WriteMemory(rollAng, "float", $"{interpolated.Roll}");
                         memory.WriteMemory(playerFov, "float", $"{interpolated.FOV}");
-                        memory.WriteMemory(tickSpeed, "float", $"{interpolated.TickSpeed}");
+                        
+                        if (tickSpeed != null)
+                        {
+                            memory.WriteMemory(tickSpeed, "float", $"{interpolated.TickSpeed}");
+                        }
 
                         if (lookTracking && trackingTargetAddress != null)
                         {
@@ -205,7 +208,7 @@ namespace modularDollyCam
                             memory.WriteMemory(pitchAng, "float", $"{pitch}");
                         }
 
-                        await Task.Delay(delayMs);
+                        await Task.Delay(1);
                     }
                 }
 
@@ -217,6 +220,11 @@ namespace modularDollyCam
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK);
                 pathStart_checkbox.Checked = false;
             }
+        }
+        void setCurrentTick()
+        {
+            startTick = memory.ReadInt(tickCount);
+            timeSyncTextbox.Text = startTick.ToString();
         }
 
         public async Task getPlayerList()
@@ -241,21 +249,6 @@ namespace modularDollyCam
                     break;
 
                 trackListCombo.Items.Add(result);
-            }
-        }
-
-        public async Task getCurrentTime()
-        {
-            if (theaterTime == null) return;
-
-            while (true)
-            {
-                float time = memory.ReadFloat(theaterTime, "", false);
-                TimeSpan timeSpan = TimeSpan.FromSeconds(time);
-                string formattedTime = timeSpan.ToString(@"hh\:mm\:ss\:fff");
-
-                CurrentTimeTextbox.Text = formattedTime;
-                await Task.Delay(1);
             }
         }
     }

@@ -56,12 +56,9 @@
             groupBox9 = new GroupBox();
             keyframeDataGridGroupBox = new GroupBox();
             BlockKeyPress = new CheckBox();
-            SekelaTranslationBox = new TextBox();
             setSyncStart = new Button();
-            label3 = new Label();
             timeSyncTextbox = new TextBox();
             label1 = new Label();
-            CurrentTimeTextbox = new TextBox();
             timesyncCheckbox = new CheckBox();
             StartDelayTextbox = new TextBox();
             trackingCheckbox = new CheckBox();
@@ -89,11 +86,11 @@
             TabControl = new TabControl();
             tabPage1 = new TabPage();
             tabPage2 = new TabPage();
+            comboBoxProcesses = new ComboBox();
             comboBoxBuilds = new ComboBox();
             comboBoxGames = new ComboBox();
             tabPage3 = new TabPage();
             DebugTabpage = new TabPage();
-            comboBoxProcesses = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)keyframeDataGridView).BeginInit();
             saveGroupbox.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -383,13 +380,10 @@
             // keyframeDataGridGroupBox
             // 
             keyframeDataGridGroupBox.Controls.Add(BlockKeyPress);
-            keyframeDataGridGroupBox.Controls.Add(SekelaTranslationBox);
             keyframeDataGridGroupBox.Controls.Add(setSyncStart);
-            keyframeDataGridGroupBox.Controls.Add(label3);
             keyframeDataGridGroupBox.Controls.Add(timeSyncTextbox);
             keyframeDataGridGroupBox.Controls.Add(label1);
             keyframeDataGridGroupBox.Controls.Add(startFromSelection_checkbox);
-            keyframeDataGridGroupBox.Controls.Add(CurrentTimeTextbox);
             keyframeDataGridGroupBox.Controls.Add(timesyncCheckbox);
             keyframeDataGridGroupBox.Controls.Add(StartDelayTextbox);
             keyframeDataGridGroupBox.Controls.Add(trackingCheckbox);
@@ -419,16 +413,6 @@
             BlockKeyPress.Text = "Block keybinds";
             BlockKeyPress.UseVisualStyleBackColor = true;
             // 
-            // SekelaTranslationBox
-            // 
-            SekelaTranslationBox.Enabled = false;
-            SekelaTranslationBox.Location = new Point(300, 387);
-            SekelaTranslationBox.Name = "SekelaTranslationBox";
-            SekelaTranslationBox.ReadOnly = true;
-            SekelaTranslationBox.Size = new Size(73, 23);
-            SekelaTranslationBox.TabIndex = 41;
-            SekelaTranslationBox.Text = "00:00:00";
-            // 
             // setSyncStart
             // 
             setSyncStart.Location = new Point(210, 387);
@@ -438,15 +422,6 @@
             setSyncStart.Text = "grab current";
             setSyncStart.UseVisualStyleBackColor = true;
             setSyncStart.Click += setSyncStart_Click;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(671, 390);
-            label3.Name = "label3";
-            label3.Size = new Size(82, 15);
-            label3.TabIndex = 34;
-            label3.Text = "(Current time)";
             // 
             // timeSyncTextbox
             // 
@@ -465,16 +440,6 @@
             label1.Size = new Size(35, 15);
             label1.TabIndex = 39;
             label1.Text = "delay";
-            // 
-            // CurrentTimeTextbox
-            // 
-            CurrentTimeTextbox.Enabled = false;
-            CurrentTimeTextbox.Location = new Point(759, 387);
-            CurrentTimeTextbox.Name = "CurrentTimeTextbox";
-            CurrentTimeTextbox.ReadOnly = true;
-            CurrentTimeTextbox.Size = new Size(73, 23);
-            CurrentTimeTextbox.TabIndex = 36;
-            CurrentTimeTextbox.Text = "00:00:00";
             // 
             // timesyncCheckbox
             // 
@@ -751,6 +716,14 @@
             tabPage2.Text = "Advanced";
             tabPage2.UseVisualStyleBackColor = true;
             // 
+            // comboBoxProcesses
+            // 
+            comboBoxProcesses.FormattingEnabled = true;
+            comboBoxProcesses.Location = new Point(11, 68);
+            comboBoxProcesses.Name = "comboBoxProcesses";
+            comboBoxProcesses.Size = new Size(206, 23);
+            comboBoxProcesses.TabIndex = 2;
+            // 
             // comboBoxBuilds
             // 
             comboBoxBuilds.FormattingEnabled = true;
@@ -784,14 +757,6 @@
             DebugTabpage.TabIndex = 3;
             DebugTabpage.Text = "Debug";
             DebugTabpage.UseVisualStyleBackColor = true;
-            // 
-            // comboBoxProcesses
-            // 
-            comboBoxProcesses.FormattingEnabled = true;
-            comboBoxProcesses.Location = new Point(11, 68);
-            comboBoxProcesses.Name = "comboBoxProcesses";
-            comboBoxProcesses.Size = new Size(206, 23);
-            comboBoxProcesses.TabIndex = 2;
             // 
             // MainForm
             // 
@@ -882,8 +847,6 @@
         private CheckBox directLookCheckbox;
         private GroupBox groupBox1;
         private DataGridView trackingDataGrid;
-        private TextBox CurrentTimeTextbox;
-        private Label label3;
         private CheckBox timesyncCheckbox;
         private ComboBox trackListCombo;
         private CheckBox trackingCheckbox;
@@ -894,7 +857,6 @@
         private DataGridView dataGridView1;
         private GroupBox groupBox2;
         private Button button3;
-        private TextBox SekelaTranslationBox;
         private TabControl TabControl;
         private TabPage tabPage1;
         private TabPage tabPage2;
