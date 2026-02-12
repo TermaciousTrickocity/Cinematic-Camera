@@ -42,5 +42,10 @@ namespace modularDollyCam
         public string FOV { get; set; }
         public string TickCount { get; set; }
         public string TickSpeed { get; set; }
+        public string PlayerList { get; set; }
+
+        [XmlArray("PlayerListOffsets")]
+        [XmlArrayItem("Offset")]
+        public List<string> PlayerListOffsets { get; set; } = new List<string>();
     }
 }

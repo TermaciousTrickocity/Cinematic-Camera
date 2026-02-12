@@ -7,6 +7,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using Console = Colorful.Console;
 
 namespace modularDollyCam
@@ -118,6 +119,9 @@ namespace modularDollyCam
                 playerFov = p?.FOV;
                 tickCount = p?.TickCount;
                 tickSpeed = p?.TickSpeed;
+                playerList = p?.PlayerList;
+                // new: copy offsets (may be empty) from config into the runtime field
+                playerListOffsets = p?.PlayerListOffsets ?? new List<string>();
 
                 GetModules();
             }

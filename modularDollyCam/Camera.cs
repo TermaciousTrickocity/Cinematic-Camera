@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace modularDollyCam
 {
@@ -30,7 +31,11 @@ namespace modularDollyCam
         public string playerFov;
         public string tickCount;
         public string tickSpeed;
-        
+        public string playerList;
+
+
+        public List<string> playerListOffsets = new List<string>();
+
         List<Keyframe> keyFrames = new List<Keyframe>();
 
         private void SetupDataGridView()
@@ -215,6 +220,7 @@ namespace modularDollyCam
                 pathStart_checkbox.Checked = false;
                 keyframeDataGridView.Rows[originalSelectedRow].Cells[originalSelectedColumn].Selected = true;
 
+                // Delay end + just end after path is done
                 if (pauseTicks.Checked == true && tickSpeed != null)
                 {
                     if (int.TryParse(endDelay.Text, out int delayEndSeconds) && delayEndSeconds > 0)
@@ -241,15 +247,42 @@ namespace modularDollyCam
         {
             trackListCombo.Items.Clear();
 
-            int[] offsets =
+            List<int> offsetsList = new List<int>();
+
+            if (playerListOffsets != null && playerListOffsets.Count > 0)
             {
-                0x120, 0x5B0, 0xA40, 0xED0, 0x1360, 0x17F0, 0x1C80, 0x2110,
-                0x25A0, 0x2A30, 0x2EC0, 0x3350, 0x37E0, 0x3C70, 0x4100, 0x4590
-            };
+                foreach (var s in playerListOffsets)
+                {
+                    if (string.IsNullOrWhiteSpace(s)) continue;
+                    string t = s.Trim();
+
+                    try
+                    {
+                        int parsed;
+                        if (t.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
+                        {
+                            parsed = int.Parse(t.Substring(2), NumberStyles.HexNumber);
+                        }
+                        else
+                        {
+                            bool hasHexChar = t.IndexOfAny(new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'a', 'b', 'c', 'd', 'e', 'f' }) >= 0;
+                            parsed = hasHexChar
+                                ? int.Parse(t, NumberStyles.HexNumber)
+                                : int.Parse(t, NumberStyles.Integer);
+                        }
+
+                        offsetsList.Add(parsed);
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+                }
+            }
 
             long baseAddr = long.Parse(trackingTargetAddress, System.Globalization.NumberStyles.HexNumber);
 
-            foreach (int offset in offsets)
+            foreach (int offset in offsetsList)
             {
                 string currentAddress = (baseAddr + offset).ToString("X");
                 byte[] name = memory.ReadBytes(currentAddress, 30);
