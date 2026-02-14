@@ -55,11 +55,11 @@
           <Pitch>halo3.dll+0125BAA4,0x38</Pitch>
           <Roll>halo3.dll+0125BAA4,0x3C</Roll>
           <FOV>halo3.dll+2D3DDE4</FOV>
-          <TickCount />
-          <TickSpeed />
+          <TickCount>halo3.dll+012BF2C0,0x150</TickCount>
+            <TickSpeed />
         </Pointers>
       </Build>
-      <Build number="1.3495.0.0">
+      <Build number="1.3528.0.0">
         <Pointers>
           <X>halo3.dll+0125CB24,0x28</X>
           <Y>halo3.dll+0125CB24,0x2C</Y>
@@ -68,7 +68,7 @@
           <Pitch>halo3.dll+0125CB24,0x38</Pitch>
           <Roll>halo3.dll+0125CB24,0x3C</Roll>
           <FOV>halo3.dll+2D3EDE4</FOV>
-          <TickCount />
+          <TickCount>halo3.dll+012C0340,0x150</TickCount>
           <TickSpeed />
         </Pointers>
       </Build>
@@ -83,7 +83,7 @@
           <Pitch>halo3odst.dll+012C196C,0x38</Pitch>
           <Roll>halo3odst.dll+012C196C,0x3C</Roll>
           <FOV>halo3odst.dll+2D818D8</FOV>
-          <TickCount />
+          <TickCount>halo3odst.dll+01FE9630,0x10C</TickCount>
           <TickSpeed />
         </Pointers>
       </Build>
@@ -97,7 +97,7 @@
           <Pitch>halo3odst.dll+012C196C,0x38</Pitch>
           <Roll>halo3odst.dll+012C196C,0x3C</Roll>
           <FOV>halo3odst.dll+2D818D8</FOV>
-          <TickCount />
+          <TickCount>halo3odst.dll+01FE9630,0x10C</TickCount>
           <TickSpeed />
         </Pointers>
       </Build>
