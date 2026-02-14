@@ -172,12 +172,6 @@ namespace modularDollyCam
             }
         }
 
-        private void teleportCamera_Button_Click(object sender, EventArgs e)
-        {
-            memory.WriteMemory(xPos, "float", teleportX.Text.ToString());
-            memory.WriteMemory(yPos, "float", teleportY.Text.ToString());
-            memory.WriteMemory(zPos, "float", teleportZ.Text.ToString());
-        }
 
         private void clearList_Button_Click(object sender, EventArgs e)
         {
@@ -187,13 +181,6 @@ namespace modularDollyCam
             {
                 keyframeDataGridView.Rows.Clear();
             }
-        }
-
-        private void teleportToPlayer_Button_Click(object sender, EventArgs e)
-        {
-            memory.WriteMemory(xPos, "float", "100000.0");
-            memory.WriteMemory(yPos, "float", "100000.0");
-            memory.WriteMemory(zPos, "float", "100000.0");
         }
 
         private void dupeSelection_Button_Click(object sender, EventArgs e)
@@ -360,6 +347,50 @@ namespace modularDollyCam
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             //lookTracking = !lookTracking;
+        }
+
+        private void setTop_CheckedChanged(object sender, EventArgs e)
+        {
+            if (setTop.Checked == true)
+            {
+                TopMost = true;
+            }
+            else
+            {
+                TopMost = false;
+            }
+        }
+
+        private void StartDelayTextbox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '\r' || e.KeyChar == '\n')
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void hzTextbox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '\r' || e.KeyChar == '\n')
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void TimeSyncTextbox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '\r' || e.KeyChar == '\n')
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void EndDelay_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '\r' || e.KeyChar == '\n')
+            {
+                e.Handled = true;
+            }
         }
     }
 }

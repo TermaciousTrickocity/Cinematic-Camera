@@ -32,12 +32,7 @@
             AddKey_Button = new Button();
             importPath_Button = new Button();
             exportPath_Button = new Button();
-            teleportToPlayer_Button = new Button();
-            teleportZ = new TextBox();
-            teleportY = new TextBox();
-            teleportX = new TextBox();
             resetCameraRotation_Button = new Button();
-            teleportCamera_Button = new Button();
             teleportToSelection_Button = new Button();
             targetTracking = new CheckBox();
             deleteKey_Button = new Button();
@@ -57,13 +52,13 @@
             label3 = new Label();
             endDelay = new TextBox();
             pauseTicks = new CheckBox();
-            BlockKeyPress = new CheckBox();
             setSyncStart = new Button();
             timeSyncTextbox = new TextBox();
             label1 = new Label();
             timesyncCheckbox = new CheckBox();
             StartDelayTextbox = new TextBox();
             button1 = new Button();
+            BlockKeyPress = new CheckBox();
             trackingCheckbox = new CheckBox();
             trackListCombo = new ComboBox();
             groupBox8 = new GroupBox();
@@ -88,6 +83,7 @@
             comboBoxGames = new ComboBox();
             tabPage3 = new TabPage();
             DebugTabpage = new TabPage();
+            setTop = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)keyframeDataGridView).BeginInit();
             saveGroupbox.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -103,10 +99,11 @@
             // 
             // keyframeDataGridView
             // 
+            keyframeDataGridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             keyframeDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             keyframeDataGridView.Location = new Point(29, 45);
             keyframeDataGridView.Name = "keyframeDataGridView";
-            keyframeDataGridView.Size = new Size(970, 368);
+            keyframeDataGridView.Size = new Size(952, 372);
             keyframeDataGridView.TabIndex = 0;
             // 
             // AddKey_Button
@@ -123,7 +120,7 @@
             // 
             importPath_Button.Location = new Point(86, 16);
             importPath_Button.Name = "importPath_Button";
-            importPath_Button.Size = new Size(74, 26);
+            importPath_Button.Size = new Size(74, 34);
             importPath_Button.TabIndex = 5;
             importPath_Button.Text = "Load";
             importPath_Button.UseVisualStyleBackColor = true;
@@ -133,49 +130,15 @@
             // 
             exportPath_Button.Location = new Point(6, 16);
             exportPath_Button.Name = "exportPath_Button";
-            exportPath_Button.Size = new Size(74, 26);
+            exportPath_Button.Size = new Size(74, 34);
             exportPath_Button.TabIndex = 6;
             exportPath_Button.Text = "Save";
             exportPath_Button.UseVisualStyleBackColor = true;
             exportPath_Button.Click += exportPath_Button_Click;
             // 
-            // teleportToPlayer_Button
-            // 
-            teleportToPlayer_Button.Location = new Point(725, 48);
-            teleportToPlayer_Button.Name = "teleportToPlayer_Button";
-            teleportToPlayer_Button.Size = new Size(129, 26);
-            teleportToPlayer_Button.TabIndex = 34;
-            teleportToPlayer_Button.Text = "Teleport to player";
-            teleportToPlayer_Button.UseVisualStyleBackColor = true;
-            teleportToPlayer_Button.Click += teleportToPlayer_Button_Click;
-            // 
-            // teleportZ
-            // 
-            teleportZ.Location = new Point(962, 19);
-            teleportZ.Name = "teleportZ";
-            teleportZ.Size = new Size(45, 23);
-            teleportZ.TabIndex = 17;
-            teleportZ.Text = "0.00";
-            // 
-            // teleportY
-            // 
-            teleportY.Location = new Point(911, 19);
-            teleportY.Name = "teleportY";
-            teleportY.Size = new Size(45, 23);
-            teleportY.TabIndex = 16;
-            teleportY.Text = "0.00";
-            // 
-            // teleportX
-            // 
-            teleportX.Location = new Point(860, 19);
-            teleportX.Name = "teleportX";
-            teleportX.Size = new Size(45, 23);
-            teleportX.TabIndex = 15;
-            teleportX.Text = "0.00";
-            // 
             // resetCameraRotation_Button
             // 
-            resetCameraRotation_Button.Location = new Point(166, 51);
+            resetCameraRotation_Button.Location = new Point(511, 19);
             resetCameraRotation_Button.Name = "resetCameraRotation_Button";
             resetCameraRotation_Button.Size = new Size(117, 26);
             resetCameraRotation_Button.TabIndex = 7;
@@ -183,19 +146,10 @@
             resetCameraRotation_Button.UseVisualStyleBackColor = true;
             resetCameraRotation_Button.Click += resetCameraRotation_Button_Click;
             // 
-            // teleportCamera_Button
-            // 
-            teleportCamera_Button.Location = new Point(766, 16);
-            teleportCamera_Button.Name = "teleportCamera_Button";
-            teleportCamera_Button.Size = new Size(88, 26);
-            teleportCamera_Button.TabIndex = 8;
-            teleportCamera_Button.Text = "Teleport camera";
-            teleportCamera_Button.UseVisualStyleBackColor = true;
-            teleportCamera_Button.Click += teleportCamera_Button_Click;
-            // 
             // teleportToSelection_Button
             // 
-            teleportToSelection_Button.Location = new Point(860, 48);
+            teleportToSelection_Button.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            teleportToSelection_Button.Location = new Point(842, 19);
             teleportToSelection_Button.Name = "teleportToSelection_Button";
             teleportToSelection_Button.Size = new Size(147, 26);
             teleportToSelection_Button.TabIndex = 6;
@@ -215,7 +169,7 @@
             // 
             // deleteKey_Button
             // 
-            deleteKey_Button.Location = new Point(8, 50);
+            deleteKey_Button.Location = new Point(353, 19);
             deleteKey_Button.Name = "deleteKey_Button";
             deleteKey_Button.Size = new Size(72, 26);
             deleteKey_Button.TabIndex = 4;
@@ -225,7 +179,7 @@
             // 
             // replaceCurrent_Button
             // 
-            replaceCurrent_Button.Location = new Point(86, 19);
+            replaceCurrent_Button.Location = new Point(130, 19);
             replaceCurrent_Button.Name = "replaceCurrent_Button";
             replaceCurrent_Button.Size = new Size(74, 26);
             replaceCurrent_Button.TabIndex = 5;
@@ -235,7 +189,7 @@
             // 
             // dupeSelection_Button
             // 
-            dupeSelection_Button.Location = new Point(166, 19);
+            dupeSelection_Button.Location = new Point(210, 19);
             dupeSelection_Button.Name = "dupeSelection_Button";
             dupeSelection_Button.Size = new Size(74, 26);
             dupeSelection_Button.TabIndex = 7;
@@ -245,25 +199,27 @@
             // 
             // saveGroupbox
             // 
+            saveGroupbox.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            saveGroupbox.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             saveGroupbox.Controls.Add(importPath_Button);
-            saveGroupbox.Controls.Add(importPathWithOffset);
             saveGroupbox.Controls.Add(exportPath_Button);
             saveGroupbox.Enabled = false;
-            saveGroupbox.Location = new Point(727, 429);
+            saveGroupbox.Location = new Point(815, 425);
             saveGroupbox.Name = "saveGroupbox";
-            saveGroupbox.Size = new Size(272, 48);
+            saveGroupbox.Size = new Size(166, 58);
             saveGroupbox.TabIndex = 9;
             saveGroupbox.TabStop = false;
-            saveGroupbox.Text = "Save/load";
+            saveGroupbox.Text = "Save/load (paths)";
             // 
             // importPathWithOffset
             // 
-            importPathWithOffset.Location = new Point(166, 16);
+            importPathWithOffset.Location = new Point(248, 219);
             importPathWithOffset.Name = "importPathWithOffset";
             importPathWithOffset.Size = new Size(96, 26);
             importPathWithOffset.TabIndex = 7;
             importPathWithOffset.Text = "Import offset";
             importPathWithOffset.UseVisualStyleBackColor = true;
+            importPathWithOffset.Visible = false;
             importPathWithOffset.Click += importPathWithOffset_Click;
             // 
             // startFromSelection_checkbox
@@ -289,7 +245,7 @@
             // 
             // clearList_Button
             // 
-            clearList_Button.Location = new Point(86, 50);
+            clearList_Button.Location = new Point(431, 19);
             clearList_Button.Name = "clearList_Button";
             clearList_Button.Size = new Size(74, 26);
             clearList_Button.TabIndex = 7;
@@ -299,7 +255,8 @@
             // 
             // hzTextbox
             // 
-            hzTextbox.Location = new Point(923, 16);
+            hzTextbox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            hzTextbox.Location = new Point(905, 16);
             hzTextbox.Name = "hzTextbox";
             hzTextbox.Size = new Size(41, 23);
             hzTextbox.TabIndex = 11;
@@ -308,8 +265,9 @@
             // 
             // label2
             // 
+            label2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label2.AutoSize = true;
-            label2.Location = new Point(965, 20);
+            label2.Location = new Point(947, 20);
             label2.Name = "label2";
             label2.Size = new Size(19, 15);
             label2.TabIndex = 10;
@@ -338,14 +296,11 @@
             // 
             // groupBox9
             // 
-            groupBox9.Controls.Add(teleportZ);
+            groupBox9.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            groupBox9.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             groupBox9.Controls.Add(resetCameraRotation_Button);
-            groupBox9.Controls.Add(teleportToPlayer_Button);
-            groupBox9.Controls.Add(teleportY);
             groupBox9.Controls.Add(keyframeDataGridGroupBox);
             groupBox9.Controls.Add(button1);
-            groupBox9.Controls.Add(teleportX);
-            groupBox9.Controls.Add(teleportCamera_Button);
             groupBox9.Controls.Add(teleportToSelection_Button);
             groupBox9.Controls.Add(replaceCurrent_Button);
             groupBox9.Controls.Add(dupeSelection_Button);
@@ -355,18 +310,19 @@
             groupBox9.Enabled = false;
             groupBox9.Location = new Point(6, 13);
             groupBox9.Name = "groupBox9";
-            groupBox9.Size = new Size(1019, 575);
+            groupBox9.Size = new Size(1004, 546);
             groupBox9.TabIndex = 14;
             groupBox9.TabStop = false;
             groupBox9.Text = "Control";
             // 
             // keyframeDataGridGroupBox
             // 
+            keyframeDataGridGroupBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            keyframeDataGridGroupBox.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             keyframeDataGridGroupBox.Controls.Add(label3);
             keyframeDataGridGroupBox.Controls.Add(endDelay);
             keyframeDataGridGroupBox.Controls.Add(saveGroupbox);
             keyframeDataGridGroupBox.Controls.Add(pauseTicks);
-            keyframeDataGridGroupBox.Controls.Add(BlockKeyPress);
             keyframeDataGridGroupBox.Controls.Add(setSyncStart);
             keyframeDataGridGroupBox.Controls.Add(timeSyncTextbox);
             keyframeDataGridGroupBox.Controls.Add(label1);
@@ -379,17 +335,18 @@
             keyframeDataGridGroupBox.Controls.Add(hzTextbox);
             keyframeDataGridGroupBox.Controls.Add(sortDown_button);
             keyframeDataGridGroupBox.Controls.Add(sortUp_button);
-            keyframeDataGridGroupBox.Location = new Point(8, 86);
+            keyframeDataGridGroupBox.Location = new Point(8, 51);
             keyframeDataGridGroupBox.Name = "keyframeDataGridGroupBox";
-            keyframeDataGridGroupBox.Size = new Size(1005, 483);
+            keyframeDataGridGroupBox.Size = new Size(990, 489);
             keyframeDataGridGroupBox.TabIndex = 34;
             keyframeDataGridGroupBox.TabStop = false;
             keyframeDataGridGroupBox.Text = "Keyframes";
             // 
             // label3
             // 
+            label3.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             label3.AutoSize = true;
-            label3.Location = new Point(216, 451);
+            label3.Location = new Point(216, 455);
             label3.Name = "label3";
             label3.Size = new Size(123, 15);
             label3.TabIndex = 43;
@@ -397,7 +354,8 @@
             // 
             // endDelay
             // 
-            endDelay.Location = new Point(137, 448);
+            endDelay.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            endDelay.Location = new Point(137, 452);
             endDelay.Name = "endDelay";
             endDelay.Size = new Size(73, 23);
             endDelay.TabIndex = 42;
@@ -405,31 +363,21 @@
             // 
             // pauseTicks
             // 
+            pauseTicks.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             pauseTicks.AutoSize = true;
-            pauseTicks.Location = new Point(29, 450);
+            pauseTicks.Location = new Point(29, 454);
             pauseTicks.Name = "pauseTicks";
             pauseTicks.Size = new Size(107, 19);
             pauseTicks.TabIndex = 41;
             pauseTicks.Text = "Pause after end";
             pauseTicks.UseVisualStyleBackColor = true;
             // 
-            // BlockKeyPress
-            // 
-            BlockKeyPress.AutoSize = true;
-            BlockKeyPress.Checked = true;
-            BlockKeyPress.CheckState = CheckState.Checked;
-            BlockKeyPress.Location = new Point(592, 450);
-            BlockKeyPress.Name = "BlockKeyPress";
-            BlockKeyPress.Size = new Size(105, 19);
-            BlockKeyPress.TabIndex = 37;
-            BlockKeyPress.Text = "Block keybinds";
-            BlockKeyPress.UseVisualStyleBackColor = true;
-            // 
             // setSyncStart
             // 
-            setSyncStart.Location = new Point(216, 419);
+            setSyncStart.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            setSyncStart.Location = new Point(216, 422);
             setSyncStart.Name = "setSyncStart";
-            setSyncStart.Size = new Size(84, 23);
+            setSyncStart.Size = new Size(97, 26);
             setSyncStart.TabIndex = 36;
             setSyncStart.Text = "grab current";
             setSyncStart.UseVisualStyleBackColor = true;
@@ -437,7 +385,8 @@
             // 
             // timeSyncTextbox
             // 
-            timeSyncTextbox.Location = new Point(137, 419);
+            timeSyncTextbox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            timeSyncTextbox.Location = new Point(137, 423);
             timeSyncTextbox.Name = "timeSyncTextbox";
             timeSyncTextbox.Size = new Size(73, 23);
             timeSyncTextbox.TabIndex = 40;
@@ -455,13 +404,15 @@
             // 
             // timesyncCheckbox
             // 
+            timesyncCheckbox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             timesyncCheckbox.AutoSize = true;
-            timesyncCheckbox.Location = new Point(29, 421);
+            timesyncCheckbox.Location = new Point(29, 425);
             timesyncCheckbox.Name = "timesyncCheckbox";
             timesyncCheckbox.Size = new Size(104, 19);
             timesyncCheckbox.TabIndex = 17;
             timesyncCheckbox.Text = "Start time sync";
             timesyncCheckbox.UseVisualStyleBackColor = true;
+            timesyncCheckbox.CheckedChanged += timesyncCheckbox_CheckedChanged;
             // 
             // StartDelayTextbox
             // 
@@ -471,15 +422,28 @@
             StartDelayTextbox.TabIndex = 38;
             StartDelayTextbox.Text = "0";
             StartDelayTextbox.TextAlign = HorizontalAlignment.Right;
+            StartDelayTextbox.WordWrap = false;
             // 
             // button1
             // 
-            button1.Location = new Point(289, 50);
+            button1.Location = new Point(634, 19);
             button1.Name = "button1";
             button1.Size = new Size(97, 26);
             button1.TabIndex = 17;
             button1.Text = "Relocate path";
             button1.UseVisualStyleBackColor = true;
+            // 
+            // BlockKeyPress
+            // 
+            BlockKeyPress.AutoSize = true;
+            BlockKeyPress.Checked = true;
+            BlockKeyPress.CheckState = CheckState.Checked;
+            BlockKeyPress.Location = new Point(248, 155);
+            BlockKeyPress.Name = "BlockKeyPress";
+            BlockKeyPress.Size = new Size(105, 19);
+            BlockKeyPress.TabIndex = 37;
+            BlockKeyPress.Text = "Block keybinds";
+            BlockKeyPress.UseVisualStyleBackColor = true;
             // 
             // trackingCheckbox
             // 
@@ -507,7 +471,7 @@
             groupBox8.Controls.Add(groupBox11);
             groupBox8.Controls.Add(groupBox10);
             groupBox8.Enabled = false;
-            groupBox8.Location = new Point(1683, 52);
+            groupBox8.Location = new Point(1546, 145);
             groupBox8.Name = "groupBox8";
             groupBox8.Size = new Size(302, 226);
             groupBox8.TabIndex = 33;
@@ -647,6 +611,7 @@
             // 
             // TabControl
             // 
+            TabControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             TabControl.Controls.Add(tabPage1);
             TabControl.Controls.Add(tabPage2);
             TabControl.Controls.Add(tabPage3);
@@ -654,19 +619,19 @@
             TabControl.Location = new Point(12, 12);
             TabControl.Name = "TabControl";
             TabControl.SelectedIndex = 0;
-            TabControl.Size = new Size(1039, 622);
+            TabControl.Size = new Size(1024, 593);
             TabControl.TabIndex = 36;
             // 
             // tabPage1
             // 
+            tabPage1.BackColor = Color.WhiteSmoke;
             tabPage1.Controls.Add(groupBox9);
             tabPage1.Location = new Point(4, 24);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(1031, 594);
+            tabPage1.Size = new Size(1016, 565);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Control";
-            tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
@@ -676,7 +641,7 @@
             tabPage2.Location = new Point(4, 24);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(1031, 594);
+            tabPage2.Size = new Size(1016, 565);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Advanced";
             tabPage2.UseVisualStyleBackColor = true;
@@ -709,38 +674,51 @@
             // 
             tabPage3.Location = new Point(4, 24);
             tabPage3.Name = "tabPage3";
-            tabPage3.Size = new Size(1031, 594);
+            tabPage3.Size = new Size(1016, 565);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "Memory";
             tabPage3.UseVisualStyleBackColor = true;
             // 
             // DebugTabpage
             // 
+            DebugTabpage.Controls.Add(setTop);
             DebugTabpage.Controls.Add(trackListCombo);
+            DebugTabpage.Controls.Add(importPathWithOffset);
             DebugTabpage.Controls.Add(trackingCheckbox);
+            DebugTabpage.Controls.Add(BlockKeyPress);
             DebugTabpage.Location = new Point(4, 24);
             DebugTabpage.Name = "DebugTabpage";
-            DebugTabpage.Size = new Size(1031, 594);
+            DebugTabpage.Size = new Size(1016, 565);
             DebugTabpage.TabIndex = 3;
             DebugTabpage.Text = "Debug";
             DebugTabpage.UseVisualStyleBackColor = true;
+            // 
+            // setTop
+            // 
+            setTop.AutoSize = true;
+            setTop.Location = new Point(248, 182);
+            setTop.Name = "setTop";
+            setTop.Size = new Size(120, 19);
+            setTop.TabIndex = 38;
+            setTop.Text = "Set always on-top";
+            setTop.UseVisualStyleBackColor = true;
+            setTop.CheckedChanged += setTop_CheckedChanged;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.ControlLight;
-            ClientSize = new Size(1060, 644);
+            BackColor = SystemColors.ButtonFace;
+            ClientSize = new Size(1044, 613);
             Controls.Add(TabControl);
             Controls.Add(groupBox8);
-            MaximizeBox = false;
-            MinimumSize = new Size(985, 658);
+            MinimumSize = new Size(956, 585);
             Name = "MainForm";
+            Opacity = 0.95D;
             Text = "Halo camera tool";
             ((System.ComponentModel.ISupportInitialize)keyframeDataGridView).EndInit();
             saveGroupbox.ResumeLayout(false);
             groupBox9.ResumeLayout(false);
-            groupBox9.PerformLayout();
             keyframeDataGridGroupBox.ResumeLayout(false);
             keyframeDataGridGroupBox.PerformLayout();
             groupBox8.ResumeLayout(false);
@@ -768,15 +746,11 @@
         private Button teleportToSelection_Button;
         private Button replaceCurrent_Button;
         private Button dupeSelection_Button;
-        private Button teleportCamera_Button;
         private GroupBox saveGroupbox;
         private TextBox hzTextbox;
         private Label label2;
         private Button button10;
         private Button button11;
-        private TextBox teleportZ;
-        private TextBox teleportY;
-        private TextBox teleportX;
         private TextBox movementOffsetX;
         private TextBox movementOffsetY;
         private Button deleteKey_Button;
@@ -784,7 +758,6 @@
         private Button sortUp_button;
         private Button sortDown_button;
         private Button clearList_Button;
-        private Button teleportToPlayer_Button;
         private GroupBox groupBox9;
         private CheckBox targetTracking;
         private GroupBox groupBox8;
@@ -824,5 +797,6 @@
         private Label label3;
         private TextBox endDelay;
         private CheckBox pauseTicks;
+        private CheckBox setTop;
     }
 }

@@ -50,6 +50,11 @@ namespace modularDollyCam
 
             LoadConfiguration();
             unlockUI();
+
+            StartDelayTextbox.KeyPress += StartDelayTextbox_KeyPress;
+            hzTextbox.KeyPress += hzTextbox_KeyPress;
+            timeSyncTextbox.KeyPress += TimeSyncTextbox_KeyPress;
+            endDelay.KeyPress += EndDelay_KeyPress;
         }
 
         private void LoadConfiguration()
@@ -148,7 +153,12 @@ namespace modularDollyCam
 
         private void timeSyncTextbox_TextChanged(object sender, EventArgs e)
         {
-           
+
+        }
+
+        private void timesyncCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
