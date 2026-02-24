@@ -7,14 +7,22 @@ using System.Dynamic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using XRPCLib;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using Console = Colorful.Console;
+
+
 
 namespace modularDollyCam
 {
     public partial class MainForm : Form
     {
         private GameConfiguration config;
+
+#if XBOX360
+        XRPC XDK = new XRPC();
+        bool stopped;
+#endif
 
         public MainForm()
         {
@@ -50,6 +58,10 @@ namespace modularDollyCam
 
             LoadConfiguration();
             unlockUI();
+
+#if XBOX360
+            //ConnectToConsole();
+#endif
 
             StartDelayTextbox.KeyPress += StartDelayTextbox_KeyPress;
             hzTextbox.KeyPress += hzTextbox_KeyPress;
@@ -125,7 +137,7 @@ namespace modularDollyCam
                 tickCount = p?.TickCount;
                 tickSpeed = p?.TickSpeed;
                 playerList = p?.PlayerList;
-                // new: copy offsets (may be empty) from config into the runtime field
+
                 playerListOffsets = p?.PlayerListOffsets ?? new List<string>();
 
                 GetModules();
@@ -159,6 +171,13 @@ namespace modularDollyCam
         private void timesyncCheckbox_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void ConnectButton_Click(object sender, EventArgs e)
+        {
+#if XBOX360
+            ConnectToConsole();
+#endif
         }
     }
 }

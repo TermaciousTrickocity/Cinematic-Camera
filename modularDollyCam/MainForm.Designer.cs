@@ -58,6 +58,7 @@
             timesyncCheckbox = new CheckBox();
             StartDelayTextbox = new TextBox();
             button1 = new Button();
+            ignoreSpeed = new CheckBox();
             BlockKeyPress = new CheckBox();
             trackingCheckbox = new CheckBox();
             trackListCombo = new ComboBox();
@@ -83,7 +84,14 @@
             comboBoxGames = new ComboBox();
             tabPage3 = new TabPage();
             DebugTabpage = new TabPage();
+            groupBox1 = new GroupBox();
+            freezeMemoryCheckbox = new CheckBox();
+            ConnectButton = new Button();
+            label4 = new Label();
+            Xbox360BaseAddress = new TextBox();
+            TickTimeToSecondsCheckbox = new CheckBox();
             setTop = new CheckBox();
+            label7 = new Label();
             ((System.ComponentModel.ISupportInitialize)keyframeDataGridView).BeginInit();
             saveGroupbox.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -95,6 +103,7 @@
             tabPage1.SuspendLayout();
             tabPage2.SuspendLayout();
             DebugTabpage.SuspendLayout();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // keyframeDataGridView
@@ -213,7 +222,7 @@
             // 
             // importPathWithOffset
             // 
-            importPathWithOffset.Location = new Point(248, 219);
+            importPathWithOffset.Location = new Point(683, 19);
             importPathWithOffset.Name = "importPathWithOffset";
             importPathWithOffset.Size = new Size(96, 26);
             importPathWithOffset.TabIndex = 7;
@@ -433,12 +442,22 @@
             button1.Text = "Relocate path";
             button1.UseVisualStyleBackColor = true;
             // 
+            // ignoreSpeed
+            // 
+            ignoreSpeed.AutoSize = true;
+            ignoreSpeed.Location = new Point(18, 71);
+            ignoreSpeed.Name = "ignoreSpeed";
+            ignoreSpeed.Size = new Size(147, 19);
+            ignoreSpeed.TabIndex = 44;
+            ignoreSpeed.Text = "Dont use theater speed";
+            ignoreSpeed.UseVisualStyleBackColor = true;
+            // 
             // BlockKeyPress
             // 
             BlockKeyPress.AutoSize = true;
             BlockKeyPress.Checked = true;
             BlockKeyPress.CheckState = CheckState.Checked;
-            BlockKeyPress.Location = new Point(248, 155);
+            BlockKeyPress.Location = new Point(18, 19);
             BlockKeyPress.Name = "BlockKeyPress";
             BlockKeyPress.Size = new Size(105, 19);
             BlockKeyPress.TabIndex = 37;
@@ -448,7 +467,7 @@
             // trackingCheckbox
             // 
             trackingCheckbox.AutoSize = true;
-            trackingCheckbox.Location = new Point(248, 128);
+            trackingCheckbox.Location = new Point(794, 24);
             trackingCheckbox.Name = "trackingCheckbox";
             trackingCheckbox.Size = new Size(70, 19);
             trackingCheckbox.TabIndex = 37;
@@ -460,7 +479,7 @@
             // 
             trackListCombo.FormattingEnabled = true;
             trackListCombo.Items.AddRange(new object[] { "none" });
-            trackListCombo.Location = new Point(324, 126);
+            trackListCombo.Location = new Point(870, 22);
             trackListCombo.Name = "trackListCombo";
             trackListCombo.Size = new Size(126, 23);
             trackListCombo.TabIndex = 36;
@@ -681,6 +700,9 @@
             // 
             // DebugTabpage
             // 
+            DebugTabpage.Controls.Add(groupBox1);
+            DebugTabpage.Controls.Add(TickTimeToSecondsCheckbox);
+            DebugTabpage.Controls.Add(ignoreSpeed);
             DebugTabpage.Controls.Add(setTop);
             DebugTabpage.Controls.Add(trackListCombo);
             DebugTabpage.Controls.Add(importPathWithOffset);
@@ -693,16 +715,86 @@
             DebugTabpage.Text = "Debug";
             DebugTabpage.UseVisualStyleBackColor = true;
             // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(label7);
+            groupBox1.Controls.Add(freezeMemoryCheckbox);
+            groupBox1.Controls.Add(ConnectButton);
+            groupBox1.Controls.Add(label4);
+            groupBox1.Controls.Add(Xbox360BaseAddress);
+            groupBox1.Location = new Point(3, 443);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(212, 119);
+            groupBox1.TabIndex = 48;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Xbox 360";
+            // 
+            // freezeMemoryCheckbox
+            // 
+            freezeMemoryCheckbox.AutoSize = true;
+            freezeMemoryCheckbox.Location = new Point(87, 93);
+            freezeMemoryCheckbox.Name = "freezeMemoryCheckbox";
+            freezeMemoryCheckbox.Size = new Size(103, 19);
+            freezeMemoryCheckbox.TabIndex = 49;
+            freezeMemoryCheckbox.Text = "Freeze console";
+            freezeMemoryCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // ConnectButton
+            // 
+            ConnectButton.Location = new Point(6, 90);
+            ConnectButton.Name = "ConnectButton";
+            ConnectButton.Size = new Size(75, 23);
+            ConnectButton.TabIndex = 49;
+            ConnectButton.Text = "Connect";
+            ConnectButton.UseVisualStyleBackColor = true;
+            ConnectButton.Click += ConnectButton_Click;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(6, 19);
+            label4.Name = "label4";
+            label4.Size = new Size(91, 15);
+            label4.TabIndex = 47;
+            label4.Text = "Camera address";
+            // 
+            // Xbox360BaseAddress
+            // 
+            Xbox360BaseAddress.Location = new Point(103, 16);
+            Xbox360BaseAddress.Name = "Xbox360BaseAddress";
+            Xbox360BaseAddress.Size = new Size(100, 23);
+            Xbox360BaseAddress.TabIndex = 46;
+            Xbox360BaseAddress.Text = "0xC0000000";
+            // 
+            // TickTimeToSecondsCheckbox
+            // 
+            TickTimeToSecondsCheckbox.AutoSize = true;
+            TickTimeToSecondsCheckbox.Location = new Point(18, 96);
+            TickTimeToSecondsCheckbox.Name = "TickTimeToSecondsCheckbox";
+            TickTimeToSecondsCheckbox.Size = new Size(182, 19);
+            TickTimeToSecondsCheckbox.TabIndex = 45;
+            TickTimeToSecondsCheckbox.Text = "TickTimeToSecondsCheckbox";
+            TickTimeToSecondsCheckbox.UseVisualStyleBackColor = true;
+            // 
             // setTop
             // 
             setTop.AutoSize = true;
-            setTop.Location = new Point(248, 182);
+            setTop.Location = new Point(18, 46);
             setTop.Name = "setTop";
             setTop.Size = new Size(120, 19);
             setTop.TabIndex = 38;
             setTop.Text = "Set always on-top";
             setTop.UseVisualStyleBackColor = true;
             setTop.CheckedChanged += setTop_CheckedChanged;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(102, 42);
+            label7.Name = "label7";
+            label7.Size = new Size(95, 15);
+            label7.TabIndex = 49;
+            label7.Text = "(physical region)";
             // 
             // MainForm
             // 
@@ -714,7 +806,6 @@
             Controls.Add(groupBox8);
             MinimumSize = new Size(956, 585);
             Name = "MainForm";
-            Opacity = 0.95D;
             Text = "Halo camera tool";
             ((System.ComponentModel.ISupportInitialize)keyframeDataGridView).EndInit();
             saveGroupbox.ResumeLayout(false);
@@ -731,6 +822,8 @@
             tabPage2.ResumeLayout(false);
             DebugTabpage.ResumeLayout(false);
             DebugTabpage.PerformLayout();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -798,5 +891,13 @@
         private TextBox endDelay;
         private CheckBox pauseTicks;
         private CheckBox setTop;
+        private CheckBox ignoreSpeed;
+        private CheckBox TickTimeToSecondsCheckbox;
+        private GroupBox groupBox1;
+        private Button ConnectButton;
+        private Label label4;
+        private TextBox Xbox360BaseAddress;
+        private CheckBox freezeMemoryCheckbox;
+        private Label label7;
     }
 }

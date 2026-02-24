@@ -8,19 +8,31 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM64 = Debug|ARM64
 		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|ARM64 = Release|ARM64
 		Release|x86 = Release|x86
+		Xbox360|Any CPU = Xbox360|Any CPU
+		Xbox360|ARM64 = Xbox360|ARM64
+		Xbox360|x86 = Xbox360|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{8B059CF2-4F1A-4E06-AE83-65DB441B5545}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8B059CF2-4F1A-4E06-AE83-65DB441B5545}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B059CF2-4F1A-4E06-AE83-65DB441B5545}.Debug|ARM64.ActiveCfg = Debug|Any CPU
 		{8B059CF2-4F1A-4E06-AE83-65DB441B5545}.Debug|x86.ActiveCfg = Debug|x86
 		{8B059CF2-4F1A-4E06-AE83-65DB441B5545}.Debug|x86.Build.0 = Debug|x86
-		{8B059CF2-4F1A-4E06-AE83-65DB441B5545}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8B059CF2-4F1A-4E06-AE83-65DB441B5545}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B059CF2-4F1A-4E06-AE83-65DB441B5545}.Release|Any CPU.ActiveCfg = Release|x86
+		{8B059CF2-4F1A-4E06-AE83-65DB441B5545}.Release|Any CPU.Build.0 = Release|x86
+		{8B059CF2-4F1A-4E06-AE83-65DB441B5545}.Release|ARM64.ActiveCfg = Release|Any CPU
 		{8B059CF2-4F1A-4E06-AE83-65DB441B5545}.Release|x86.ActiveCfg = Release|x86
 		{8B059CF2-4F1A-4E06-AE83-65DB441B5545}.Release|x86.Build.0 = Release|x86
+		{8B059CF2-4F1A-4E06-AE83-65DB441B5545}.Xbox360|Any CPU.ActiveCfg = Xbox360|Any CPU
+		{8B059CF2-4F1A-4E06-AE83-65DB441B5545}.Xbox360|Any CPU.Build.0 = Xbox360|Any CPU
+		{8B059CF2-4F1A-4E06-AE83-65DB441B5545}.Xbox360|ARM64.ActiveCfg = Xbox360|Any CPU
+		{8B059CF2-4F1A-4E06-AE83-65DB441B5545}.Xbox360|x86.ActiveCfg = Xbox360|x86
+		{8B059CF2-4F1A-4E06-AE83-65DB441B5545}.Xbox360|x86.Build.0 = Xbox360|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

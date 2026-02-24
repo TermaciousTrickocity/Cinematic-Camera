@@ -44,7 +44,7 @@ namespace modularDollyCam
             int dataRowCount = keyframeDataGridView.Rows.Cast<System.Windows.Forms.DataGridViewRow>().Count(r => !r.IsNewRow);
             if (dataRowCount == 0)
             {
-                MessageBox.Show("There are no key points to export.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("There is nothing to save...", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -101,7 +101,7 @@ namespace modularDollyCam
                 }
                 catch (Exception ex)
                 {
-
+                    MessageBox.Show($"Something went wrong while saving the path! \n\n{ex.ToString()}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -114,7 +114,14 @@ namespace modularDollyCam
             }
             else
             {
-                MessageBox.Show("Please select a row to delete.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (keyframeDataGridView.Rows.Count <= 0)
+                {
+                    MessageBox.Show("There is nothing to delete.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Please select a row to delete.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                } 
             }
         }
 
@@ -168,18 +175,24 @@ namespace modularDollyCam
                 keyframeDataGridView.Rows[selectedIndex].Cells["Roll"].Value = memory.ReadFloat(rollAng, "", false);
                 keyframeDataGridView.Rows[selectedIndex].Cells["FOV"].Value = memory.ReadFloat(playerFov);
                 keyframeDataGridView.Rows[selectedIndex].Cells["Transition Time"].Value = transitionTime;
-                // keep existing Tick Speed value untouched to avoid losing user data
             }
         }
 
 
         private void clearList_Button_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Are you sure you want to clear all rows from the list?\n(You are going lose everything!)", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
-
-            if (result == DialogResult.Yes)
+            if (keyframeDataGridView.Rows.Count > 0)
             {
-                keyframeDataGridView.Rows.Clear();
+                DialogResult result = MessageBox.Show("Are you sure you want to delete everything?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
+
+                if (result == DialogResult.Yes)
+                {
+                    keyframeDataGridView.Rows.Clear();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Can't.", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
         }
 

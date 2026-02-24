@@ -162,5 +162,21 @@
         </Pointers>
       </Build>
     </Game>
+    <Game name="Halo 2 Groundhog">
+      <!-- will update this at somepoint... -->
+      <Build number="1.0">
+        <Pointers>
+          <X>19C28436950</X>
+          <Y>19C28436954</Y>
+          <Z>19C28436958</Z>
+          <Yaw>19C2843695C</Yaw>
+          <Pitch>19C28436960</Pitch>
+          <Roll />
+          <FOV />
+          <TickCount />
+          <TickSpeed />
+        </Pointers>
+      </Build>
+    </Game>
   </Games>
 </Configuration>

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>net9.0-windows7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
@@ -9,6 +9,7 @@
     <Company>Termacious Trickocity</Company>
     <RepositoryUrl>https://github.com/TermaciousTrickocity/Cinematic-Camera</RepositoryUrl>
     <Platforms>AnyCPU;x86</Platforms>
+    <Configurations>Debug;Release;Xbox360</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,6 +25,12 @@
     <Reference Include="Memory">
       <HintPath>Memory.dll</HintPath>
     </Reference>
+    <Reference Include="XDevkit">
+      <HintPath>xdevkit.dll</HintPath>
+    </Reference>
+    <Reference Include="XRPC">
+      <HintPath>XRPC.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +40,9 @@
 
   <ItemGroup>
     <None Update="config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Memory.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

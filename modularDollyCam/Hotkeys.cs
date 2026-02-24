@@ -7,6 +7,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.TimeZoneInfo;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace modularDollyCam
 {
@@ -32,6 +34,10 @@ namespace modularDollyCam
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr GetModuleHandle(string lpModuleName);
 
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        private static extern short GetKeyState(int keyCode);
+
+        private const int VK_CONTROL = 0x11;
         private const int VK_A = 0x41;
         private const int VK_B = 0x42;
         private const int VK_C = 0x43;
@@ -60,8 +66,6 @@ namespace modularDollyCam
         private const int VK_Z = 0x5A;
         private const int VK_Home = 0x24;
 
-        bool togInc = false;
-
         private IntPtr SetHook(LowLevelKeyboardProc proc)
         {
             using (Process curProcess = Process.GetCurrentProcess())
@@ -71,13 +75,17 @@ namespace modularDollyCam
             }
         }
 
+        private int? lastTick = null;
+
         private IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
             if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
             {
                 int vkCode = Marshal.ReadInt32(lParam);
 
-                if (BlockKeyPress.Checked == false)
+                bool Ctrl = (GetKeyState(VK_CONTROL) & 0x8000) != 0;
+
+                if (Ctrl && BlockKeyPress.Checked == false)
                 {
                     switch (vkCode)
                     {
@@ -88,7 +96,7 @@ namespace modularDollyCam
                             pathStart_checkbox.Checked = false;
                             break;
                         case VK_T:
-                            lookTracking = !lookTracking;
+                            //lookTracking = !lookTracking;
                             break;
                         case VK_H:
                             getPlayerList();
@@ -117,9 +125,68 @@ namespace modularDollyCam
                                 memory.ReadFloat(pitchAng, "", false),
                                 memory.ReadFloat(rollAng, "", false),
                                 memory.ReadFloat(playerFov, "", false),
-                                1, 
+                                1,
                                 1
                             );
+                            break;
+                        case VK_L:
+                            try
+                            {
+                                int currentTick = memory.ReadInt(tickCount);
+                                int rowCount = keyframeDataGridView.Rows.Count;
+
+                                const float tickRate = 59.9f;
+                                if (rowCount == 0)
+                                {
+                                    AddKeyPointRow(
+                                        memory.ReadFloat(xPos, "", false),
+                                        memory.ReadFloat(yPos, "", false),
+                                        memory.ReadFloat(zPos, "", false),
+                                        memory.ReadFloat(yawAng, "", false),
+                                        memory.ReadFloat(pitchAng, "", false),
+                                        memory.ReadFloat(rollAng, "", false),
+                                        memory.ReadFloat(playerFov, "", false),
+                                        1,
+                                        1
+                                    );
+
+                                    keyframeDataGridView.Rows[0].Cells[7].Value = 1f;
+                                }
+                                else
+                                {
+                                    if (lastTick.HasValue)
+                                    {
+                                        float timeDifferenceSeconds = (currentTick - lastTick.Value) / tickRate;
+
+                                        int previousRowIndex = rowCount - 1;
+                                        keyframeDataGridView.Rows[previousRowIndex].Cells[7].Value = Math.Max(0f, timeDifferenceSeconds);
+                                    }
+
+                                    AddKeyPointRow(
+                                        memory.ReadFloat(xPos, "", false),
+                                        memory.ReadFloat(yPos, "", false),
+                                        memory.ReadFloat(zPos, "", false),
+                                        memory.ReadFloat(yawAng, "", false),
+                                        memory.ReadFloat(pitchAng, "", false),
+                                        memory.ReadFloat(rollAng, "", false),
+                                        memory.ReadFloat(playerFov, "", false),
+                                        1,
+                                        1
+                                    );
+
+                                    keyframeDataGridView.Rows[rowCount].Cells[7].Value = 1f;
+                                }
+
+                               lastTick = currentTick;
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(
+                                    ex.ToString(),
+                                    ":) you fucked it!",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Exclamation);
+                            }
                             break;
                         default:
                             break;
@@ -128,6 +195,5 @@ namespace modularDollyCam
             }
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
-
     }
 }

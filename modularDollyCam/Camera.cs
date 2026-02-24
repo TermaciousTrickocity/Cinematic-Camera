@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Numerics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Globalization;
+using XRPCLib;
 
 namespace modularDollyCam
 {
     public partial class MainForm : Form
     {
         private Thread cameraThread;
-
         private bool lookTracking = false;
         private Vector3 targetPosition;
         private string theaterTime;
@@ -32,7 +32,6 @@ namespace modularDollyCam
         public string tickCount;
         public string tickSpeed;
         public string playerList;
-
 
         public List<string> playerListOffsets = new List<string>();
 
@@ -180,7 +179,10 @@ namespace modularDollyCam
                         
                         if (tickSpeed != null)
                         {
-                            memory.WriteMemory(tickSpeed, "float", $"{interpolated.TickSpeed}");
+                            if (ignoreSpeed.Checked != true)
+                            {
+                                memory.WriteMemory(tickSpeed, "float", $"{interpolated.TickSpeed}");
+                            }
                         }
 
                         if (lookTracking && trackingTargetAddress != null)
@@ -266,9 +268,7 @@ namespace modularDollyCam
                         else
                         {
                             bool hasHexChar = t.IndexOfAny(new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'a', 'b', 'c', 'd', 'e', 'f' }) >= 0;
-                            parsed = hasHexChar
-                                ? int.Parse(t, NumberStyles.HexNumber)
-                                : int.Parse(t, NumberStyles.Integer);
+                            parsed = hasHexChar ? int.Parse(t, NumberStyles.HexNumber) : int.Parse(t, NumberStyles.Integer);
                         }
 
                         offsetsList.Add(parsed);
