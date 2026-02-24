@@ -1,8 +1,5 @@
 # Multi Halo Cinematic Camera
 
-beware of jank
-> Supports Halo: The Master Chief Collection
-
 ## Prerequisites
 Grab .NET Desktop Runtime from [here](https://dotnet.microsoft.com/en-us/download/dotnet/8.0).
 
