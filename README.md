@@ -23,3 +23,5 @@ Grab .NET Desktop Runtime from [here](https://dotnet.microsoft.com/en-us/downloa
 ```T``` Toggles whether you're tracking something or not.
 
 ```H``` Refreshes the player list.
+
+```L``` Calculates time elapsed from last keyframe.
