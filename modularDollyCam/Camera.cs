@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
+using static XRPCLib.XRPC;
 using XRPCLib;
 
 namespace modularDollyCam
@@ -169,6 +171,12 @@ namespace modularDollyCam
 
                         var interpolated = CatmullRomInterpolation(p0, p1, p2, p3, t);
 
+#if XBOX360
+                        XDK.WriteFloat(uint.TryParse(xPos, out uint xPosUint) ? xPosUint : 0, interpolated.X);
+                        XDK.WriteFloat(uint.TryParse(yPos, out uint yPosUint) ? yPosUint : 0, interpolated.Y);
+                        XDK.WriteFloat(uint.TryParse(zPos, out uint zPosUint) ? zPosUint : 0, interpolated.Z);
+
+#else
                         memory.WriteMemory(xPos, "float", $"{interpolated.X}");
                         memory.WriteMemory(yPos, "float", $"{interpolated.Y}");
                         memory.WriteMemory(zPos, "float", $"{interpolated.Z}");
@@ -176,7 +184,10 @@ namespace modularDollyCam
                         memory.WriteMemory(pitchAng, "float", $"{interpolated.Pitch}");
                         memory.WriteMemory(rollAng, "float", $"{interpolated.Roll}");
                         memory.WriteMemory(playerFov, "float", $"{interpolated.FOV}");
-                        
+#endif
+
+
+
                         if (tickSpeed != null)
                         {
                             if (ignoreSpeed.Checked != true)
@@ -215,7 +226,7 @@ namespace modularDollyCam
                             memory.WriteMemory(pitchAng, "float", $"{pitch}");
                         }
 
-                        await Task.Delay(1);
+                        await Task.Delay(delayMs);
                     }
                 }
 

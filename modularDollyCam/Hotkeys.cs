@@ -96,7 +96,7 @@ namespace modularDollyCam
                             pathStart_checkbox.Checked = false;
                             break;
                         case VK_T:
-                            //lookTracking = !lookTracking;
+
                             break;
                         case VK_H:
                             getPlayerList();

@@ -49,6 +49,8 @@
             sortDown_button = new Button();
             groupBox9 = new GroupBox();
             keyframeDataGridGroupBox = new GroupBox();
+            LookTrack = new CheckBox();
+            setTarget = new Button();
             label3 = new Label();
             endDelay = new TextBox();
             pauseTicks = new CheckBox();
@@ -60,7 +62,6 @@
             button1 = new Button();
             ignoreSpeed = new CheckBox();
             BlockKeyPress = new CheckBox();
-            trackingCheckbox = new CheckBox();
             trackListCombo = new ComboBox();
             groupBox8 = new GroupBox();
             groupBox11 = new GroupBox();
@@ -85,13 +86,13 @@
             tabPage3 = new TabPage();
             DebugTabpage = new TabPage();
             groupBox1 = new GroupBox();
+            label7 = new Label();
             freezeMemoryCheckbox = new CheckBox();
             ConnectButton = new Button();
             label4 = new Label();
             Xbox360BaseAddress = new TextBox();
             TickTimeToSecondsCheckbox = new CheckBox();
             setTop = new CheckBox();
-            label7 = new Label();
             ((System.ComponentModel.ISupportInitialize)keyframeDataGridView).BeginInit();
             saveGroupbox.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -328,6 +329,8 @@
             // 
             keyframeDataGridGroupBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             keyframeDataGridGroupBox.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            keyframeDataGridGroupBox.Controls.Add(LookTrack);
+            keyframeDataGridGroupBox.Controls.Add(setTarget);
             keyframeDataGridGroupBox.Controls.Add(label3);
             keyframeDataGridGroupBox.Controls.Add(endDelay);
             keyframeDataGridGroupBox.Controls.Add(saveGroupbox);
@@ -350,6 +353,29 @@
             keyframeDataGridGroupBox.TabIndex = 34;
             keyframeDataGridGroupBox.TabStop = false;
             keyframeDataGridGroupBox.Text = "Keyframes";
+            // 
+            // LookTrack
+            // 
+            LookTrack.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            LookTrack.AutoSize = true;
+            LookTrack.Location = new Point(384, 454);
+            LookTrack.Name = "LookTrack";
+            LookTrack.Size = new Size(81, 19);
+            LookTrack.TabIndex = 45;
+            LookTrack.Text = "Look track";
+            LookTrack.UseVisualStyleBackColor = true;
+            LookTrack.CheckedChanged += LookTrack_CheckedChanged;
+            // 
+            // setTarget
+            // 
+            setTarget.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            setTarget.Location = new Point(384, 423);
+            setTarget.Name = "setTarget";
+            setTarget.Size = new Size(99, 25);
+            setTarget.TabIndex = 44;
+            setTarget.Text = "Set look target";
+            setTarget.UseVisualStyleBackColor = true;
+            setTarget.Click += setTarget_Click;
             // 
             // label3
             // 
@@ -463,17 +489,6 @@
             BlockKeyPress.TabIndex = 37;
             BlockKeyPress.Text = "Block keybinds";
             BlockKeyPress.UseVisualStyleBackColor = true;
-            // 
-            // trackingCheckbox
-            // 
-            trackingCheckbox.AutoSize = true;
-            trackingCheckbox.Location = new Point(794, 24);
-            trackingCheckbox.Name = "trackingCheckbox";
-            trackingCheckbox.Size = new Size(70, 19);
-            trackingCheckbox.TabIndex = 37;
-            trackingCheckbox.Text = "Tracking";
-            trackingCheckbox.UseVisualStyleBackColor = true;
-            trackingCheckbox.CheckedChanged += checkBox1_CheckedChanged;
             // 
             // trackListCombo
             // 
@@ -706,7 +721,6 @@
             DebugTabpage.Controls.Add(setTop);
             DebugTabpage.Controls.Add(trackListCombo);
             DebugTabpage.Controls.Add(importPathWithOffset);
-            DebugTabpage.Controls.Add(trackingCheckbox);
             DebugTabpage.Controls.Add(BlockKeyPress);
             DebugTabpage.Location = new Point(4, 24);
             DebugTabpage.Name = "DebugTabpage";
@@ -728,6 +742,15 @@
             groupBox1.TabIndex = 48;
             groupBox1.TabStop = false;
             groupBox1.Text = "Xbox 360";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(102, 42);
+            label7.Name = "label7";
+            label7.Size = new Size(95, 15);
+            label7.TabIndex = 49;
+            label7.Text = "(physical region)";
             // 
             // freezeMemoryCheckbox
             // 
@@ -786,15 +809,6 @@
             setTop.Text = "Set always on-top";
             setTop.UseVisualStyleBackColor = true;
             setTop.CheckedChanged += setTop_CheckedChanged;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Location = new Point(102, 42);
-            label7.Name = "label7";
-            label7.Size = new Size(95, 15);
-            label7.TabIndex = 49;
-            label7.Text = "(physical region)";
             // 
             // MainForm
             // 
@@ -872,7 +886,6 @@
         private CheckBox directLookCheckbox;
         private CheckBox timesyncCheckbox;
         private ComboBox trackListCombo;
-        private CheckBox trackingCheckbox;
         private Label label1;
         private TextBox StartDelayTextbox;
         private TextBox timeSyncTextbox;
@@ -899,5 +912,7 @@
         private TextBox Xbox360BaseAddress;
         private CheckBox freezeMemoryCheckbox;
         private Label label7;
+        private Button setTarget;
+        private CheckBox LookTrack;
     }
 }

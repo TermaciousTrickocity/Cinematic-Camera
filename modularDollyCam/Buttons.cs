@@ -357,11 +357,6 @@ namespace modularDollyCam
                 1);
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            //lookTracking = !lookTracking;
-        }
-
         private void setTop_CheckedChanged(object sender, EventArgs e)
         {
             if (setTop.Checked == true)

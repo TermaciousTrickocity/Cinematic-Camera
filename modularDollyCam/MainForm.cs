@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using System.Dynamic;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
 using XRPCLib;
@@ -178,6 +179,23 @@ namespace modularDollyCam
 #if XBOX360
             ConnectToConsole();
 #endif
+        }
+
+        private void setTarget_Click(object sender, EventArgs e)
+        {
+            targetPosition = new Vector3(memory.ReadFloat(xPos), memory.ReadFloat(yPos), memory.ReadFloat(zPos));
+        }
+
+        private void LookTrack_CheckedChanged(object sender, EventArgs e)
+        {
+            if (LookTrack.Checked == true)
+            {
+                lookTracking = true;
+            }
+            else
+            {
+                lookTracking = false;
+            }
         }
     }
 }

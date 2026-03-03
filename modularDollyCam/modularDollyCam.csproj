@@ -12,6 +12,22 @@
     <Configurations>Debug;Release;Xbox360</Configurations>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Xbox360|AnyCPU'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Xbox360|x86'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="PluginData.cs~RFc0c2fc.TMP" />
   </ItemGroup>
