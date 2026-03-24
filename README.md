@@ -4,19 +4,19 @@
 Grab .NET Desktop Runtime from [here](https://dotnet.microsoft.com/en-us/download/dotnet/8.0).
 
 ## Hotkeys
-```M``` Starts path
+```M``` Starts path.
 
-```N``` Stops path
+```N``` Stops path.
 
-```P``` Rolls camera clockwise
+```P``` Rolls camera clockwise.
 
-```O``` Rolls camera counter clockwise
+```O``` Rolls camera counter clockwise.
 
-```I``` Zooms camera in
+```I``` Zooms camera in.
 
-```U``` Zooms camera out
+```U``` Zooms camera out.
 
-```K``` Adds a keyframe
+```K``` Adds a keyframe.
 
 ```Y``` Manually sets the look target to where ever your camera is currently.
 
