@@ -93,6 +93,7 @@
             Xbox360BaseAddress = new TextBox();
             TickTimeToSecondsCheckbox = new CheckBox();
             setTop = new CheckBox();
+            endAtSelection = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)keyframeDataGridView).BeginInit();
             saveGroupbox.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -223,7 +224,7 @@
             // 
             // importPathWithOffset
             // 
-            importPathWithOffset.Location = new Point(683, 19);
+            importPathWithOffset.Location = new Point(768, 19);
             importPathWithOffset.Name = "importPathWithOffset";
             importPathWithOffset.Size = new Size(96, 26);
             importPathWithOffset.TabIndex = 7;
@@ -329,6 +330,7 @@
             // 
             keyframeDataGridGroupBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             keyframeDataGridGroupBox.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            keyframeDataGridGroupBox.Controls.Add(endAtSelection);
             keyframeDataGridGroupBox.Controls.Add(LookTrack);
             keyframeDataGridGroupBox.Controls.Add(setTarget);
             keyframeDataGridGroupBox.Controls.Add(label3);
@@ -481,8 +483,6 @@
             // BlockKeyPress
             // 
             BlockKeyPress.AutoSize = true;
-            BlockKeyPress.Checked = true;
-            BlockKeyPress.CheckState = CheckState.Checked;
             BlockKeyPress.Location = new Point(18, 19);
             BlockKeyPress.Name = "BlockKeyPress";
             BlockKeyPress.Size = new Size(105, 19);
@@ -792,12 +792,14 @@
             // TickTimeToSecondsCheckbox
             // 
             TickTimeToSecondsCheckbox.AutoSize = true;
+            TickTimeToSecondsCheckbox.Enabled = false;
             TickTimeToSecondsCheckbox.Location = new Point(18, 96);
             TickTimeToSecondsCheckbox.Name = "TickTimeToSecondsCheckbox";
             TickTimeToSecondsCheckbox.Size = new Size(182, 19);
             TickTimeToSecondsCheckbox.TabIndex = 45;
             TickTimeToSecondsCheckbox.Text = "TickTimeToSecondsCheckbox";
             TickTimeToSecondsCheckbox.UseVisualStyleBackColor = true;
+            TickTimeToSecondsCheckbox.Visible = false;
             // 
             // setTop
             // 
@@ -809,6 +811,16 @@
             setTop.Text = "Set always on-top";
             setTop.UseVisualStyleBackColor = true;
             setTop.CheckedChanged += setTop_CheckedChanged;
+            // 
+            // endAtSelection
+            // 
+            endAtSelection.AutoSize = true;
+            endAtSelection.Location = new Point(322, 18);
+            endAtSelection.Name = "endAtSelection";
+            endAtSelection.Size = new Size(109, 19);
+            endAtSelection.TabIndex = 46;
+            endAtSelection.Text = "End at selection";
+            endAtSelection.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -914,5 +926,6 @@
         private Label label7;
         private Button setTarget;
         private CheckBox LookTrack;
+        private CheckBox endAtSelection;
     }
 }

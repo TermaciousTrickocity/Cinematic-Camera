@@ -109,6 +109,14 @@ namespace modularDollyCam
         {
             try
             {
+                if (startFromSelection_checkbox.Checked && endAtSelection.Checked)
+                {
+                    MessageBox.Show("You cannot use both 'Start From Selection' and 'End At Selection' at the same time.\nPlease disable one of them.\n\n (Will add a index based system to accommodate both because it would be beneficial for creating intricate paths later...)", "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    pathStart_checkbox.Checked = false;
+                    return;
+                }
+
                 // Tick timesync
                 if (timesyncCheckbox.Checked && tickCount != null)
                 {
@@ -133,11 +141,24 @@ namespace modularDollyCam
 
                 keyFrames.Clear();
 
-                int startIndex = (startFromSelection_checkbox.Checked && keyframeDataGridView.SelectedRows.Count > 0) ? keyframeDataGridView.SelectedRows[0].Index : 0;
+                int startIndex = 0;
+                int endIndex = keyframeDataGridView.Rows.Count - 1;
 
-                for (int i = startIndex; i < keyframeDataGridView.Rows.Count; i++)
+                if (keyframeDataGridView.SelectedRows.Count > 0)
+                {
+                    int selectedIndex = keyframeDataGridView.SelectedRows[0].Index;
+
+                    if (startFromSelection_checkbox.Checked)
+                        startIndex = selectedIndex;
+
+                    if (endAtSelection.Checked)
+                        endIndex = selectedIndex;
+                }
+
+                for (int i = startIndex; i <= endIndex; i++)
                 {
                     var row = keyframeDataGridView.Rows[i];
+
                     float x = Convert.ToSingle(row.Cells["X"].Value);
                     float y = Convert.ToSingle(row.Cells["Y"].Value);
                     float z = Convert.ToSingle(row.Cells["Z"].Value);
@@ -172,10 +193,9 @@ namespace modularDollyCam
                         var interpolated = CatmullRomInterpolation(p0, p1, p2, p3, t);
 
 #if XBOX360
-                        XDK.WriteFloat(uint.TryParse(xPos, out uint xPosUint) ? xPosUint : 0, interpolated.X);
-                        XDK.WriteFloat(uint.TryParse(yPos, out uint yPosUint) ? yPosUint : 0, interpolated.Y);
-                        XDK.WriteFloat(uint.TryParse(zPos, out uint zPosUint) ? zPosUint : 0, interpolated.Z);
-
+                XDK.WriteFloat(uint.TryParse(xPos, out uint xPosUint) ? xPosUint : 0, interpolated.X);
+                XDK.WriteFloat(uint.TryParse(yPos, out uint yPosUint) ? yPosUint : 0, interpolated.Y);
+                XDK.WriteFloat(uint.TryParse(zPos, out uint zPosUint) ? zPosUint : 0, interpolated.Z);
 #else
                         memory.WriteMemory(xPos, "float", $"{interpolated.X}");
                         memory.WriteMemory(yPos, "float", $"{interpolated.Y}");
@@ -185,8 +205,6 @@ namespace modularDollyCam
                         memory.WriteMemory(rollAng, "float", $"{interpolated.Roll}");
                         memory.WriteMemory(playerFov, "float", $"{interpolated.FOV}");
 #endif
-
-
 
                         if (tickSpeed != null)
                         {
@@ -219,6 +237,7 @@ namespace modularDollyCam
                             );
 
                             Vector3 direction = targetPosition - cameraPosition;
+
                             float yaw = (float)Math.Atan2(direction.Y, direction.X) % (2 * (float)Math.PI);
                             float pitch = (float)Math.Atan2(direction.Z, direction.Length()) % (2 * (float)Math.PI);
 
@@ -231,9 +250,10 @@ namespace modularDollyCam
                 }
 
                 pathStart_checkbox.Checked = false;
+
                 keyframeDataGridView.Rows[originalSelectedRow].Cells[originalSelectedColumn].Selected = true;
 
-                // Delay end + just end after path is done
+                // Delay end
                 if (pauseTicks.Checked == true && tickSpeed != null)
                 {
                     if (int.TryParse(endDelay.Text, out int delayEndSeconds) && delayEndSeconds > 0)
@@ -250,6 +270,8 @@ namespace modularDollyCam
                 pathStart_checkbox.Checked = false;
             }
         }
+
+
         void setCurrentTick()
         {
             startTick = memory.ReadInt(tickCount);
